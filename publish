@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -e
+
+git checkout ghpages
+htmlDir=$(nix-build --no-out-link ./default.nix)
+
+rm -rf ./html
+cp -rf "$htmlDir" ./html
+chmod -R u+w ./html
+git add ./html
+git commit -m "Publishing new content"
+git push origin ghpages:ghpages
