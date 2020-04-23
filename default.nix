@@ -14,6 +14,14 @@ let
   };
 in
 
+if lib.inNixShell then
+
+mkShell 
+{ buildInputs = [ neuron ];
+}
+
+else
+
 stdenv.mkDerivation
 { name = "noah-zettelkasten";
   buildInputs = [ neuron ];
