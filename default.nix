@@ -20,13 +20,12 @@ stdenv.mkDerivation
   src = ./.;
   buildPhase = 
     ''
-    mkdir -p site
-    neuron -d . rib -o site
+    ${neuron}/bin/neuron -d . rib -o ./docs
     '';
 
   installPhase =
     ''
     mkdir -p $out
-    cp -r site/* $out/
+    cp -r docs/* $out/
     '';
 }
