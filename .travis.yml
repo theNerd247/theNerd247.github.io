@@ -1,9 +1,5 @@
 language: nix
 
-before-deploy:
-  - cp -r ./result/docs ./docs
-  - unlink ./result
-
 branches:
   only:
     - master
@@ -11,7 +7,7 @@ branches:
 deploy:
   provider: pages:git
   edge: true
-  local_dir: ./docs
+  local_dir: ./result
   target_branch: gh-pages
   # Set in the settings page of your repository, as a secure variable
   token: $GITHUB_TOKEN  
