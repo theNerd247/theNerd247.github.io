@@ -19,8 +19,6 @@ main = toJSONFilter filterAndPrintTags
 
 filterAndPrintTags :: Pandoc -> IO Pandoc
 filterAndPrintTags doc@(Pandoc meta _) = do
-  writeFile "meta" . show $ lookupMeta "tags" meta
-  writeFile "foo.tags" . show $ tags 
   return newDoc
   where
     (tags, newDoc) = appendTags doc
