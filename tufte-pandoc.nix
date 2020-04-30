@@ -30,7 +30,7 @@ let
     };
   
   styles = 
-    [ "--css=${tufte-css}/tufte.css"
+    [ "--css=${tufte-css}/tufte.min.css"
       "--css=${tufte-pandoc-srcs}/pandoc.css"
     ];
 
@@ -70,7 +70,7 @@ let
     	   --katex \
     	   --section-divs \
     	   --from markdown+tex_math_single_backslash \
-    	   --filter pandoc-sidenote \
+    	   --filter ${pandoc-sidenote}/bin/pandoc-sidenote \
     	   --to html5+smart \
     	   --template=${tuftePandocTemplate} \
     	   --output $@ \

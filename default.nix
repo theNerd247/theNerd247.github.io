@@ -1,7 +1,15 @@
-{ pkgs ? import <nixpkgs> {}}:
+let
+  config = {
+    packageOverrides = pkgs:
+    { haskellPackages = pkgs.haskellPackages.override
+      { overrides = self: super:
+          import ./pandoc-sidenote.nix self super;
+      };
+    };
+  };
 
-with pkgs;
-
+  pkgs = import <nixpkgs> { inherit config; }; 
+in with pkgs;
 let
 
   tufte-css = stdenv.mkDerivation
@@ -19,7 +27,7 @@ let
 
   tufte-pandoc = callPackage ./tufte-pandoc.nix 
     { inherit tufte-css;
-      pandoc-sidenote = import ./pandoc-sidenote.nix { inherit pkgs; };
+      pandoc-sidenote = pkgs.haskellPackages.pandoc-sidenote;
     };
 in
 
