@@ -32,6 +32,8 @@ stdenv.mkDerivation
           --standalone\
           --output="./html/$name"\
           --lua-filter=./pdlinks.lua\
+          --css=./tufte.css\
+          --section-divs\
           $f
       echo "<li><a href='$name'>$name</a></li>" >> ./html/index.html
     done
@@ -41,8 +43,9 @@ stdenv.mkDerivation
   installPhase =
     ''
     mkdir -p $out
-    # cp -r docs/* $out/
     cp ./html/*.html $out/
     cp -r ./static $out/static
+    cp ./tufte.css $out/tufte.css
+    cp -r ./et-book/ $out/et-book
     '';
 }
