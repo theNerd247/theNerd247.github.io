@@ -1,15 +1,5 @@
-let
-  config = {
-    packageOverrides = pkgs:
-    { haskellPackages = pkgs.haskellPackages.override
-      { overrides = self: super:
-          import ./pandoc-sidenote.nix self super;
-      };
-    };
-  };
+with (import <nixpkgs> { config = import ./haskell.nix; }); 
 
-  pkgs = import <nixpkgs> { inherit config; }; 
-in with pkgs;
 let
 
   tufte-css = stdenv.mkDerivation
@@ -25,10 +15,16 @@ let
         '';
     };
 
+  pandoc-tags = haskellPackages.pandoc-tags;
+
   tufte-pandoc = callPackage ./tufte-pandoc.nix 
     { inherit tufte-css;
       pandoc-sidenote = pkgs.haskellPackages.pandoc-sidenote;
-      pandocExtra = "--css=./static/extra.css --lua-filter=./pdlinks.lua";
+      pandocExtra = builtins.concatStringsSep " "
+        [	"--css=./static/extra.css"
+        	"--filter=${pandoc-tags}/bin/pandoc-tags"
+        	"--lua-filter=./pdlinks.lua"
+        ];
     };
 in
 
