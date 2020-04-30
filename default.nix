@@ -21,22 +21,28 @@ stdenv.mkDerivation
   buildPhase = 
     ''
     # ${neuron}/bin/neuron -d . rib -o ./docs
-    ${pandoc}/bin/pandoc\
-        --resource-path=./static\
-        -t html\
-        -f markdown\
-        --standalone\
-        --table-of-contents\
-        --output=./index.html\
-        --file-scope\
-        ./*.md
+    mkdir -p html
+    echo "<ul>" > ./html/index.html
+    for f in ./*.md; do
+      name="$(basename -s.md $f).html"
+      ${pandoc}/bin/pandoc\
+          --resource-path=./static\
+          -t html\
+          -f markdown\
+          --standalone\
+          --output="./html/$name"\
+          --lua-filter=./pdlinks.lua\
+          $f
+      echo "<li><a href='$name'>$name</a></li>" >> ./html/index.html
+    done
+    echo "</ul>" >> ./html/index.html
     '';
 
   installPhase =
     ''
     mkdir -p $out
     # cp -r docs/* $out/
-    cp ./index.html $out/
+    cp ./html/*.html $out/
     cp -r ./static $out/static
     '';
 }
