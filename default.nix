@@ -28,6 +28,7 @@ let
   tufte-pandoc = callPackage ./tufte-pandoc.nix 
     { inherit tufte-css;
       pandoc-sidenote = pkgs.haskellPackages.pandoc-sidenote;
+      pandocExtra = "--css=./static/extra.css --lua-filter=./pdlinks.lua";
     };
 in
 
