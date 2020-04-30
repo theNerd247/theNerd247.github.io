@@ -5,6 +5,7 @@
 , writeText
 , pandoc
 , pandoc-sidenote
+, tufte-pandoc-srcs
 , tufte-css
 , pandocExtra ? ""
 , useExtraStyles ? false
@@ -12,36 +13,19 @@
 }: 
 
 let 
-  tufte-pandoc-srcs = stdenv.mkDerivation
-    { name = "tufte-pandoc-srcs"; 
-      buildInputs = [ tufte-css ];
-
-      src = builtins.fetchGit
-        { url = "https://github.com/jez/tufte-pandoc-css.git";
-          ref = "master";
-        };
-
-      buildPhase = "";
-      installPhase = ''
-        mkdir -p $out
-        cp ./tufte.html5 $out/tufte.html5
-        cp ./*.css $out/
-      '';
-    };
-  
   styles = 
-    [ "--css=${tufte-css}/tufte.min.css"
-      "--css=${tufte-pandoc-srcs}/pandoc.css"
+    [ "--css=./tufte.min.css"
+      "--css=./pandoc.css"
     ];
 
   extraStyles = 
     if useExtraStyles 
-      then [ "--css=${tufte-pandoc-srcs}/tufte-extra.css" ]
+      then [ "--css=./tufte-extra.css" ]
       else [];
 
   solarizedStyle = 
     if useSolarizedStyles 
-      then [ "--css=${tufte-pandoc-srcs}./pandoc-solarized.css" ]
+      then [ "--css=./pandoc-solarized.css" ]
       else [];
 
   extraPandocFlags = 
