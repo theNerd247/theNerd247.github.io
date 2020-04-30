@@ -3,41 +3,33 @@
 with pkgs;
 
 let
-  neuronGit = builtins.fetchGit 
-  { url = "https://github.com/srid/neuron"; 
-    ref = "master"; 
-  };
 
-  neuron = import neuronGit.outPath 
-  { inherit pkgs;
-    gitRev = neuronGit.shortRev; 
-  };
+  tufte-css = stdenv.mkDerivation
+    { name = "tufte-css"; 
+      src = builtins.fetchGit
+      { url = "https://github.com/edwardtufte/tufte-css.git";
+        ref = "gh-pages";
+      };
+      installPhase = ''
+        mkdir -p $out
+        cp -r et-book/ $out/et-book
+        cp tufte.min.css $out/tufte.min.css
+        '';
+    };
+
+  tufte-pandoc = callPackage ./tufte-pandoc.nix 
+    { inherit tufte-css;
+      pandoc-sidenote = import ./pandoc-sidenote.nix { inherit pkgs; };
+    };
 in
 
 stdenv.mkDerivation
 { name = "noah-zettelkasten";
-  buildInputs = [ pandoc ];
   src = ./.;
+  buildInputs = [ tufte-pandoc ];
   buildPhase = 
     ''
-    # ${neuron}/bin/neuron -d . rib -o ./docs
-    mkdir -p html
-    echo "<ul>" > ./html/index.html
-    for f in ./*.md; do
-      name="$(basename -s.md $f).html"
-      ${pandoc}/bin/pandoc\
-          --resource-path=./static\
-          -t html\
-          -f markdown\
-          --standalone\
-          --output="./html/$name"\
-          --lua-filter=./pdlinks.lua\
-          --css=./tufte.css\
-          --section-divs\
-          $f
-      echo "<li><a href='$name'>$name</a></li>" >> ./html/index.html
-    done
-    echo "</ul>" >> ./html/index.html
+    ${tufte-pandoc}/bin/tufte-pandoc
     '';
 
   installPhase =
@@ -45,7 +37,5 @@ stdenv.mkDerivation
     mkdir -p $out
     cp ./html/*.html $out/
     cp -r ./static $out/static
-    cp ./tufte.css $out/tufte.css
-    cp -r ./et-book/ $out/et-book
     '';
 }
