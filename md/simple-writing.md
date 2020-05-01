@@ -16,8 +16,8 @@ Here are a few tips for writing well:
   * place verbs as close to the nouns as possible
   * avoid paranthetical text in sentences. For example:
 
-    > You may - for very necessary purposes in avoiding obfuscated languages
-    > - want to not write like this.
+    > You may - for very necessary purposes in avoiding obfuscated
+    > languages - want to not write like this.
 
     A few alternatives for side notes:
 
