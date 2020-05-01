@@ -1,0 +1,10 @@
+* pull in filterInline from pandoc-sidenote (will need to fork - or just copy
+* code)
+* change filenames of all md files to use a sanitized title found in the file
+  (stupid 2016407.md is difficult to search when I want to edit)
+* move ./static to ./md/static (safer for non-pandoc support)
+* create a larger haskell program that merges pandoc-sidenotes and pandoc-tags
+  and the lua filter into a larger filter (compbining algebras)
+* write a haskell build program for handling the build process (maybe use
+* shake?) 
+* remove github repos as assets for css files
