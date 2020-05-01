@@ -1,13 +1,13 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Main where
 
+import Control.Monad ((<=<))
+import Data.Text (Text)
+import Text.Pandoc.Builder
 import Text.Pandoc.JSON
 import Text.Pandoc.Walk
-import Text.Pandoc.Builder
-
-import Data.Text (Text)
-import qualified Data.Text as T
 import qualified Data.Map as M
+import qualified Data.Text as T
 
 type Tag = Text
 type Tags = [Tag]
@@ -19,7 +19,7 @@ main = toJSONFilter filterAndPrintTags
 
 filterAndPrintTags :: Pandoc -> IO Pandoc
 filterAndPrintTags doc@(Pandoc meta _) = do
-  return newDoc
+  return $ walk changeMarkdownLink newDoc
   where
     (tags, newDoc) = appendTags doc
 
@@ -46,3 +46,9 @@ getTags :: Meta -> Tags
 getTags meta
   | Just (MetaList tags) <- lookupMeta "tags" meta = [str | (MetaInlines ((Str str):[])) <- tags]
   | otherwise = []
+
+changeMarkdownLink :: Inline -> Inline
+changeMarkdownLink x@(Link attr ((Str _):[]) (url, mouseover))
+  | (Just name) <- T.stripPrefix "./" <=< T.stripSuffix ".md" $ url 
+  = Link attr [(Str $ "(see " <> name <> ")")] ("./"<>name<>".html", mouseover)
+changeMarkdownLink x = x

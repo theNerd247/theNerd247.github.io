@@ -1,4 +1,4 @@
-with (import <nixpkgs> { config = import ./haskell.nix; }); 
+with (import ./nixpkgs.nix);
 
 let
 
@@ -42,7 +42,6 @@ let
       pandocExtra = builtins.concatStringsSep " "
         [	"--css=./static/extra.css"
         	"--filter=${pandoc-tags}/bin/pandoc-tags"
-        	"--lua-filter=./pdlinks.lua"
         ];
     };
 in

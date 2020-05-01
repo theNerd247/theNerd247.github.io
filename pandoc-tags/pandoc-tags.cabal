@@ -23,7 +23,7 @@ executable pandoc-tags
   -- other-extensions:
   build-depends:       
       base
-    , pandoc-types
+    , pandoc-types >= 1.20
     , text
     , containers
   -- hs-source-dirs:

@@ -6,5 +6,5 @@ let
 in
 
 self: super:
-  { pandoc-sidenote = self.callCabal2nix "pandoc-sidenote" src {};
-  }
+{ pandoc-sidenote = self.callCabal2nix "pandoc-sidenote" src {};
+}
