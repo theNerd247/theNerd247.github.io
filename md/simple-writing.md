@@ -7,27 +7,22 @@ tags:
 ---
 
 Research papers are difficult to read. And I'm learning that it's not because I
-don't have enough background in the subject material. It's that the author is a
-poor editor.
+am unintelligent or ignorant. It's that the author is a poor editor.
 
-Here are a few tips for writing well:
+Here are a few tips for writing well[^1]:
 
-  * write in the way you speak
-  * place verbs as close to the nouns as possible
-  * avoid paranthetical text in sentences. For example:
+  * write in a manner that's easy to read aloud.
+  * place verbs as close to nouns as possible
+  * avoid paranthetical text in sentences [1].
+  * don't mangle ideas together. Sentences,  paragraphs, etc should have a
+    single idea
+  * build up and then make a point; don't make your point and then hurry to 
+    give its proof aftarwards. 
+  * make conclusions of sentences match subjects of following sentences [2].
+  * state the obvious; but not "too obvious". - someone will thank you later.
+  * avoid technical words that only your colleges would know (jargon).
 
-    > You may - for very necessary purposes in avoiding obfuscated
-    > languages - want to not write like this.
+[^1]: _The Science of Scientific Writing_ by George D. Gopen and Judith A. Swan
 
-    A few alternatives for side notes:
-
-      * don't include them
-      * use foot/margin notes
-      * Add another, separate sentence or paragraph[^1] before or after the
-        sentence. 
-
-
-[^1]: Often I find that parenthetical statements are evidence that more thought
-  needs to go into your prose. Either the reader needs background information
-  or you want to dive deeper into a topic. Think of parenthetical notes as your
-  child interrupting you while you're talking.
+[1]: ./parenthetical-texts.md
+[2]: ./context-and-writing.md
