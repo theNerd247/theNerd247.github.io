@@ -52,6 +52,12 @@ stdenv.mkDerivation
   buildInputs = [ tufte-pandoc ];
   buildPhase = 
     ''
+    rm -f md/index.md
+    for f in md/*.md; do 
+      name=$(echo $f | sed -e 's/.md\|md\///g')
+      link="$name".html
+      echo "* [$name]($link)" >> md/index.md
+    done
     ${tufte-pandoc}/bin/tufte-pandoc
     '';
 
