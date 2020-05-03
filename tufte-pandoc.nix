@@ -30,11 +30,12 @@ let
 
   extraPandocFlags = 
     builtins.concatStringsSep " "
-      ( styles
-      ++ extraStyles
-      ++ solarizedStyle
-      ++ [ pandocExtra ]
-      );
+      [ pandocExtra ];
+#      ( styles
+#      ++ extraStyles
+#      ++ solarizedStyle
+#      ++ [ pandocExtra ]
+#      );
 
   tuftePandocTemplate = "${tufte-pandoc-srcs}/tufte.html5";
 
@@ -54,9 +55,7 @@ let
     	   --katex \
     	   --section-divs \
     	   --from markdown+tex_math_single_backslash \
-    	   --filter ${pandoc-sidenote}/bin/pandoc-sidenote \
     	   --to html5+smart \
-    	   --template=${tuftePandocTemplate} \
     	   --output $@ \
     	   ${extraPandocFlags} \
     	   $<

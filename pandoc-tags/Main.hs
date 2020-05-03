@@ -52,3 +52,4 @@ changeMarkdownLink x@(Link attr ((Str _):[]) (url, mouseover))
   | (Just name) <- T.stripPrefix "./" <=< T.stripSuffix ".md" $ url 
   = Link attr [(Str $ "(see " <> name <> ")")] ("./"<>name<>".html", mouseover)
 changeMarkdownLink x = x
+
