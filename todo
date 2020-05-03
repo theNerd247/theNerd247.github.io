@@ -8,3 +8,4 @@
 * write a haskell build program for handling the build process (maybe use
 * shake?) 
 * remove github repos as assets for css files
+* add a search system to make it easy to discover links between notes
