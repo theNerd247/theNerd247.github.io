@@ -44,3 +44,11 @@ tags:
 
 1. `ConnectKeyword Notes = Notes | Graph(Notes) is connected`
 1. `ConnectKeyword Notes = Notes | User input is ignored`
+
+# Notes
+
+It might be useful to write seperate algebras for solving different pieces of
+the puzzle namely:
+
+  * collecting links from a note
+  * collecting keywords from a note
