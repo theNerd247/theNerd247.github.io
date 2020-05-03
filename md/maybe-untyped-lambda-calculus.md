@@ -54,7 +54,15 @@ So. a `Maybe Int` would be written as:
   ```
   λx:Int n:Int j:(Int → Int). j x
   ```
-I want to 
+Now what if we really want polymorphism? Then we'd need to extend to using System-F.
+
+  ```
+  ∀a.∀b.λx:a n:b j:(a → b) . j x 
+  ```
+Here we don't explicitly state the type of the inputs. Instead we put a type
+lambda (`∀`) that turns the 3 variable `just` into a 5 variable function. The
+extra 2 variables at the beginning are type variables that are used to form the
+types of the incoming terms.
 
 [^1]: We're actually using the untyped lambda calculus where `c := {()} ∪ N` -
   constants are the unit value and the natural numbers.
@@ -62,4 +70,3 @@ I want to
   the simply typed lambda calculus.
 
 [1]: ./simply-typed-lambda-calculus.md
-
