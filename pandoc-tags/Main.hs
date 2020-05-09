@@ -1,5 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE DeriveTraversable #-}
 
 module Main where
 
@@ -10,17 +11,40 @@ import Data.Text (Text)
 import Text.Pandoc
 import Text.Pandoc.Builder
 import Text.Pandoc.Walk
+import Data.Map.Merge.Strict (merge, zipWithMatched, preserveMissing)
 import qualified Data.Map as M
 import qualified Data.Text as T
 
-type Tag      = Text
-type Tags     = [Tag]
-type TagMap   = M.Map Tag [FilePath]
+type Tag    = Text
+type Tags   = [Tag]
+type TagMap = TagMapM [FilePath]
+type TagsM  = WriterT TagMap IO
 
-type TagsM = WriterT TagMap IO
+newtype TagMapM a = TagMapM { unTagMapM :: M.Map Tag a }
+  deriving (Show, Functor, Foldable, Traversable)
+
+instance (Semigroup v) => Semigroup (TagMapM v) where
+  (TagMapM m1) <> (TagMapM m2) = TagMapM $
+    merge 
+      preserveMissing 
+      preserveMissing
+      (zipWithMatched (const (<>)))
+      m1
+      m2
+
+instance (Monoid v) => Monoid (TagMapM v) where
+  mempty = TagMapM mempty
 
 main :: IO ()
 main = undefined
+
+runTagsM :: TagsM a -> IO (a, [Pandoc])
+runTagsM = fmap (fmap buildPandocsFromTagMap) . runWriterT
+
+buildPandocsFromTagMap :: TagMap -> [Pandoc]
+buildPandocsFromTagMap = 
+  M.foldMapWithKey (fmap pure . buildTagsPandoc)
+  . unTagMapM 
 
 buildTagsPandoc :: Tag -> [FilePath] -> Pandoc
 buildTagsPandoc tag = 
@@ -29,7 +53,6 @@ buildTagsPandoc tag =
 mkFilePathPandoc :: FilePath -> Blocks
 mkFilePathPandoc fp = 
   let pFp = T.pack fp
-      
   in plain $ maybe mempty (flip (link pFp) mempty) (filePathTitle pFp)
 
 transformMarkdown :: ReaderOptions -> FilePath -> TagsM Pandoc
@@ -42,7 +65,7 @@ loadFileToPandoc :: ReaderOptions -> FilePath -> TagsM Pandoc
 loadFileToPandoc = undefined
 
 buildTagMap :: FilePath -> Tags -> TagMap
-buildTagMap fp = M.fromList . fmap (\t -> (t, [fp]))
+buildTagMap fp = TagMapM . M.fromList . fmap (\t -> (t, [fp]))
 
 customPandocFilter :: Pandoc -> (Tags, Pandoc)
 customPandocFilter = fmap (walk changeMarkdownLink) . appendTagLinks
@@ -56,8 +79,8 @@ appendTagLinks p =
 mkTagLinks :: Tags -> Pandoc
 mkTagLinks = 
     Pandoc mempty 
-  . (:[]) . Div ("tag-links", ["tag-links"], []) 
-  . (:[]) . Para 
+  . pure . Div ("tag-links", ["tag-links"], []) 
+  . pure . Para 
   . intersperse (Str ", ") 
   . fmap mkLink
 
