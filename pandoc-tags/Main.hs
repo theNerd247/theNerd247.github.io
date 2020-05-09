@@ -5,6 +5,7 @@
 module Main where
 
 import Control.Monad ((<=<))
+import Control.Monad.IO.Class
 import Control.Monad.Writer.Lazy
 import Data.List (intersperse)
 import Data.Text (Text)
@@ -15,10 +16,11 @@ import Data.Map.Merge.Strict (merge, zipWithMatched, preserveMissing)
 import qualified Data.Map as M
 import qualified Data.Text as T
 
-type Tag    = Text
-type Tags   = [Tag]
-type TagMap = TagMapM [FilePath]
-type TagsT  = WriterT TagMap
+type Tag        = Text
+type Tags       = [Tag]
+type TagMap     = TagMapM [FilePath]
+type TagsT      = WriterT TagMap
+type TagPandoc = (Tag, Pandoc)
 
 newtype TagMapM a = TagMapM { unTagMapM :: M.Map Tag a }
   deriving (Show, Functor, Foldable, Traversable)
@@ -37,18 +39,32 @@ instance (Monoid v) => Monoid (TagMapM v) where
 
 main :: IO ()
 main = undefined
-  -- traverse over filepaths and load file + extractAndAppendTags
+  -- traverse processSourceFile 
   -- runTagsT
-  -- concat tags pandocs with source pandocs
-  -- fmap with custom filters
-  -- traverse_ with writer
+  -- fmap walkWithFilters
+  -- traverse_ writeTagFile
 
-runTagsT :: (Monad m) => TagsT m a -> m (a, [Pandoc])
+writeTagFile :: TagPandoc -> IO ()
+writeTagFile = undefined
+  -- determine output file type
+  -- generate filepath from tag
+  -- write pandoc to filepath
+
+processSourceFile :: (MonadIO m) => FilePath -> TagsT m ()
+processSourceFile fp = undefined
+  -- read file
+  -- walkWithFilters <$> (extractAndAppendTags fp)
+  -- write file
+
+walkWithFilters :: Pandoc -> Pandoc
+walkWithFilters = walk mdLinkToHtml
+
+runTagsT :: (Monad m) => TagsT m a -> m (a, [TagPandoc])
 runTagsT = fmap (fmap buildPandocsFromTagMap) . runWriterT
 
-buildPandocsFromTagMap :: TagMap -> [Pandoc]
+buildPandocsFromTagMap :: TagMap -> [TagPandoc]
 buildPandocsFromTagMap = 
-    M.foldMapWithKey (fmap pure . buildTagsPandoc) 
+    M.foldMapWithKey (\t fps -> pure (t, buildTagsPandoc t fps))
   . unTagMapM 
 
 buildTagsPandoc :: Tag -> [FilePath] -> Pandoc
