@@ -2,6 +2,7 @@
 module Main where
 
 import Control.Monad ((<=<))
+import Data.List (intersperse)
 import Data.Text (Text)
 import Text.Pandoc.Builder
 import Text.Pandoc.JSON
@@ -17,16 +18,13 @@ type TagLinks = Block
 main :: IO ()
 main = toJSONFilter filterAndPrintTags
 
-filterAndPrintTags :: Pandoc -> IO Pandoc
-filterAndPrintTags doc@(Pandoc meta _) = do
-  return $ walk changeMarkdownLink newDoc
-  where
-    (tags, newDoc) = appendTags doc
+filterAndPrintTags :: Pandoc -> Pandoc
+filterAndPrintTags = snd . appendTags . walk changeMarkdownLink 
 
 appendTags :: Pandoc -> (Tags, Pandoc)
 appendTags pandoc = (tags, addTagLinks tagLinks pandoc)
   where 
-    tagLinks = Div ("tag-links", ["tag-links"], []) $  Para . (:[]) . mkLink <$> tags
+    tagLinks = Div ("tag-links", ["tag-links"], []) . (:[]) .  Para . intersperse (Str ", ")  $ mkLink <$> tags
     tags = docTags pandoc
 
 addTagLinks :: TagLinks -> Pandoc -> Pandoc
@@ -52,4 +50,3 @@ changeMarkdownLink x@(Link attr ((Str _):[]) (url, mouseover))
   | (Just name) <- T.stripPrefix "./" <=< T.stripSuffix ".md" $ url 
   = Link attr [(Str $ "(see " <> name <> ")")] ("./"<>name<>".html", mouseover)
 changeMarkdownLink x = x
-
