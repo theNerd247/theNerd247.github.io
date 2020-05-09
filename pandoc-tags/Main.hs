@@ -1,36 +1,67 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE RecordWildCards #-}
+
 module Main where
 
 import Control.Monad ((<=<))
+import Control.Monad.Writer.Lazy
 import Data.List (intersperse)
 import Data.Text (Text)
+import Text.Pandoc
 import Text.Pandoc.Builder
-import Text.Pandoc.JSON
 import Text.Pandoc.Walk
 import qualified Data.Map as M
 import qualified Data.Text as T
 
-type Tag = Text
-type Tags = [Tag]
-type TagLink = Inline
-type TagLinks = Block
+type Tag      = Text
+type Tags     = [Tag]
+type TagMap   = M.Map Tag [FilePath]
+
+type TagsM = WriterT TagMap IO
 
 main :: IO ()
-main = toJSONFilter filterAndPrintTags
+main = undefined
 
-filterAndPrintTags :: Pandoc -> Pandoc
-filterAndPrintTags = snd . appendTags . walk changeMarkdownLink 
+buildTagsPandoc :: Tag -> [FilePath] -> Pandoc
+buildTagsPandoc tag = 
+  setTitle (str tag) . doc . bulletList . fmap mkFilePathPandoc
 
-appendTags :: Pandoc -> (Tags, Pandoc)
-appendTags pandoc = (tags, addTagLinks tagLinks pandoc)
-  where 
-    tagLinks = Div ("tag-links", ["tag-links"], []) . (:[]) .  Para . intersperse (Str ", ")  $ mkLink <$> tags
-    tags = docTags pandoc
+mkFilePathPandoc :: FilePath -> Blocks
+mkFilePathPandoc fp = 
+  let pFp = T.pack fp
+      
+  in plain $ maybe mempty (flip (link pFp) mempty) (filePathTitle pFp)
 
-addTagLinks :: TagLinks -> Pandoc -> Pandoc
-addTagLinks links (Pandoc meta doc) = Pandoc meta $ doc ++ [links]
+transformMarkdown :: ReaderOptions -> FilePath -> TagsM Pandoc
+transformMarkdown ops fp = do
+  (tags, newDoc) <- customPandocFilter <$> loadFileToPandoc ops fp
+  tell $ buildTagMap fp tags
+  return newDoc
 
-mkLink :: Tag -> TagLink
+loadFileToPandoc :: ReaderOptions -> FilePath -> TagsM Pandoc
+loadFileToPandoc = undefined
+
+buildTagMap :: FilePath -> Tags -> TagMap
+buildTagMap fp = M.fromList . fmap (\t -> (t, [fp]))
+
+customPandocFilter :: Pandoc -> (Tags, Pandoc)
+customPandocFilter = fmap (walk changeMarkdownLink) . appendTagLinks
+
+appendTagLinks :: Pandoc -> (Tags, Pandoc)
+appendTagLinks p = 
+  let t  = docTags p
+      np = p <> mkTagLinks t
+  in (t, np)
+
+mkTagLinks :: Tags -> Pandoc
+mkTagLinks = 
+    Pandoc mempty 
+  . (:[]) . Div ("tag-links", ["tag-links"], []) 
+  . (:[]) . Para 
+  . intersperse (Str ", ") 
+  . fmap mkLink
+
+mkLink :: Tag -> Inline
 mkLink tagName = 
   Link 
   ("tag-link", ["tag-link"], [])
@@ -46,7 +77,11 @@ getTags meta
   | otherwise = []
 
 changeMarkdownLink :: Inline -> Inline
-changeMarkdownLink x@(Link attr ((Str _):[]) (url, mouseover))
-  | (Just name) <- T.stripPrefix "./" <=< T.stripSuffix ".md" $ url 
+changeMarkdownLink (Link attr@(tl, _, _) ((Str _):[]) (url, mouseover))
+  | (Just name) <- filePathTitle url 
+  , "tag-link" <- tl
   = Link attr [(Str $ "(see " <> name <> ")")] ("./"<>name<>".html", mouseover)
 changeMarkdownLink x = x
+
+filePathTitle :: Text -> Maybe Text
+filePathTitle = T.stripPrefix "./" <=< T.stripSuffix ".md"
