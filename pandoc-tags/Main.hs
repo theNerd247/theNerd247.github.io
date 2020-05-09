@@ -8,7 +8,7 @@ import Control.Monad ((<=<))
 import Control.Monad.Writer.Lazy
 import Data.List (intersperse)
 import Data.Text (Text)
-import Text.Pandoc
+import Text.Pandoc hiding (Writer)
 import Text.Pandoc.Builder
 import Text.Pandoc.Walk
 import Data.Map.Merge.Strict (merge, zipWithMatched, preserveMissing)
@@ -18,7 +18,7 @@ import qualified Data.Text as T
 type Tag    = Text
 type Tags   = [Tag]
 type TagMap = TagMapM [FilePath]
-type TagsM  = WriterT TagMap IO
+type TagsT  = WriterT TagMap
 
 newtype TagMapM a = TagMapM { unTagMapM :: M.Map Tag a }
   deriving (Show, Functor, Foldable, Traversable)
@@ -37,13 +37,18 @@ instance (Monoid v) => Monoid (TagMapM v) where
 
 main :: IO ()
 main = undefined
+  -- traverse over filepaths and load file + extractAndAppendTags
+  -- runTagsT
+  -- concat tags pandocs with source pandocs
+  -- fmap with custom filters
+  -- traverse_ with writer
 
-runTagsM :: TagsM a -> IO (a, [Pandoc])
-runTagsM = fmap (fmap buildPandocsFromTagMap) . runWriterT
+runTagsT :: (Monad m) => TagsT m a -> m (a, [Pandoc])
+runTagsT = fmap (fmap buildPandocsFromTagMap) . runWriterT
 
 buildPandocsFromTagMap :: TagMap -> [Pandoc]
 buildPandocsFromTagMap = 
-  M.foldMapWithKey (fmap pure . buildTagsPandoc)
+    M.foldMapWithKey (fmap pure . buildTagsPandoc) 
   . unTagMapM 
 
 buildTagsPandoc :: Tag -> [FilePath] -> Pandoc
@@ -55,26 +60,18 @@ mkFilePathPandoc fp =
   let pFp = T.pack fp
   in plain $ maybe mempty (flip (link pFp) mempty) (filePathTitle pFp)
 
-transformMarkdown :: ReaderOptions -> FilePath -> TagsM Pandoc
-transformMarkdown ops fp = do
-  (tags, newDoc) <- customPandocFilter <$> loadFileToPandoc ops fp
-  tell $ buildTagMap fp tags
-  return newDoc
-
-loadFileToPandoc :: ReaderOptions -> FilePath -> TagsM Pandoc
-loadFileToPandoc = undefined
+extractAndAppendTags :: (Monad m) => FilePath -> Pandoc -> TagsT m Pandoc
+extractAndAppendTags fp = do
+  writer . fmap (buildTagMap fp) . appendTagLinks
 
 buildTagMap :: FilePath -> Tags -> TagMap
 buildTagMap fp = TagMapM . M.fromList . fmap (\t -> (t, [fp]))
 
-customPandocFilter :: Pandoc -> (Tags, Pandoc)
-customPandocFilter = fmap (walk changeMarkdownLink) . appendTagLinks
-
-appendTagLinks :: Pandoc -> (Tags, Pandoc)
+appendTagLinks :: Pandoc -> (Pandoc, Tags)
 appendTagLinks p = 
   let t  = docTags p
       np = p <> mkTagLinks t
-  in (t, np)
+  in (np, t)
 
 mkTagLinks :: Tags -> Pandoc
 mkTagLinks = 
@@ -82,10 +79,10 @@ mkTagLinks =
   . pure . Div ("tag-links", ["tag-links"], []) 
   . pure . Para 
   . intersperse (Str ", ") 
-  . fmap mkLink
+  . fmap mkTagLink
 
-mkLink :: Tag -> Inline
-mkLink tagName = 
+mkTagLink :: Tag -> Inline
+mkTagLink tagName = 
   Link 
   ("tag-link", ["tag-link"], [])
   [Str tagName]
@@ -99,12 +96,12 @@ getTags meta
   | Just (MetaList tags) <- lookupMeta "tags" meta = [str | (MetaInlines ((Str str):[])) <- tags]
   | otherwise = []
 
-changeMarkdownLink :: Inline -> Inline
-changeMarkdownLink (Link attr@(tl, _, _) ((Str _):[]) (url, mouseover))
+mdLinkToHtml :: Inline -> Inline
+mdLinkToHtml (Link attr@(tl, _, _) ((Str _):[]) (url, mouseover))
   | (Just name) <- filePathTitle url 
   , "tag-link" <- tl
   = Link attr [(Str $ "(see " <> name <> ")")] ("./"<>name<>".html", mouseover)
-changeMarkdownLink x = x
+mdLinkToHtml x = x
 
 filePathTitle :: Text -> Maybe Text
 filePathTitle = T.stripPrefix "./" <=< T.stripSuffix ".md"
