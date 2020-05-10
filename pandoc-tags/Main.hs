@@ -4,6 +4,7 @@
 
 module Main where
 
+import Control.Arrow (first)
 import Control.Monad ((<=<))
 import Control.Monad.IO.Class
 import Control.Monad.Reader
@@ -53,11 +54,8 @@ main = undefined
   -- fmap walkWithFilters
   -- traverse_ writeTagFile
 
-writeTagFile :: TagPandoc -> IO ()
-writeTagFile = undefined
-  -- determine output file type
-  -- generate filepath from tag
-  -- write pandoc to filepath
+writeTagFile :: (PandocMonad m, MonadIO m) => TagPandoc -> TagsT m ()
+writeTagFile = uncurry writePandoc . first T.unpack
 
 processSourceFile :: (PandocMonad m, MonadIO m) => FilePath -> TagsT m ()
 processSourceFile fp = do
