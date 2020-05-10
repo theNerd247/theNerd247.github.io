@@ -9,14 +9,15 @@ import Control.Monad ((<=<))
 import Control.Monad.IO.Class
 import Control.Monad.Reader
 import Control.Monad.Writer.Lazy
-import Data.List (intersperse)
 import Data.Foldable (traverse_)
+import Data.List (intersperse)
 import Data.Map.Merge.Strict (merge, zipWithMatched, preserveMissing)
 import Data.Text (Text)
 import System.Environment
 import System.FilePath.Posix
-import Text.Pandoc hiding (Writer)
+import Text.Pandoc hiding (Writer, readMarkdown)
 import Text.Pandoc.Builder
+import Text.Pandoc.Readers.Markdown
 import Text.Pandoc.Walk
 import qualified Data.Map as M
 import qualified Data.Text as T
@@ -59,8 +60,8 @@ main = runIO d >>= either (putStrLn . show) return
 
 initPandocState :: PandocState
 initPandocState = PandocState
-  { readerOpts = def
-  , writerOpts = def
+  { readerOpts = def { readerStandalone = True, readerExtensions = pandocExtensions }
+  , writerOpts = def { writerSectionDivs = True }
   , outDir     = "./html"
   }
 
@@ -72,7 +73,7 @@ processSourceFile fp = do
   ops <- asks readerOpts 
   (liftIO $ T.readFile fp) 
     >>= readMarkdown ops 
-    >>= extractAndAppendTags fp . walkWithFilters 
+    >>= extractAndAppendTags fp  -- . walkWithFilters 
     >>= writePandoc fp 
 
 writePandoc :: (PandocMonad m, MonadIO m) => FilePath -> Pandoc -> TagsT m ()
@@ -110,8 +111,7 @@ mkFilePathPandoc fp =
   in plain $ maybe mempty (flip (link pFp) mempty) (filePathTitle pFp)
 
 extractAndAppendTags :: (Monad m) => FilePath -> Pandoc -> TagsT m Pandoc
-extractAndAppendTags fp = do
-  writer . fmap (buildTagMap fp) . appendTagLinks
+extractAndAppendTags fp = writer . fmap (buildTagMap fp) . appendTagLinks 
 
 buildTagMap :: FilePath -> Tags -> TagMap
 buildTagMap fp = TagMapM . M.fromList . fmap (\t -> (t, [fp]))
