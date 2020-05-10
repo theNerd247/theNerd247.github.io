@@ -11,6 +11,8 @@ import Control.Monad.Reader
 import Control.Monad.Writer.Lazy
 import Data.Foldable (traverse_)
 import Data.List (intersperse)
+import Data.Encoding (decodeString, encodeString)
+import Data.Encoding.UTF8 (UTF8(..))
 import Data.Map.Merge.Strict (merge, zipWithMatched, preserveMissing)
 import Data.Text (Text)
 import System.Environment
@@ -19,11 +21,12 @@ import Text.Pandoc hiding (Writer, readMarkdown)
 import Text.Pandoc.Builder
 import Text.Pandoc.Readers.Markdown
 import Text.Pandoc.Walk
+import qualified Data.List as L
 import qualified Data.Map as M
 import qualified Data.Text as T
 import qualified Data.Text.IO as T
 
-type Tag        = Text
+type Tag        = String
 type Tags       = [Tag]
 type TagMap     = TagMapM [FilePath]
 type TagsT m    = WriterT TagMap (ReaderT PandocState m)
@@ -66,22 +69,28 @@ initPandocState = PandocState
   }
 
 processTagFile :: (PandocMonad m, MonadIO m) => TagPandoc -> TagsT m ()
-processTagFile = uncurry writePandoc . (T.unpack *** walkWithFilters)
+processTagFile = uncurry writePandoc . (id *** walkWithFilters)
 
 processSourceFile :: (PandocMonad m, MonadIO m) => FilePath -> TagsT m ()
 processSourceFile fp = do
   ops <- asks readerOpts 
-  (liftIO $ T.readFile fp) 
+  (liftIO $ readFileUTF8 fp) 
     >>= readMarkdown ops 
-    >>= extractAndAppendTags fp  -- . walkWithFilters 
+    >>= extractAndAppendTags fp . walkWithFilters 
     >>= writePandoc fp 
+
+readFileUTF8 :: FilePath -> IO Text
+readFileUTF8 = fmap (T.pack . decodeString UTF8) . readFile 
 
 writePandoc :: (PandocMonad m, MonadIO m) => FilePath -> Pandoc -> TagsT m ()
 writePandoc sourceFp p = do
   fp <- mkOutPath sourceFp
   ops <- asks writerOpts 
   t <- writeHtml5String ops p 
-  liftIO $ T.writeFile fp t
+  liftIO $ writeFileUTF8 fp t
+
+writeFileUTF8 :: FilePath -> Text -> IO ()
+writeFileUTF8 fp = writeFile fp . encodeString UTF8 . T.unpack
 
 mkOutPath :: (Monad m) => FilePath -> TagsT m FilePath
 mkOutPath sourceFp = 
@@ -94,7 +103,10 @@ execTagsT :: (Monad m) => PandocState -> TagsT m a -> m [TagPandoc]
 execTagsT r = fmap snd . runTagsT r
 
 runTagsT :: (Monad m) => PandocState -> TagsT m a -> m (a, [TagPandoc])
-runTagsT r = fmap (fmap buildPandocsFromTagMap) . flip runReaderT r  . runWriterT
+runTagsT r = 
+  fmap (fmap buildPandocsFromTagMap) 
+  . flip runReaderT r 
+  . runWriterT
 
 buildPandocsFromTagMap :: TagMap -> [TagPandoc]
 buildPandocsFromTagMap = 
@@ -106,9 +118,7 @@ buildTagsPandoc tag =
   setTitle (str tag) . doc . bulletList . fmap mkFilePathPandoc
 
 mkFilePathPandoc :: FilePath -> Blocks
-mkFilePathPandoc fp = 
-  let pFp = T.pack fp
-  in plain $ maybe mempty (flip (link pFp) mempty) (filePathTitle pFp)
+mkFilePathPandoc fp = plain $ link fp (takeBaseName fp) mempty
 
 extractAndAppendTags :: (Monad m) => FilePath -> Pandoc -> TagsT m Pandoc
 extractAndAppendTags fp = writer . fmap (buildTagMap fp) . appendTagLinks 
@@ -147,10 +157,7 @@ getTags meta
 
 mdLinkToHtml :: Inline -> Inline
 mdLinkToHtml (Link attr@(tl, _, _) ((Str _):[]) (url, mouseover))
-  | (Just name) <- filePathTitle url 
-  , "tag-link" <- tl
-  = Link attr [(Str $ "(see " <> name <> ")")] ("./"<>name<>".html", mouseover)
+  | tl /= "tag-link" 
+  = let name = takeBaseName url 
+    in Link attr [(Str $ "(see " <> name <> ")")] ("./"<>name<>".html", mouseover)
 mdLinkToHtml x = x
-
-filePathTitle :: Text -> Maybe Text
-filePathTitle = T.stripPrefix "./" <=< T.stripSuffix ".md"
