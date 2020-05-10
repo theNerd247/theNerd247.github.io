@@ -6,21 +6,24 @@ module Main where
 
 import Control.Monad ((<=<))
 import Control.Monad.IO.Class
+import Control.Monad.Reader
 import Control.Monad.Writer.Lazy
 import Data.List (intersperse)
+import Data.Map.Merge.Strict (merge, zipWithMatched, preserveMissing)
 import Data.Text (Text)
+import System.FilePath.Posix
 import Text.Pandoc hiding (Writer)
 import Text.Pandoc.Builder
 import Text.Pandoc.Walk
-import Data.Map.Merge.Strict (merge, zipWithMatched, preserveMissing)
 import qualified Data.Map as M
 import qualified Data.Text as T
+import qualified Data.Text.IO as T
 
 type Tag        = Text
 type Tags       = [Tag]
 type TagMap     = TagMapM [FilePath]
-type TagsT      = WriterT TagMap
-type TagPandoc = (Tag, Pandoc)
+type TagsT m    = WriterT TagMap (ReaderT PandocState m)
+type TagPandoc  = (Tag, Pandoc)
 
 newtype TagMapM a = TagMapM { unTagMapM :: M.Map Tag a }
   deriving (Show, Functor, Foldable, Traversable)
@@ -37,6 +40,12 @@ instance (Semigroup v) => Semigroup (TagMapM v) where
 instance (Monoid v) => Monoid (TagMapM v) where
   mempty = TagMapM mempty
 
+data PandocState = PandocState
+  { readerOpts :: ReaderOptions
+  , writerOpts :: WriterOptions
+  , outDir     :: FilePath
+  } deriving Show
+
 main :: IO ()
 main = undefined
   -- traverse processSourceFile 
@@ -50,17 +59,29 @@ writeTagFile = undefined
   -- generate filepath from tag
   -- write pandoc to filepath
 
-processSourceFile :: (MonadIO m) => FilePath -> TagsT m ()
-processSourceFile fp = undefined
-  -- read file
-  -- walkWithFilters <$> (extractAndAppendTags fp)
-  -- write file
+processSourceFile :: (PandocMonad m, MonadIO m) => FilePath -> TagsT m ()
+processSourceFile fp = do
+  ops <- asks readerOpts 
+  (liftIO $ T.readFile fp) 
+    >>= readMarkdown ops 
+    >>= writePandoc fp . walkWithFilters 
+
+writePandoc :: (PandocMonad m, MonadIO m) => FilePath -> Pandoc -> TagsT m ()
+writePandoc sourceFp p = do
+  fp <- mkOutPath sourceFp
+  ops <- asks writerOpts 
+  t <- writeHtml5String ops p 
+  liftIO $ T.writeFile fp t
+
+mkOutPath :: (Monad m) => FilePath -> TagsT m FilePath
+mkOutPath sourceFp = 
+   (</> ((takeBaseName sourceFp) <.> "html")) <$> (asks outDir)
 
 walkWithFilters :: Pandoc -> Pandoc
 walkWithFilters = walk mdLinkToHtml
 
-runTagsT :: (Monad m) => TagsT m a -> m (a, [TagPandoc])
-runTagsT = fmap (fmap buildPandocsFromTagMap) . runWriterT
+runTagsT :: (Monad m) => PandocState -> TagsT m a -> m (a, [TagPandoc])
+runTagsT r = fmap (fmap buildPandocsFromTagMap) . flip runReaderT r  . runWriterT
 
 buildPandocsFromTagMap :: TagMap -> [TagPandoc]
 buildPandocsFromTagMap = 
