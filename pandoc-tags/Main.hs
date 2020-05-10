@@ -4,14 +4,16 @@
 
 module Main where
 
-import Control.Arrow (first)
+import Control.Arrow ((***))
 import Control.Monad ((<=<))
 import Control.Monad.IO.Class
 import Control.Monad.Reader
 import Control.Monad.Writer.Lazy
 import Data.List (intersperse)
+import Data.Foldable (traverse_)
 import Data.Map.Merge.Strict (merge, zipWithMatched, preserveMissing)
 import Data.Text (Text)
+import System.Environment
 import System.FilePath.Posix
 import Text.Pandoc hiding (Writer)
 import Text.Pandoc.Builder
@@ -48,21 +50,30 @@ data PandocState = PandocState
   } deriving Show
 
 main :: IO ()
-main = undefined
-  -- traverse processSourceFile 
-  -- runTagsT
-  -- fmap walkWithFilters
-  -- traverse_ writeTagFile
+main = runIO d >>= either (putStrLn . show) return
+  where
+    d = liftIO getArgs
+      >>= execTagsT initPandocState . traverse processSourceFile
+      >>= execTagsT initPandocState . traverse_ processTagFile 
+      >>  return ()
 
-writeTagFile :: (PandocMonad m, MonadIO m) => TagPandoc -> TagsT m ()
-writeTagFile = uncurry writePandoc . first T.unpack
+initPandocState :: PandocState
+initPandocState = PandocState
+  { readerOpts = def
+  , writerOpts = def
+  , outDir     = "./html"
+  }
+
+processTagFile :: (PandocMonad m, MonadIO m) => TagPandoc -> TagsT m ()
+processTagFile = uncurry writePandoc . (T.unpack *** walkWithFilters)
 
 processSourceFile :: (PandocMonad m, MonadIO m) => FilePath -> TagsT m ()
 processSourceFile fp = do
   ops <- asks readerOpts 
   (liftIO $ T.readFile fp) 
     >>= readMarkdown ops 
-    >>= writePandoc fp . walkWithFilters 
+    >>= extractAndAppendTags fp . walkWithFilters 
+    >>= writePandoc fp 
 
 writePandoc :: (PandocMonad m, MonadIO m) => FilePath -> Pandoc -> TagsT m ()
 writePandoc sourceFp p = do
@@ -77,6 +88,9 @@ mkOutPath sourceFp =
 
 walkWithFilters :: Pandoc -> Pandoc
 walkWithFilters = walk mdLinkToHtml
+
+execTagsT :: (Monad m) => PandocState -> TagsT m a -> m [TagPandoc]
+execTagsT r = fmap snd . runTagsT r
 
 runTagsT :: (Monad m) => PandocState -> TagsT m a -> m (a, [TagPandoc])
 runTagsT r = fmap (fmap buildPandocsFromTagMap) . flip runReaderT r  . runWriterT
