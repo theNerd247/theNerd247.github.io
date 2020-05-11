@@ -21,10 +21,29 @@ executable pandoc-tags
   main-is:             Main.hs
   -- other-modules:
   -- other-extensions:
+  ghc-options: -O2 -flate-specialise -fspecialise-aggressively -fplugin=Polysemy.Plugin
+  default-extensions:
+      DataKinds
+    , FlexibleContexts
+    , GADTs
+    , LambdaCase
+    , PolyKinds
+    , RankNTypes
+    , ScopedTypeVariables
+    , TypeApplications
+    , TypeOperators
+    , TypeFamilies
   build-depends:       
       base
-    , pandoc-types >= 1.20
-    , text
     , containers
+    , exceptions
+    , filepath
+    , pandoc
+    , pandoc-types
+    , path
+    , path-text-utf8
+    , polysemy
+    , polysemy-plugin
+    , text
   -- hs-source-dirs:
   default-language:    Haskell2010
