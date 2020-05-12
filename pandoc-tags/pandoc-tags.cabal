@@ -40,7 +40,6 @@ executable pandoc-tags
     , filepath
     , pandoc
     , pandoc-types
-    , path
     , path-text-utf8
     , polysemy
     , polysemy-plugin

@@ -1,31 +1,28 @@
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE TemplateHaskell #-}
 
--- {-# LANGUAGE ScopedTypeVariables #-}
--- {-# LANGUAGE FlexibleContexts #-}
--- {-# LANGUAGE DataKinds #-}
-
 module Types where
 
 import Polysemy
 import Text.Pandoc
+import Text.Pandoc.Builder
 import qualified Data.Map as M
 
---  data Zettel tm m a where
---    WritePandoc :: FilePath -> Pandoc -> Zettel tm m ()
---    ReadPandoc  :: FilePath -> Zettel tm m Pandoc
---    BuildTagMap :: [Tag] -> FilePath -> Zettel tm m tm
---    MakeOutPath :: Basename -> Zettel tm m FilePath
---  
---  type Basename = String
---  
---  type Tag = String
---  type Tags = [Tag]
+data Zettel m a where
+  WritePandoc :: BaseName -> Pandoc -> Zettel m ()
+  ReadPandoc  :: FilePath -> Zettel m Pandoc
+  AddTags     :: [Tag] -> BaseName -> Zettel m ()
+  GetTagInfos :: Zettel m [TagInfo]
+  MakeLink    :: BaseName -> LinkName -> Zettel m Inlines
 
--- makeSem ''Zettel
+type LinkName = String
+type BaseName = FilePath
 
-data Console m a where
-  WriteLine :: String -> Console m ()
-  ReadLine  :: Console m String
+type Tag = String
 
-makeSem ''Console
+data TagInfo = TagInfo
+  { tag         :: Tag
+  , taggedFiles :: [FilePath]
+  } deriving (Show)
+
+makeSem ''Zettel

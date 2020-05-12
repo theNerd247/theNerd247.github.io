@@ -6,42 +6,64 @@
 
 module Main where
 
-import Control.Arrow
 import Polysemy
+import Polysemy.Error
+import Polysemy.State
 import Tags
+import Types
+import Text.Pandoc
+import Text.Pandoc.Builder
+import Text.Pandoc.Readers
+import Text.Pandoc.Writers
 import Data.Foldable
 import Control.Monad
+import Control.Monad.IO.Class
+import Control.Arrow hiding (first)
+import Data.Bifunctor (first)
+import qualified FileIO as F
 import qualified Data.Map as M
 import qualified Data.Text as T
 
-data Zettel tm m a where
-  WritePandoc     :: Name -> Pandoc -> Zettel tm m ()
-  ReadPandoc      :: FilePath -> Zettel tm m Pandoc
-  BuildTagMap     :: [Tag] -> FilePath -> Zettel tm m tm
+main :: IO ()
+main = undefined
 
-type TagFps = (Tag, [FilePath])
+runZettel :: (MonadIO m, Members '[Error String, Embed m, State TagMap] r) => Sem (Zettel ': r) a -> Sem r a
+runZettel = interpret $ \case
+  WritePandoc b p -> runPandoc (writeHtml5String wOpts p) >>= F.writeFile b
+  ReadPandoc f    -> F.readFile f >>= runPandoc . readMarkdown rOpts
+  AddTags ts b    -> put $ buildTagMap ts b
+  GetTagInfos     -> gets fromTagMap
+  MakeLink b n    -> return $ link b n mempty
 
-makeSem ''Zettel
+rOpts :: ReaderOptions 
+rOpts = def { readerStandalone = True, readerExtensions = pandocExtensions } 
 
-buildTagFiles :: (tm ~ w TagFps, Member (Zettel tm) r,  Foldable t, Monoid tm, Foldable w) => t FilePath -> Sem r () 
+wOpts :: WriterOptions
+wOpts = def { writerSectionDivs = True }
+
+runPandoc :: Member (Error String) r => PandocPure a -> Sem r a
+runPandoc = fromEither . first show . runPure 
+
+buildTagFiles :: (Member (Zettel) r,  Foldable t) => t FilePath -> Sem r () 
 buildTagFiles = 
   foldMapM processMarkdownFile 
-  >>= traverse_ (uncurry processTagFile)
+  >=> const getTagInfos
+  >=> traverse_ processTagFile
 
 foldMapM :: (Monad m, Monoid w, Foldable t) => (a -> m w) -> t a -> m w
 foldMapM f = foldM (\acc x -> (acc <>) <$> (f x)) mempty
 
-processTagFile :: Member (Zettel tm) r => Tag -> [FilePath] -> Sem r () 
-processTagFile tag = writePandoc tag . customFilters . buildTagsPandoc tag
+processTagFile :: Member (Zettel) r => TagInfo -> Sem r () 
+processTagFile TagInfo{..} = 
+  buildTagsPandoc tag taggedFiles
+  >>= writePandoc tag . customFilters
 
-processMarkdownFile :: Member (Zettel tm) r => FilePath -> Sem r tm
+processMarkdownFile :: Member (Zettel) r => FilePath -> Sem r ()
 processMarkdownFile fp = do
   doc <- readPandoc fp 
-  let 
-    tags    = getTags doc
-    newDoc  = customFilters $ appendTags tags doc
-  writePandoc fp newDoc 
-  buildTagMap tags fp 
+  let tags = getTags doc
+  appendTags tags doc >>= writePandoc fp . customFilters 
+  addTags tags fp 
 
 customFilters :: Pandoc -> Pandoc
-customFilters = undefined
+customFilters = id

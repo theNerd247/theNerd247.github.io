@@ -1,25 +1,33 @@
 {-# LANGUAGE FlexibleContexts #-}
 
 module FileIO 
-( writeFileUTF8
-, readFileUTF8
+( readFile
+, writeFile
 ) where
 
+import Control.Monad
+import Control.Monad.IO.Class
+import Data.Bifunctor
 import Data.Text (Text)
-import Path
-import Path.Text.UTF8
-import Control.Monad.Catch
-import Control.Monad.Error.Class
-import Prelude hiding (writeFile, readFile)
+import Polysemy
+import Polysemy.Error
+import Prelude hiding (readFile, writeFile)
 import qualified Data.Text as T
+import qualified Path.Text.UTF8 as P
 
-type FPath = Path Rel File
+readFile :: (MonadIO m, Members '[Embed m, Error String] r) => FilePath -> Sem r Text
+readFile = withFp P.readFile 
 
-writeFileUTF8 :: FilePath -> Text -> IO ()
-writeFileUTF8 fp = writeFile fp . T.unpack
+writeFile :: (MonadIO m, Members '[Embed m, Error String] r) => FilePath -> Text -> Sem r ()
+writeFile fp t = withFp (flip P.writeFile t) fp
 
-readFileUTF8 :: FilePath -> IO Text
-readFileUTF8 = readFile 
+-- withFp :: (MonadIO m, Members '[Embed m, Error String] r) => (Path Rel File -> IO a) -> FilePath -> Sem r a
+withFp f =
+    fromEither
+  . first show
+  . P.parseRelFile
+  >=> embed
+  . liftIO
+  . f
 
-parseFilePath :: (MonadError PathException m) => FilePath -> m FPath
-parseFilePath = either throwError return . parseRelFile
+
