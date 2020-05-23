@@ -41,7 +41,7 @@ getSourceFiles = embed . liftIO $ getArgs
 
 runZettel :: (MonadIO m, Members '[Error String, Embed m, State TagMap] r) => Sem (Zettel ': r) a -> Sem r a
 runZettel = interpret $ \case
-  WritePandoc b p -> runPandoc (writeHtml5String wOpts p) >>= F.writeFile b
+  WritePandoc b p -> runPandoc (writeHtml5String wOpts p) >>= F.writeFile (b <> ".html")
   ReadPandoc f    -> F.readFile f >>= runPandoc . readMarkdown rOpts
   AddTags ts b    -> put $ buildTagMap ts b
   GetTagInfos     -> gets fromTagMap
@@ -56,11 +56,12 @@ wOpts = def { writerSectionDivs = True }
 runPandoc :: Member (Error String) r => PandocPure a -> Sem r a
 runPandoc = fromEither . first show . runPure 
 
-buildTagFiles :: (Member (Zettel) r,  Foldable t) => t FilePath -> Sem r () 
+buildTagFiles :: (Members '[Zettel, Input [FilePath]] r) => Sem r () 
 buildTagFiles = 
-  foldMapM processMarkdownFile 
-  >=> const getTagInfos
-  >=> traverse_ processTagFile
+      input
+  >>= processMarkdownFile 
+  >>= const getTagInfos
+  >>= traverse_ processTagFile
 
 foldMapM :: (Monad m, Monoid w, Foldable t) => (a -> m w) -> t a -> m w
 foldMapM f = foldM (\acc x -> (acc <>) <$> (f x)) mempty

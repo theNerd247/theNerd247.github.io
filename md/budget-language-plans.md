@@ -110,13 +110,57 @@ If I formulate budgets using `expect` then I know i've met that budget if the
 query returns a non-empty set of transactions. Here's an example:
 
   ```
-  foodBudetMay2020 = expect
-         isFoodExpense
-      && between 2020-03-01+1mo 
-      && totalAmount <= $350.00
 
+  data TermF typ a =
+      Var Text
+    | Lambda Text typ a 
+    | Lit Lit
+    | BuiltIn
+
+  data Lit = 
+      Currency Double
+    | ...
+    | Query 
+
+  data TypeF a =
+      TypeLit TypeLit
+    | TypeArrow a a
+
+  forall a. Maybe a : *
+  Maybe : * -> *
+
+  TypeApp [Arrow, TypeApp [List, Num], Num]
+
+  TypeLit =
+      List
+    | Maybe
+    | Num
+    | Arrow
+    | ...
+
+    foodBudetMay2020 = expect
+       isFoodExpense
+    && between 2020-03-01+1mo 
+    && totalAmount <= $350.00
+
+  Apps (<=) [BuiltIn totalAmount, Lit $350]
+
+  totalAmount : Query Currency
+  $n          : Query Currency
+  (<=)        : Query Currency -> Query Currency -> Query Bool
+  (&&)        : Query Bool -> Query Bool -> Query Bool
+
+  Because Query is Applicative we can change the target syntax to
+
+  totalAmount : Currency
+  $n          : Currency
+  (<=)        : Currency -> Currency -> Bool
+  (&&)        : Bool -> Bool -> Bool
+
+
+  isFoodExpense : Query
   isFoodExpense = expect
-    anyOf
+    anyOf : [Query] -> Query
       [ desc /Kroger/
       , desc /Publix/
       , desc /Costco/ && amount < $150
