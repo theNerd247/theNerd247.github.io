@@ -6,26 +6,38 @@
 
 module Main where
 
+import Control.Arrow hiding (first)
+import Control.Monad
+import Control.Monad.IO.Class
+import Data.Bifunctor (first)
+import Data.Foldable
 import Polysemy
 import Polysemy.Error
 import Polysemy.State
+import System.Environment (getArgs)
 import Tags
-import Types
 import Text.Pandoc
 import Text.Pandoc.Builder
 import Text.Pandoc.Readers
 import Text.Pandoc.Writers
-import Data.Foldable
-import Control.Monad
-import Control.Monad.IO.Class
-import Control.Arrow hiding (first)
-import Data.Bifunctor (first)
-import qualified FileIO as F
+import Types
 import qualified Data.Map as M
 import qualified Data.Text as T
+import qualified FileIO as F
 
 main :: IO ()
 main = 
+  runM
+  . handleErrors
+  . runError
+  . evalState mempty
+  . (getSourceFiles >>= buildTagFiles)
+
+handleErrors :: (MonadIO m, Member (Embed m) r) => Sem (Error String ': r) () -> Sem r ()
+handleErrors = runError >=> either (embed . liftIO . putStrLn) return
+
+getSourceFiles :: (MonadIO m, Member (Embed m) r) => Sem r [FilePath]
+getSourceFiles = embed . liftIO $ getArgs
 
 runZettel :: (MonadIO m, Members '[Error String, Embed m, State TagMap] r) => Sem (Zettel ': r) a -> Sem r a
 runZettel = interpret $ \case
