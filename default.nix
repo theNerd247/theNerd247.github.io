@@ -5,15 +5,14 @@ let
       });
     };
 
-  buildHtml = path: 
-    pkgs.conix.build.pandoc "html" 
-      (builtins.replaceStrings [".nix"] [""] (baseNameOf path))
-      [(pkgs.conix.runModule (import path))];
+  buildHtml = name: page: pkgs.conix.build.pandoc "html" name [ page ];
 in
   pkgs.symlinkJoin 
     { name = "html";
-      paths = builtins.map buildHtml
-        [
-          ./contents/home.nix
-        ];
+      paths = pkgs.lib.attrsets.mapAttrsToList buildHtml
+        (pkgs.conix.buildPages
+          [ (import ./contents/why-fp-eaql.nix)
+            (import ./contents/index.nix)
+          ]
+        ).posts;
     }

@@ -1,6 +1,6 @@
 postMeta: content: conix:
 conix.texts [ "posts" postMeta.name ]
-  (content 
+  ((content conix)
     ++ [(conix.hidden (conix.setValue [ "meta" ] postMeta))]
   )
 
