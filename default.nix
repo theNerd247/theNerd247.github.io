@@ -5,10 +5,15 @@ let
       });
     };
 
-  modules = [
-    (import ./contents/home.nix)
-  ];
-
-  toplevelPage = pkgs.conix.buildPages modules;
+  buildHtml = path: 
+    pkgs.conix.build.pandoc "html" 
+      (builtins.replaceStrings [".nix"] [""] (baseNameOf path))
+      [(pkgs.conix.runModule (import path))];
 in
-  pkgs.conix.build.pandoc "html" "index" [ toplevelPage ]
+  pkgs.symlinkJoin 
+    { name = "html";
+      paths = builtins.map buildHtml
+        [
+          ./contents/home.nix
+        ];
+    }
