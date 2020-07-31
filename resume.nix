@@ -6,7 +6,7 @@ mainPortfolio = {
   email         = "noah.harvey247@gmail.com";
   github        = "github.com/theNerd247";
   website       = "linkedin.com/noahharvey";
-  experiences   = [ delanteGroup gtri genAssembly ];
+  experiences   = [ delanteGroup gtri genAssembly awakeSecurity ];
   languages = 
       [ linux
         haskell
@@ -186,6 +186,17 @@ git = {
     yearsExperience    = 8;
     languageCategories = [];
 };
+
+awakeSecurity = {
+  instituteName = "Awake Security";
+  website       = "https://awakesecurity.com/";
+  position      = "Software Engineer Intern";
+  period        = { start = 2020; end = 2020; };
+  duties        =
+      [ "TBD"
+      ];
+};
+
 
 genAssembly = {
   instituteName = "General Assembly";
