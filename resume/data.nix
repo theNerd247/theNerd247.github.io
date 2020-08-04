@@ -1,5 +1,5 @@
 rec {
-mainPortfolio = {
+portfolio = {
   personalTitle = "Software Engineer";
   firstName     = "Noah";
   lastName      = "Harvey";

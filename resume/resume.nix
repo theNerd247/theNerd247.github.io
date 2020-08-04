@@ -1,26 +1,94 @@
 conix: 
 let
   at = p: conix.at ([ "portfolio"] ++ p);
-  textIf = p: f: t: 
-    if f then conix.text p t else conix.emptyModule;
+  for = path: xs: f: conix.texts [] (builtins.map f xs);
+  sortExperiences = builtins.sort (a: b: a.period.start > b.period.start);
+  showPeriod = period: "${builtins.toString period.start} - ${builtins.toString (period.end or "present")}";
+  showAuthors = authors:
+    let
+      prim = builtins.head authors;
+    in
+      "${prim.lastName}, ${prim.firstName}${if builtins.length authors > 1 then " et al." else ""}";
 in
 
 conix.texts [] [
-"# "(at ["firstName"])" " (at ["lastName"])
+"# "(at ["firstName"])" "(at ["lastName"])''
+
+## Experience
+''
 
 (conix.moduleUsing ["experiences"] [ "portfolio" "experiences"] 
-  (es: conix.texts [] (builtins.map 
-    (e: conix.texts [e.instituteName] [
-      ''
+  (es: for [] (sortExperiences es)
+    (experience: conix.texts [experience.instituteName] [
+''
 
-        # ${e.position}
-        * ${e.instituteName}
-        * ${builtins.toString e.period.start} - ${builtins.toString (e.period.end or "present")}
+### ${experience.position}
 
-      ''
-      (conix.texts ["duties"] (builtins.map (d: "    * ${d}\n") e.duties))
+  * ${experience.instituteName}
+  * ${showPeriod experience.period}
+
+''
+      (for ["duties"] experience.duties (d: 
+
+"    * ${d}\n"
+
+      ))
     ])
-    es)
+  )
+)''
+
+## Relevant Projects
+
+''
+(conix.moduleUsing ["projects"] ["portfolio" "projects"]
+  (projects: for [] projects
+    (project: conix.texts [project.instituteName] [
+''
+#### ${project.instituteName}
+  * ''
+      (for [project.instituteName] project.projectLanguages
+        (language: conix.text [] "${language.languageName} ")
+      )
+''
+
+
+${project.synopsis}
+
+''
+    ])
   )
 )
+''
+
+## Education
+
+''
+(conix.moduleUsing ["education"] ["portfolio" "schools"]
+  (schools: for [] schools
+    (school: conix.text [school.instituteName]
+''
+
+### ${school.degree}
+
+  * ${school.instituteName}
+  * ${showPeriod school.period}
+''
+    )
+  )
+)
+''
+
+## Publications
+
+''
+(conix.moduleUsing ["publications"] ["portfolio" "publications"]
+  (publications: for [] publications
+    (publication: conix.text []
+''
+  * ${showAuthors publication.publicationAuthors} _${publication.publicationTitle}_ ${builtins.toString publication.publicationYear}, ${publication.publisher}
+''
+    )
+  )
+)
+
 ]

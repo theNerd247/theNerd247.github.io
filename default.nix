@@ -1,9 +1,5 @@
 let 
-  pkgs = import <nixpkgs> { 
-    overlays = import (builtins.fetchGit
-      { url = "https://github.com/theNerd247/conix.git";
-      });
-    };
+  pkgs = import ./pkgs.nix;
 
   buildHtml = name: page: pkgs.conix.build.pandoc "html" name [ page ];
 
