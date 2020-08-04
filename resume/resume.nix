@@ -8,22 +8,19 @@ in
 conix.texts [] [
 "# "(at ["firstName"])" " (at ["lastName"])
 
-(conix.bindModule 
-  (conix.foldMapModules
-    (experience: conix.texts [experience.instituteName] [
-      ''* ${experience.position}
-        * ${experience.instituteName}
-        * ''
-      (conix.text [ "period" "start" ] experience.period.start)" - "
-      (conix.text ["period" "end" ] 
-        (experience.period.end or "present")
-      )
-      (conix.foldMapModulesIx 
-        (ix: duty: conix.text [ "duty${ix}" ] "  * ${duty}") 
-        experience.duties
-      )
+(conix.moduleUsing ["experiences"] [ "portfolio" "experiences"] 
+  (es: conix.texts [] (builtins.map 
+    (e: conix.texts [e.instituteName] [
+      ''
+
+        # ${e.position}
+        * ${e.instituteName}
+        * ${builtins.toString e.period.start} - ${builtins.toString (e.period.end or "present")}
+
+      ''
+      (conix.texts ["duties"] (builtins.map (d: "    * ${d}\n") e.duties))
     ])
+    es)
   )
-  (at ["experiences"])
 )
 ]
