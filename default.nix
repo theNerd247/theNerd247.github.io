@@ -21,7 +21,7 @@ let
         ]
       ).posts;
 in
-pkgs.runCommand "zettelkasten" {passAsFile = [ "paths" ]; inherit paths;}
+pkgs.runCommand "zettelkasten" { passAsFile = [ "paths" ]; inherit paths;}
   
   ''
   mkdir -p $out
