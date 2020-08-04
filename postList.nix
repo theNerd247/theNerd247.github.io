@@ -4,7 +4,7 @@ conix:
     if n != "index"
     then conix.bindModule 
       (p: 
-        conix.pureModule "* [${p.meta.title}](./${p.meta.name}.html)"
+        conix.pureModule "* [${p.meta.title}](./${p.meta.name}.html)\n"
       ) (conix.at [ "posts" n])
     else conix.emptyModule
   ) 

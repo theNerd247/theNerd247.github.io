@@ -1,10 +1,9 @@
 conix: conix.texts [ "posts" "index" ] [
-''# Noah Harvey Zettelkasten
+''# Zettelkasten
 
 # Posts
 
 ''((import ../postList.nix) conix)''
-
 
 ---
 
