@@ -2,8 +2,15 @@ let
 
   pkgs = import ../pkgs.nix;
 
+  resume = import ./resume.nix;
+
+  data = conix: conix.pagesModule (import ./data.nix);
+
   toplevel = conix: conix.mergeModules
-    (conix.pagesModule (import ./data.nix))
-    ((import ./resume.nix) conix);
+    (data conix)
+    (resume conix);
 in
-  pkgs.conix.build.htmlFile "resume" toplevel
+  { html = pkgs.conix.build.htmlFile "resume" toplevel;
+    inherit resume;
+    inherit data;
+  }
