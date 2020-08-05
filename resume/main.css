@@ -3,6 +3,8 @@ body{
   flex-flow: column nowrap;
   font-size: 10pt;
   line-height: 1.1em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
 }
 
 h1 {
@@ -79,4 +81,10 @@ ul {
 
 .subsection > h4 {
   margin-top: 0.75em;
+}
+
+.contact {
+  font-family: 'Geneva', sans-serif;
+  text-align: center;
+  padding-bottom: 1em;
 }

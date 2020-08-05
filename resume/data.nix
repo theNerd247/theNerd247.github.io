@@ -5,7 +5,7 @@ portfolio = {
   lastName      = "Harvey";
   email         = "noah.harvey247@gmail.com";
   github        = "github.com/theNerd247";
-  website       = "linkedin.com/noahharvey";
+  linkedin      = "linkedin.com/in/noahharvey";
   experiences   = [ delanteGroup genAssembly awakeSecurity ];
   languages = 
       [ linux

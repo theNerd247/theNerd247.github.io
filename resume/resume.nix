@@ -54,6 +54,11 @@ in
 conix.texts [] [
 "# "(at ["firstName"])" "(at ["lastName"])''
 
+<section class="contact">
+''(conix.at ["portfolio" "email"])" - "(conix.at ["portfolio" "linkedin"])" - "(conix.at ["portfolio" "github"])
+''
+</section>
+
 ''
 (section "Experience" ["portfolio" "experiences"] sortExperiences "experience" (experience: [
 
