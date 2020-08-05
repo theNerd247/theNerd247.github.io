@@ -12,9 +12,8 @@ let
 
   html = pkgs.conix.build.pandoc "html" "--css ./latex.css --css ./main.css" "resume" [ (pkgs.conix.runModule toplevel)];
 
-  css = [ ./main.css ./latex.css ];
 in
-  { site = (import ../copyJoin.nix) pkgs "resume" ([ html ] ++ css);
+  { site = (import ../copyJoin.nix) pkgs "resume" [ html ./static ];
     inherit resume;
     inherit data;
   }
