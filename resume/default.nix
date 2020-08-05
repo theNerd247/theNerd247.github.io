@@ -9,8 +9,12 @@ let
   toplevel = conix: conix.mergeModules
     (data conix)
     (resume conix);
+
+  html = pkgs.conix.build.pandoc "html" "--css ./latex.css --css ./main.css" "resume" [ (pkgs.conix.runModule toplevel)];
+
+  css = [ ./main.css ./latex.css ];
 in
-  { html = pkgs.conix.build.htmlFile "resume" toplevel;
+  { site = (import ../copyJoin.nix) pkgs "resume" ([ html ] ++ css);
     inherit resume;
     inherit data;
   }

@@ -1,7 +1,7 @@
 let 
   pkgs = import ./pkgs.nix;
 
-  buildHtml = name: page: pkgs.conix.build.pandoc "html" name [ page ];
+  buildHtml = name: page: pkgs.conix.build.pandoc "html" "" name [ page ];
 
   resume =
     (import ./newPost.nix) 
@@ -21,11 +21,4 @@ let
         ]
       ).posts;
 in
-pkgs.runCommand "zettelkasten" { passAsFile = [ "paths" ]; inherit paths;}
-  
-  ''
-  mkdir -p $out
-  for i in $(cat $pathsPath); do
-    cp $i/*.html $out/
-  done
-  ''
+  (import ./copyJoin.nix) pkgs "zettelkasten" paths
