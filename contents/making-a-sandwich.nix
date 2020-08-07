@@ -1,6 +1,6 @@
 (import ../newPost.nix)
   { name = "making-a-sandwich"; 
-    tags = ["functional-programming" "philosophy"];
+    tags = [ "draft" "functional-programming" "philosophy" ];
     title = "What if I didn't Give you a Sandwich";
   } (conix: [
 "# "(conix.at ["posts" "making-a-sandwich" "meta" "title"])

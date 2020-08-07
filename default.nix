@@ -14,11 +14,15 @@ let
   paths = 
     pkgs.lib.attrsets.mapAttrsToList buildHtml
       (pkgs.conix.buildPages
-        [ (import ./contents/why-fp-eaql.nix)
-          ((import ./resume).data)
+        [ 
+          (import ./contents/making-a-sandwich.nix)
           (import ./contents/no-vars-js.nix)
-          resume
+          (import ./contents/phd-research.nix)
+          (import ./contents/what-is-programming.nix)
+          (import ./contents/why-fp-eaql.nix)
           (import ./contents/index.nix)
+          ((import ./resume).data)
+          resume
         ]
       ).posts;
 in

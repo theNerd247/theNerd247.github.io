@@ -1,7 +1,7 @@
-(import ./newPost.nix)
-  { tags = [ "phd" ];
+(import ../newPost.nix)
+  { tags = [ "draft" "phd" ];
     name = "phd-research";
-    title = "PhD Research"
+    title = "PhD Research";
   }
 (conix: [
 '' ## Interests
@@ -29,6 +29,6 @@
 * GRE Scores
 * CV
 * Statement of purpose (1-2 pgs, research interests, purpose of PhD)
-
+''
   
 ])

@@ -1,6 +1,6 @@
 (import ../newPost.nix)
   { name = "what-is-programming"; 
-    tags = ["functional-programming" "philosophy"];
+    tags = [ "draft" "functional-programming" "philosophy"];
     title = "What is Programming?";
   } (conix: [
 "# "(conix.at ["posts" "what-is-programming" "meta" "title"])

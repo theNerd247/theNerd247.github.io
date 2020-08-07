@@ -1,6 +1,6 @@
 (import ../newPost.nix) 
   { name = "no-vars-js";
-    tags = [ "javascript" "variables" ];
+    tags = [ "draft" "javascript" "variables"];
     title = "JavaScript with No ...Variables?";
   }
 (conix: [

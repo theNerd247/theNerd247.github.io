@@ -3,7 +3,11 @@ conix: conix.texts [ "posts" "index" ] [
 
 # Posts
 
-''((import ../postList.nix) conix)''
+''((import ../postList.nix) true conix)''
+
+# Drafts 
+
+''((import ../postList.nix) false conix)''
 
 ---
 
