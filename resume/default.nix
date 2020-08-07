@@ -14,6 +14,5 @@ let
 
 in
   { site = (import ../copyJoin.nix) pkgs "resume" [ html ./static ];
-    inherit resume;
-    inherit data;
+    resume = toplevel;
   }
