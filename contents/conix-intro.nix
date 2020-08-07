@@ -3,15 +3,20 @@
   tags = ["draft" "conix"];
   title = "Comonadic Content in Nix";
 }
-(conix: ["# "(conix.at [ "posts" "conix-intro" "meta" "title"])
-''
+(conix: ["# "(conix.at [ "posts" "conix-intro" "meta" "title"])''
+
 ## We Need a Better Authoring Tool
 
 ## Readmes That Break
 
-## Including Source Code - That Works!
+## Scrap Your Cache - We Have Nix Store
 
 ## All The Functional Power
+
+## My Blog Setup
+
+## Including Source Code - That Works!
+
 
 ''
 ])

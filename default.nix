@@ -20,6 +20,7 @@ let
           (import ./contents/phd-research.nix)
           (import ./contents/what-is-programming.nix)
           (import ./contents/why-fp-eaql.nix)
+          (import ./contents/conix-intro.nix)
           (import ./contents/index.nix)
           ((import ./resume).data)
           resume
