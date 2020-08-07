@@ -6,9 +6,8 @@
 "# "(conix.at ["posts" "why-fp-eaql" "meta" "title"])
 ''
 
-Programming is the process of taking a solution from the mind of the
-programmer and encoding that solution into a machine so that the same
-instances of a problem can be automatically solved. 
+A DSL is a very specific language that aims to make encoding solutions to a
+certain problem domain more intuitive. 
 
 A person programs when they take any solution and "write it down". For
 example a cook programs a cake by writing the recipe down. Recipes are

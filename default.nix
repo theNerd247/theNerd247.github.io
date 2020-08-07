@@ -16,6 +16,7 @@ let
       (pkgs.conix.buildPages
         [ (import ./contents/why-fp-eaql.nix)
           ((import ./resume).data)
+          (import ./contents/no-vars-js.nix)
           resume
           (import ./contents/index.nix)
         ]

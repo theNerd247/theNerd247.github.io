@@ -13,7 +13,7 @@ let
 in
 conix.texts [ name ] [
 
-(conix.hidden (conix.setVal [ "code" ] jsCode))
+(conix.hidden (conix.setValue [ "code" ] jsCode))
 
 ''```javascript
 ${jsCode}
