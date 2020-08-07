@@ -43,7 +43,7 @@ console.log(modifyPair(mkPair (2) (3)))
 ''
 
 Take a look at: 
-'' ((import ../codeBlock.nix) [ "posts" "no-vars-js" "buildHouse-functional" "code"] 1 2 conix)''
+'' ((import ../codeBlock.nix) [ "posts" "no-vars-js" "buildHouse-functional" "code"] "javascript" 1 2 conix)''
 
 Notice how we're creating a really thin wrapper around accessing a value from an object.
 

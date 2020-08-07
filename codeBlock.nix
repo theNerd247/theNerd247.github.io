@@ -1,4 +1,4 @@
-path: start: end: conix:
+path: lang: start: end: conix:
 
 let
   pkgs = import ./pkgs.nix;
@@ -35,7 +35,7 @@ in
   conix.mapVal 
     (t: 
       ''
-      ```
+      ```${lang}
       ${extractLines t}
       ```
       ''
