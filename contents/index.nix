@@ -1,8 +1,5 @@
 conix: conix.texts [ "posts" "index" ] [
-''# Zettelkasten
-
-''(conix.textOf [ "resume" ])''
-
+''# Thoughts of a Functional Programmer
 
 # Posts
 
@@ -11,6 +8,10 @@ conix: conix.texts [ "posts" "index" ] [
 # Drafts 
 
 ''((import ../postList.nix) false conix)''
+
+# About
+
+* [Resume](./resume.html)
 
 ---
 

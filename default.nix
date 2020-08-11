@@ -1,10 +1,7 @@
 let 
   pkgs = import ./pkgs.nix;
 
-  buildHtml = name: page: pkgs.conix.build.pandoc "html" "" name [ page ];
-
-  resumeLink = conix:
-    conix.text [ "resume" ] "[Resume](./resume.html)";
+  buildHtml = name: page: pkgs.conix.build.pandoc "html" "--css ./zettelkasten.css" name [ page ];
 
   posts = 
     pkgs.lib.attrsets.mapAttrsToList buildHtml
@@ -17,10 +14,9 @@ let
           (import ./contents/why-fp-eaql.nix)
           (import ./contents/conix-intro.nix)
           (import ./contents/index.nix)
-          resumeLink
         ]
       ).posts;
 
-  paths = posts ++ [ (import ./resume).site ];
+  paths = posts ++ [ (import ./resume).site ] ++ [ ./static ];
 in
   (import ./copyJoin.nix) pkgs "zettelkasten" paths

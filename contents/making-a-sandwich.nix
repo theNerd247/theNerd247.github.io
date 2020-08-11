@@ -3,8 +3,8 @@
     tags = [ "draft" "functional-programming" "philosophy" ];
     title = "What if I didn't Give you a Sandwich";
   } (conix: [
-"# "(conix.at ["posts" "making-a-sandwich" "meta" "title"])
-''
+"# "(conix.at ["posts" "making-a-sandwich" "meta" "title"])''
+
 Here's a question:
 
 > If I give you the recipe for making a sandwich and all of the recipe's
@@ -40,4 +40,5 @@ The Curry-Howard isomorphism
 
 ## P
 
+[^1]: By given I mean: will we end up with a sandwhich after some period of time?
 ''])

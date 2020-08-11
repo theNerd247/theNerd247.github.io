@@ -199,9 +199,9 @@ awakeSecurity = {
   position      = "Software Engineer Intern";
   period        = { start = 2020; end = 2020; };
   duties        =
-    [ "Authored the optparse-repline open source library to aid in refactoring codebase."
-      "Authored the conix open source project to make programmable and stable documentation."
-      "Designed tutorials for an internally developed functional programming language."
+    [ "Authored the optparse-repline open source library to aid in refactoring codebase and eliminate production bugs."
+      "Authored the conix open source project to enhance code documentation authoring."
+      "Designed tutorials for the EAQL functional programming language."
     ];
 };
 
