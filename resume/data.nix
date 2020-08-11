@@ -32,7 +32,7 @@ portfolio = {
         lambda
         scheduler 
         lessonsNixStore
-        resumePortfolio
+        conix
       ];
 
   publications = 
@@ -64,6 +64,12 @@ lambda = {
   projectLanguages = [ haskell ];
 };
 
+conix = {
+  instituteName = "conix";
+  website = "https://github.com/theNerd247/conix";
+  synopsis = "Comonadic content authoring library in nix";
+  projectLanguages = [ nix ];
+};
 
 ariaRacer = {
   instituteName = "aria-racer";
@@ -193,8 +199,10 @@ awakeSecurity = {
   position      = "Software Engineer Intern";
   period        = { start = 2020; end = 2020; };
   duties        =
-      [ "TBD"
-      ];
+    [ "Authored the optparse-repline open source library to aid in refactoring codebase."
+      "Authored the conix open source project to make programmable and stable documentation."
+      "Designed tutorials for an internally developed functional programming language."
+    ];
 };
 
 
@@ -204,9 +212,9 @@ genAssembly = {
   position      = "Lead Instructor";
   period        = { start = 2018; end = 2019; };
   duties        =
-      [ "Lead 60 career-changing students in three 12-week immersive courses using JavaScript Python MongoDB and SQL with a 90% job placement rate "
-       "Designed and implemented Git architecture for managing course curriculum which eliminiated work duplication and increased clear team communication"
-       "Designed prototyped and built course scheduling system using functional programming to decrease course planning time from 1 week to half a day"
+      [ "Lead 60 career-changing students in three 12-week immersive courses using JavaScript Python MongoDB and SQL with a 90% job placement rate."
+       "Designed and implemented Git architecture for managing course curriculum which eliminiated work duplication and increased clear team communication."
+       "Designed prototyped and built course scheduling system using functional programming to decrease course planning time from 1 week to half a day."
       ];
 };
 
@@ -216,9 +224,9 @@ ksuTA = {
   position      =  "Teaching Assistant";
   period        = { start = 2016; end = 2017; };
   duties        =
-      [ "Developed a web server in Haskell to manage a robot race competition"
-       "Used embedded C programming to design tools for students"
-       "Lead and instructed embedded software and robotics lab"
+      [ "Developed a web server in Haskell to manage a robot race competition."
+       "Used embedded C programming to design tools for students."
+       "Lead and instructed embedded software and robotics lab."
       ];
 };
 
@@ -228,13 +236,13 @@ gtri = {
   position      = "Robotics Software Engineer Co-Op";
   period        = { start = 2015; end = 2016; };
   duties        =
-      [ "Contributed to the completion of an automated poultry de-boning project designed to increase factory processing speed by 80% "
-       "Designed graphical tool using C++ to enable research scientists to easily capture and process data relevant to projects "
+      [ "Contributed to the completion of an automated poultry de-boning project designed to increase factory processing speed by 80%."
+       "Designed graphical tool using C++ to enable research scientists to easily capture and process data relevant to projects."
       ];
   otherSkills =
-      [ "Contributed to on going research projects within a week of on-boarding using image processing algorithms in C++"
-       "Contributed to the completion of a 5 year prototyping project for top industry client in poultry processing"
-       "Introduced the Robotic Operating System framework to new projects to increase modularity and increase"
+      [ "Contributed to on going research projects within a week of on-boarding using image processing algorithms in C++."
+       "Contributed to the completion of a 5 year prototyping project for top industry client in poultry processing."
+       "Introduced the Robotic Operating System framework to new projects to increase modularity and increase."
       ];
 };
 
@@ -244,9 +252,9 @@ uniq = {
   position      = "Mechatronics Engineer Intern";
   period        = { start = 2014; end = 2014; };
   duties        =
-      [ "Designed embedded software for small engine control systems"
-       "Designed and prototyped digital microcontroller circuits"
-       "Aided in brainstorming new company products"
+      [ "Designed embedded software for small engine control systems."
+        "Designed and prototyped digital microcontroller circuits."
+        "Aided in brainstorming new company products."
       ];
 };
 
@@ -256,9 +264,9 @@ delanteGroup = {
   position      = "Full Stack Software Engineer";
   period        = { start = 2017; end = 2018; };
   duties        =
-      [ "Designed handwriting to text automation process using AWS MTURK to decrease operation costs from approximately 1k per month to approximately $100 per month"
-       "Wrote a C# to TypeScript transpiler to increase cross language type-safety between frontend and backend code"
-       "Increased client facing productivity by ensuring minimal downtime of MongoDB servers"
+      [ "Designed handwriting to text automation process using AWS MTURK to decrease operation costs from approximately 1k per month to approximately $100 per month."
+        "Wrote a C# to TypeScript transpiler to increase cross language type-safety between frontend and backend code."
+        "Increased client facing productivity by ensuring minimal downtime of MongoDB servers."
       ];
 };
 
