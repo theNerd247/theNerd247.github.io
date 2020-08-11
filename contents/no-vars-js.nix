@@ -7,7 +7,7 @@
 "# "(conix.at [ "posts" "no-vars-js" "meta" "title" ])'' 
 
 Let's have some fun. Take the following javascript code and re-write it such
-that there are internally declared variables.
+that there are no `const` keywords used.
 
 ''((import ../runJs.nix) "buildHouse-imperative" true conix 
 ''
