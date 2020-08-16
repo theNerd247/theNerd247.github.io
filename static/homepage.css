@@ -1,0 +1,7 @@
+.about > ul {
+  text-align: center;
+}
+
+.about > ul > li {
+  display: inline;
+}

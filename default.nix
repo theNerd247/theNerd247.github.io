@@ -1,7 +1,12 @@
 let 
   pkgs = import ./pkgs.nix;
 
-  buildHtml = name: page: pkgs.conix.build.pandoc "html" "--css ./zettelkasten.css" name [ page ];
+  buildHtml = name: page: pkgs.conix.build.pandoc 
+  "html" 
+  "--css ./zettelkasten.css --css ./homepage.css" 
+  name [ page ];
+
+  resumeData = x: x.pagesModule (import ./resume/data.nix);
 
   posts = 
     pkgs.lib.attrsets.mapAttrsToList buildHtml
@@ -9,11 +14,11 @@ let
         [ 
           (import ./contents/making-a-sandwich.nix)
           (import ./contents/no-vars-js.nix)
-          (import ./contents/phd-research.nix)
           (import ./contents/what-is-programming.nix)
           (import ./contents/why-fp-eaql.nix)
           (import ./contents/conix-intro.nix)
           (import ./contents/index.nix)
+          resumeData
         ]
       ).posts;
 

@@ -1,6 +1,12 @@
 conix: conix.texts [ "posts" "index" ] [
 ''# Thoughts of a Functional Programmer
 
+<div class="about" >
+* [GitHub](''(conix.at [ "portfolio" "gitHubLink"]) '')
+* [LinkedIn](''(conix.at [ "portfolio" "linkedInLink"]) '')
+* [Resume](./resume.html)
+</div>
+
 # Posts
 
 ''((import ../postList.nix) true conix)''
@@ -8,10 +14,6 @@ conix: conix.texts [ "posts" "index" ] [
 # Drafts 
 
 ''((import ../postList.nix) false conix)''
-
-# About
-
-* [Resume](./resume.html)
 
 ---
 
