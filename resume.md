@@ -6,7 +6,7 @@ noah.harvey247@gmail.com - linkedin.com/in/noahharvey - github.com/theNerd247</s
 ### Experience
 <div class="section-contents">
 <div class="subsection">
-#### Software Engineer Intern
+#### Functional Programmer Intern
 <div class="aligned">
 <span class="left-align">Awake Security</span>
 <span class="right-align">
@@ -15,9 +15,11 @@ noah.harvey247@gmail.com - linkedin.com/in/noahharvey - github.com/theNerd247</s
  </div>
 
  <div class="content">
- * Authored the optparse-repline open source library to aid in refactoring codebase and eliminate production bugs.
-* Authored the conix open source project to enhance code documentation authoring.
-* Designed tutorials for the EAQL functional programming language.
+ * Invented Conix - an open source project for creating bug free documentation written in Nix.
+* Created the optparse-repline open source Haskell library to aid in
+      refactoring a large codebase and eliminate production bugs as well as
+      stablize a user interface.
+* Designed tutorials for EAQL - a new programming language invented by Awake Security.
  </div>
 </div>
 <div class="subsection">
@@ -58,6 +60,32 @@ noah.harvey247@gmail.com - linkedin.com/in/noahharvey - github.com/theNerd247</s
 <div class="subsection">
 
 <div class="aligned">
+<span class="left-align">conix</span>
+<span class="right-align">
+Nix
+ </span>
+ </div>
+
+ <div class="content">
+ A declarative documentation library written in nix.
+ </div>
+</div>
+<div class="subsection">
+
+<div class="aligned">
+<span class="left-align">optparse-repline</span>
+<span class="right-align">
+Haskell
+ </span>
+ </div>
+
+ <div class="content">
+ An Haskell library for creating REPLs using optparse-applicative
+ </div>
+</div>
+<div class="subsection">
+
+<div class="aligned">
 <span class="left-align">breeze-check</span>
 <span class="right-align">
 Haskell Elm Nix
@@ -78,7 +106,7 @@ Haskell Bash Docker
  </div>
 
  <div class="content">
- a racing server with a webserver interface
+ A robot racing server with a web-based interface
  </div>
 </div>
 <div class="subsection">
@@ -91,7 +119,7 @@ Haskell
  </div>
 
  <div class="content">
- a tiny lambda calculus interpreter
+ A tiny lambda calculus interpreter
  </div>
 </div>
 <div class="subsection">
@@ -104,33 +132,7 @@ JavaScript
  </div>
 
  <div class="content">
- An automated scheduling system written in FP style JavaScript
- </div>
-</div>
-<div class="subsection">
-
-<div class="aligned">
-<span class="left-align">lessons-nix</span>
-<span class="right-align">
-Nix
- </span>
- </div>
-
- <div class="content">
- A nix build system for managing teaching content
- </div>
-</div>
-<div class="subsection">
-
-<div class="aligned">
-<span class="left-align">conix</span>
-<span class="right-align">
-Nix
- </span>
- </div>
-
- <div class="content">
- Comonadic content authoring library in nix
+ An automated scheduling system for teachers.
  </div>
 </div>
 </div>
