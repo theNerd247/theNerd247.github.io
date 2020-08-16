@@ -1,5 +1,11 @@
 # Thoughts of a Functional Programmer
 
+<div class="about" >
+* [GitHub](https://github.com/theNerd247)
+* [LinkedIn](https://linkedin.com/in/noahharvey)
+* [Resume](./resume.html)
+</div>
+
 # Posts
 
 
@@ -8,13 +14,8 @@
 * [Comonadic Content in Nix](./conix-intro.html)
 * [What if I didn't Give you a Sandwich](./making-a-sandwich.html)
 * [JavaScript with No ...Variables?](./no-vars-js.html)
-* [PhD Research](./phd-research.html)
 * [What is Programming?](./what-is-programming.html)
 * [Benefits of Functional Programming With EAQL](./why-fp-eaql.html)
-
-# About
-
-* [Resume](./resume.html)
 
 ---
 
