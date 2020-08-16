@@ -27,13 +27,13 @@ portfolio = {
       ];
 
   projects =
-      [ breezeCheck
-        ariaRacer
-        lambda
-        scheduler 
-        lessonsNixStore
-        conix
-      ];
+    [ conix
+      optparseRepline
+      breezeCheck
+      ariaRacer
+      lambda
+      scheduler 
+    ];
 
   publications = 
       [ gtriRigidBodies
@@ -48,7 +48,6 @@ itcli = {
   projectLanguages = [haskell nix];
 };
 
-
 breezeCheck = {
   instituteName = "breeze-check";
   website       = "https://github.com/theNerd247/breeze-check";
@@ -60,24 +59,23 @@ breezeCheck = {
 lambda = {
   instituteName = "lambda";
   website       = "https://github.com/theNerd247/breeze-check";
-  synopsis      = "a tiny lambda calculus interpreter";
+  synopsis      = "A tiny lambda calculus interpreter";
   projectLanguages = [ haskell ];
 };
 
 conix = {
   instituteName = "conix";
   website = "https://github.com/theNerd247/conix";
-  synopsis = "Comonadic content authoring library in nix";
+  synopsis = "A declarative documentation library written in nix.";
   projectLanguages = [ nix ];
 };
 
 ariaRacer = {
   instituteName = "aria-racer";
   website       = "https://github.com/theNerd247/aria-racer";
-  synopsis      = "a racing server with a webserver interface";
+  synopsis      = "A robot racing server with a web-based interface";
   projectLanguages = [ haskell bash docker ];
 };
-
 
 resumePortfolio = {
   instituteName = "resume";
@@ -86,11 +84,17 @@ resumePortfolio = {
   projectLanguages = [ haskell nix];
 };
 
+optparseRepline = {
+  instituteName = "optparse-repline";
+  website = "https://github.com/theNerd247/optparse-repline";
+  synopsis = "An Haskell library for creating REPLs using optparse-applicative";
+  projectLanguages = [ haskell ];
+};
 
 scheduler = {
   instituteName = "scheduler";
   website = "https://github.com/theNerd247/theNerd247.github.io";
-  synopsis = "An automated scheduling system written in FP style JavaScript";
+  synopsis = "An automated scheduling system for teachers.";
   projectLanguages = [ javascript ];
 };
 
@@ -196,12 +200,14 @@ git = {
 awakeSecurity = {
   instituteName = "Awake Security";
   website       = "https://awakesecurity.com/";
-  position      = "Software Engineer Intern";
+  position      = "Functional Programmer Intern";
   period        = { start = 2020; end = 2020; };
   duties        =
-    [ "Authored the optparse-repline open source library to aid in refactoring codebase and eliminate production bugs."
-      "Authored the conix open source project to enhance code documentation authoring."
-      "Designed tutorials for the EAQL functional programming language."
+    [ "Invented Conix - an open source project for creating bug free documentation written in Nix."
+      "Created the optparse-repline open source Haskell library to aid in
+      refactoring a large codebase and eliminate production bugs as well as
+      stablize a user interface."
+      "Designed tutorials for EAQL - a new programming language invented by Awake Security."
     ];
 };
 
