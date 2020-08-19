@@ -1,4 +1,4 @@
-conix: { index = with conix.lib; withDrv (markdownFile "index") (texts [
+conix: { index = with conix.lib; postHtmlFile "index" (texts [
 ''# Thoughts of a Functional Programmer
 
 <div class="about" >

@@ -1,4 +1,4 @@
-conix: { posts.making-a-sandwich = with conix.lib; withDrv (markdownFile "making-a-sandwich") (texts [
+conix: { posts.making-a-sandwich = with conix.lib; postHtmlFile "making-a-sandwich" (texts [
 { tags = [ "functional-programming" "philosophy" ]; draft = true;} 
 "# "(label "title" "What if I didn't Give you a Sandwich")''
 

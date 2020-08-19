@@ -22,8 +22,8 @@ conix: { lib = rec {
       { foo = conix.lib.mergeModules module { drv = mkDrv module; } };
     ```
   '';
-  docs.withDrv.type = "Name -> (Module -> Derivation) -> Module -> Module";
-  withDrv = name: mkDrv: module: 
+  docs.withDrv.type = "(Module -> Derivation) -> Module -> Module";
+  withDrv = mkDrv: module: 
     conix.lib.mergeModules module { drv = mkDrv module; }
   }; 
 }
