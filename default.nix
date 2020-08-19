@@ -11,6 +11,8 @@ in
         (import ./contents/conix-intro.nix)
         (import ./contents/index.nix)
         (import ./runJs.nix)
+        (import ./withDrv.nix)
+        (import ./postHtmlFile.nix)
       ]
     );
 
