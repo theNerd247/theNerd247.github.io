@@ -1,18 +1,12 @@
-let
-
-  pkgs = import ../pkgs.nix;
-
-  resume = import ./resume.nix;
-
-  data = conix: conix.pagesModule (import ./data.nix);
-
-  toplevel = conix: conix.mergeModules
-    (data conix)
-    (resume conix);
-
-  html = pkgs.conix.build.pandoc "html" "--css ./latex.css --css ./main.css" "resume" [ (pkgs.conix.runModule toplevel)];
-
-in
-  { site = (import ../copyJoin.nix) pkgs "resume" [ html ./static ];
-    resume = toplevel;
-  }
+[ 
+  (conix: { resume.drv = with conix.lib; dir "resume"
+    [ (htmlFile "resume" "--css ./static/latex.css --css ./static/main.css"
+        (markdownFile "resume" conix.resume)
+      )
+      ./static
+    ];
+  })
+  (import ./resume.nix)
+  (import ./data.nix)
+  (c: { drv = c.resume.drv; })
+]
