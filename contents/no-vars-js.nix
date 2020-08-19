@@ -1,4 +1,4 @@
-conix: { posts.no-vars-js = with conix.lib; texts [
+conix: { posts.no-vars-js = with conix.lib; withDrv (markdownFile "no-vars-js") (texts [
 { tags = [ "draft" "javascript" "variables"]; }
 "# "(label "title" "JavaScript with No ...Variables?")'' 
 
@@ -48,4 +48,4 @@ an object.
 
 ''
 
-];}
+]);}

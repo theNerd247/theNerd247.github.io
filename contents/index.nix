@@ -1,4 +1,4 @@
-conix: { index = conix.lib.texts [
+conix: { index = with conix.lib; withDrv (markdownFile "index") (texts [
 ''# Thoughts of a Functional Programmer
 
 <div class="about" >
@@ -21,4 +21,4 @@ conix: { index = conix.lib.texts [
 
 Built using ${conix.homePageLink} v${conix.version.text}
 
-''];}
+'']);}

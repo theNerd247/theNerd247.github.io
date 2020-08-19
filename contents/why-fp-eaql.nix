@@ -1,4 +1,4 @@
-conix: { posts.why-fp-eaql = with conix.lib; texts [
+conix: { posts.why-fp-eaql = with conix.lib; withDrv (markdownFile "why-fp-eaql") (texts [
 { tags = ["draft" "functional-programming" "eaql"]; }
 "# "(label "title" "Benefits of Functional Programming With EAQL")''
 
@@ -59,4 +59,4 @@ to combine create solutions and combine them in an easy way.
 # * Lambda Cube
 # * Hindly Milner type system
 # * Writing an evaluator using recursion schemes
-];}
+]);}

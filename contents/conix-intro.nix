@@ -1,4 +1,4 @@
-conix: { posts.conix-intro = with conix.lib; texts [
+conix: { posts.conix-intro = with conix.lib; withDrv (markdownFile "conix-intro") (texts [
   { tags = ["draft" "conix"]; }
 "# "(label "title" "Comonadic Content in Nix")''
 
@@ -29,4 +29,4 @@ ContentF a
  | Datas (WriterF AttrSet a)
 ```
 ''
-];}
+]);}
