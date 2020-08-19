@@ -8,8 +8,6 @@ let
     ${nodejs}/bin/node ${codeFile} | tee $out
   '';
 in
-  conix.lib.snippet "javacsript" name code
-  ''
-  > ${builtins.readFile outFile}
-  ''
-;}
+  conix.lib.set name 
+    (conix.lib.snippet "javascript" code "> ${builtins.readFile outFile}");
+}
