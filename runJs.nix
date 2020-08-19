@@ -1,34 +1,15 @@
-name: inclueStdOut: conix: jsCode:
+conix: { lib.jsSnippet = name: code:
 let
-  pkgs = import ./pkgs.nix;
-
   nodejs = pkgs.nodejs;
 
-  code = pkgs.writeText "${name}.js" jsCode;
+  codeFile = conix.pkgs.writeText "${name}.js" jsCode;
 
-# ${nodejs}/bin/nodejs ${code} | tee $out
-  drv = pkgs.runCommandLocal "${name}-stdout" { buildInputs = [ nodejs ]; } ''
-    ${nodejs}/bin/node ${code} | tee $out
+  outFile = pkgs.runCommandLocal "${name}-stdout" { buildInputs = [ nodejs ]; } ''
+    ${nodejs}/bin/node ${codeFile} | tee $out
   '';
 in
-conix.texts [ name ] [
-
-(conix.hidden (conix.setValue [ "code" ] jsCode))
-
-''```javascript
-${jsCode}
-```
-
-${if inclueStdOut 
-  then 
-    ''
-    result: 
-    ```
-    > ${builtins.readFile drv}
-    ```
-    ''
-  else
-    builtins.seq drv ""
-}
-
-'']
+  conix.lib.snippet "javacsript" name code
+  ''
+  > ${builtins.readFile outFile}
+  ''
+;}

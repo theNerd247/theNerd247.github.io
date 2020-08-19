@@ -1,16 +1,12 @@
-(import ../newPost.nix) 
-  { name = "no-vars-js";
-    tags = [ "draft" "javascript" "variables"];
-    title = "JavaScript with No ...Variables?";
-  }
-(conix: [
-"# "(conix.at [ "posts" "no-vars-js" "meta" "title" ])'' 
+conix: { posts.no-vars-js = with conix.lib; texts [
+{ tags = [ "draft" "javascript" "variables"]; }
+"# "(label "title" "JavaScript with No ...Variables?")'' 
 
 Let's have some fun. Take the following javascript code and re-write it such
 that there are no `const` keywords used.
 
-''((import ../runJs.nix) "buildHouse-imperative" true conix 
-''
+''(jsSnippet "buildHouse-imperative" ''
+
 const modifyPair = pair => {
   const first = pair.first
   const second = pair.second
@@ -23,8 +19,7 @@ const modifyPair = pair => {
 console.log(modifyPair ({ first: 2, second: 3}))
 '')
 
-((import ../runJs.nix) "buildHouse-functional" true conix 
-''
+(jsSnippet "buildHouse-functional" ''
 const first = pair => pair.first
 const second = pair => pair.second
 
@@ -39,14 +34,18 @@ const modifyPair = both (mult) (add)
 
 console.log(modifyPair(mkPair (2) (3)))
 
-'')
-''
+'')''
+
 
 Take a look at: 
-'' ((import ../codeBlock.nix) [ "posts" "no-vars-js" "buildHouse-functional" "code"] "javascript" 1 2 conix)''
 
-Notice how we're creating a really thin wrapper around accessing a value from an object.
+```javascript
+''(t (extractLines 1 2 conix.posts.no-vars-js.buildHouse-functional.code))''
+```
+
+Notice how we're creating a really thin wrapper around accessing a value from
+an object.
 
 ''
 
-])
+];}

@@ -1,17 +1,14 @@
-(import ../newPost.nix)
-  { name = "making-a-sandwich"; 
-    tags = [ "draft" "functional-programming" "philosophy" ];
-    title = "What if I didn't Give you a Sandwich";
-  } (conix: [
-"# "(conix.at ["posts" "making-a-sandwich" "meta" "title"])''
+conix: { posts.making-a-sandwich = with conix.lib; texts [
+{ tags = [ "draft" "functional-programming" "philosophy" ]; } 
+"# "(label "title" "What if I didn't Give you a Sandwich")''
 
 Here's a question:
 
 > ''
-(conix.text ["prem1"] ''If I give you the recipe for making a sandwich'')
+(label "prem1" ''If I give you the recipe for making a sandwich'')
 " and "
-(conix.text ["prem2"] ''all of its ingredients, cookware, etc.'') 
-(conix.text ["conc"] ''Can I assume that at somepoint in time a sandwich exists?'')
+(label "prem2" ''all of its ingredients, cookware, etc.'') 
+(label "conc" ''Can I assume that at somepoint in time a sandwich exists?'')
 ''
 
 
@@ -30,10 +27,10 @@ symbols to represent the logical statements about sandwiches above.
 
 English | Symbols
 --- | ---
-"''(conix.textOf [ "posts" "making-a-sandwich" "prem1" ])''" | `P -> Q`
-"and"                                                        | "&"
-"''(conix.textOf [ "posts" "making-a-sandwich" "prem2" ])''" | `P`
-"''(conix.textOf [ "posts" "making-a-sandwich" "conc"  ])''" | `Q`
+"''(t conix.posts.making-a-sandwich.prem1)''" | `P -> Q`
+"and"                                         | "&"
+"''(t conix.posts.making-a-sandwich.prem2)''" | `P`
+"''(t conix.posts.making-a-sandwich.conc)''"  | `Q`
 
 To write the entire statement using only symbols looks like:
 
@@ -77,4 +74,4 @@ Every programming language must have function application. Apply is so
 fundamental to programming languages that its often the smallest operator. ` `
 in Haskell (that's a space, mind you), and `( )` in Typescript and C++. 
 
-''])
+''];}

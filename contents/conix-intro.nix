@@ -1,9 +1,7 @@
-(import ../newPost.nix) 
-{ name = "conix-intro";
-  tags = ["draft" "conix"];
-  title = "Comonadic Content in Nix";
-}
-(conix: ["# "(conix.at [ "posts" "conix-intro" "meta" "title"])''
+conix: { posts.conix-intro = with conix.lib; texts [
+  { tags = ["draft" "conix"]; }
+"# "(label "title" "Comonadic Content in Nix")''
+
 
 ## We Need a Better Authoring Tool
 
@@ -31,4 +29,4 @@ ContentF a
  | Datas (WriterF AttrSet a)
 ```
 ''
-])
+];}

@@ -1,21 +1,24 @@
-conix: conix.texts [ "posts" "index" ] [
+conix: { index = conix.lib.texts [
 ''# Thoughts of a Functional Programmer
 
 <div class="about" >
-* [GitHub](''(conix.at [ "portfolio" "gitHubLink"]) '')
-* [LinkedIn](''(conix.at [ "portfolio" "linkedInLink"]) '')
+* [GitHub](${conix.resume.gitHubLink})
+* [LinkedIn](${conix.resume.linkedInLink})
 * [Resume](./resume.html)
 </div>
 
 # Posts
 
-''((import ../postList.nix) true conix)''
+''#((import ../postList.nix) true conix)''
+''
 
 # Drafts 
 
-''((import ../postList.nix) false conix)''
+''#((import ../postList.nix) false conix)''
+''
 
 ---
 
-Built using ''(conix.homePageLink)" v"(conix.version.text)
-]
+Built using ${conix.homePageLink} v${conix.version.text}
+
+''];}

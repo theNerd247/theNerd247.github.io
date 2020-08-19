@@ -10,6 +10,7 @@ in
         (import ./contents/why-fp-eaql.nix)
         (import ./contents/conix-intro.nix)
         (import ./contents/index.nix)
+        (import ./runJs.nix)
       ]
     );
 
