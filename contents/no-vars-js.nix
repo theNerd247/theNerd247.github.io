@@ -1,5 +1,5 @@
 conix: { posts.no-vars-js = with conix.lib; withDrv (markdownFile "no-vars-js") (texts [
-{ tags = [ "draft" "javascript" "variables"]; }
+{ tags = [ "javascript" "variables"]; draft = true; }
 "# "(label "title" "JavaScript with No ...Variables?")'' 
 
 Let's have some fun. Take the following javascript code and re-write it such

@@ -1,5 +1,5 @@
 conix: { posts.conix-intro = with conix.lib; withDrv (markdownFile "conix-intro") (texts [
-  { tags = ["draft" "conix"]; }
+  { tags = ["conix"]; draft = true; }
 "# "(label "title" "Comonadic Content in Nix")''
 
 

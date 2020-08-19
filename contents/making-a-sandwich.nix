@@ -1,5 +1,5 @@
 conix: { posts.making-a-sandwich = with conix.lib; withDrv (markdownFile "making-a-sandwich") (texts [
-{ tags = [ "draft" "functional-programming" "philosophy" ]; } 
+{ tags = [ "functional-programming" "philosophy" ]; draft = true;} 
 "# "(label "title" "What if I didn't Give you a Sandwich")''
 
 Here's a question:

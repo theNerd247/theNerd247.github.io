@@ -1,5 +1,5 @@
 conix: { posts.why-fp-eaql = with conix.lib; withDrv (markdownFile "why-fp-eaql") (texts [
-{ tags = ["draft" "functional-programming" "eaql"]; }
+{ tags = [ "functional-programming" "eaql"]; draft = true; }
 "# "(label "title" "Benefits of Functional Programming With EAQL")''
 
 
