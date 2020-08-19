@@ -48,12 +48,12 @@ This gives us the answer to our original question: yes, the existence of
 recipes and their matching ingredients implies that the sandwich exists if
 modus ponens holds.
 
-## So What? 
+## Sandwiches as Arguments; Recipes as Programs
 
 Programmers abstract their programs using functions. Large and complex
-processes can be summarized with a single word. In short, functions are
-recipes and their arguments are ingredients. Let's restate the above in
-terms of a function in a few languages. 
+processes can be hidden away behind the walls of a function and whenever a
+programmer desires to make use of that process they simply call that function.
+And just like with recipes, functions produce a result.
 
 1. Haskell:
   ```haskell
@@ -71,12 +71,10 @@ terms of a function in a few languages.
   }
   ```
 
-The statement `(P -> Q) & P -> Q` is a function called apply. The Haskell
-version's type looks very similar to the math form. If you happen to know all
-three languages you'll notice something: they are all just calling a function
-with the given arguments. 
-
-In fact, there's something called the Curry-Howard isomorphism that says that
-calling a function is the same thing as pair a function with its arguments.
+The statement `(P -> Q) & P -> Q` is a function called "apply" in programming.
+It takes a function and an argument and applies the function to that argument.
+Every programming language must have function application. Apply is so
+fundamental to programming languages that its often the smallest operator. ` `
+in Haskell (that's a space, mind you), and `( )` in Typescript and C++. 
 
 ''])

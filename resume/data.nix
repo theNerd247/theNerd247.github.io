@@ -53,7 +53,7 @@ itcli = {
 breezeCheck = {
   instituteName = "breeze-check";
   website       = "https://github.com/theNerd247/breeze-check";
-  synopsis      = "Mobile check in system for the Breeze Church Management System";
+  synopsis      = "Mobile first check in system using snap and Elm-Lang";
   projectLanguages = [haskell elm nix];
 };
 
@@ -75,7 +75,7 @@ conix = {
 ariaRacer = {
   instituteName = "aria-racer";
   website       = "https://github.com/theNerd247/aria-racer";
-  synopsis      = "A robot racing server with a web-based interface";
+  synopsis      = "A robot racing server with a web-based interface using snap.";
   projectLanguages = [ haskell bash docker ];
 };
 
