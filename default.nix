@@ -3,12 +3,12 @@ let
 in
   { site = pkgs.conix.buildPages (
       (import ./resume) ++ 
-      [
-        (c: { drv = with c.lib; dir "zettelkasten" 
-        ( [ (dir "resume" [ (c.resume.drv) ]) 
-            ./static
-          ]
-          ++ (c.pkgs.lib.attrsets.mapAttrsToList (_: m: m.drv) c.posts)
+      [ (c: { drv = with c.lib; collect "zettelkasten" 
+          ( [ (c.resume.drv)
+              (dir "static" [ ./static ])
+              c.index.drv
+            ]
+            ++ (c.pkgs.lib.attrsets.mapAttrsToList (_: m: m.drv) c.posts)
           );
         })
         (import ./contents/making-a-sandwich.nix)

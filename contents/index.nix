@@ -4,7 +4,7 @@ conix: { index = with conix.lib; postHtmlFile "index" "--css ./static/homepage.c
 <div class="about" >
 * [GitHub](${conix.resume.gitHubLink})
 * [LinkedIn](${conix.resume.linkedInLink})
-* [Resume](./resume.html)
+* [Resume](resume/resume.html)
 </div>
 
 # Posts
@@ -19,6 +19,6 @@ conix: { index = with conix.lib; postHtmlFile "index" "--css ./static/homepage.c
 
 ---
 
-Built using ${conix.homePageLink} v${conix.version.text}
+Built using ${conix.lib.homePageLink} v${conix.lib.version.text}
 
 '']);}
