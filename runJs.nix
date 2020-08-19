@@ -1,10 +1,10 @@
 conix: { lib.jsSnippet = name: code:
 let
-  nodejs = pkgs.nodejs;
+  nodejs = conix.pkgs.nodejs;
 
-  codeFile = conix.pkgs.writeText "${name}.js" jsCode;
+  codeFile = conix.pkgs.writeText "${name}.js" code;
 
-  outFile = pkgs.runCommandLocal "${name}-stdout" { buildInputs = [ nodejs ]; } ''
+  outFile = conix.pkgs.runCommandLocal "${name}-stdout" { buildInputs = [ nodejs ]; } ''
     ${nodejs}/bin/node ${codeFile} | tee $out
   '';
 in

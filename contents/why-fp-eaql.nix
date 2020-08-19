@@ -1,4 +1,4 @@
-conix: { posts.why-fp-eaql = with conix.lib; postHtmlFile "why-fp-eaql" (texts [
+conix: { posts.why-fp-eaql = with conix.lib; postHtmlFile "why-fp-eaql" "" (texts [
 { tags = [ "functional-programming" "eaql"]; draft = true; }
 "# "(label "title" "Benefits of Functional Programming With EAQL")''
 

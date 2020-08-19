@@ -1,4 +1,4 @@
-conix: { posts.no-vars-js = with conix.lib; postHtmlFile "no-vars-js" (texts [
+conix: { posts.no-vars-js = with conix.lib; postHtmlFile "no-vars-js" "" (texts [
 { tags = [ "javascript" "variables"]; draft = true; }
 "# "(label "title" "JavaScript with No ...Variables?")'' 
 

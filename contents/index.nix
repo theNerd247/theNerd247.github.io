@@ -1,4 +1,4 @@
-conix: { index = with conix.lib; postHtmlFile "index" (texts [
+conix: { index = with conix.lib; postHtmlFile "index" "--css ./static/homepage.css" (texts [
 ''# Thoughts of a Functional Programmer
 
 <div class="about" >

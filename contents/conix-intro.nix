@@ -1,4 +1,4 @@
-conix: { posts.conix-intro = with conix.lib; postHtmlFile "conix-intro" (texts [
+conix: { posts.conix-intro = with conix.lib; postHtmlFile "conix-intro" "" (texts [
   { tags = ["conix"]; draft = true; }
 "# "(label "title" "Comonadic Content in Nix")''
 

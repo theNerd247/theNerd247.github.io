@@ -24,6 +24,5 @@ conix: { lib = rec {
   '';
   docs.withDrv.type = "(Module -> Derivation) -> Module -> Module";
   withDrv = mkDrv: module: 
-    conix.lib.mergeModules module { drv = mkDrv module; }
-  }; 
-}
+    conix.lib.mergeModules module { drv = mkDrv module; };
+}; }
