@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>6g4028pq6qz80lddlv9x5ys476lmfh2d-conix-intro</title>
+  <title>caxm08v27a0b9parzv7zh4jxvsc0j7wd-docs</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -75,35 +75,27 @@
     code span.vs { color: #4070a0; } /* VerbatimString */
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="./static/zettelkasten.css" />
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
 </head>
 <body>
-<h1 id="comonadic-content-in-nix">Comonadic Content in Nix</h1>
-<h2 id="we-need-a-better-authoring-tool">We Need a Better Authoring Tool</h2>
-<ul>
-<li>content has implicit relationships that should be explicit.</li>
-<li>why not just use a regular language with string contatenation?</li>
-</ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="dt">WriterF</span> e a <span class="ot">=</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a> <span class="ot">=</span> <span class="dt">Censor</span> ([e] <span class="ot">-&gt;</span> [e]) a</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a> <span class="op">|</span> <span class="dt">Tell</span> e a</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="ot">datas ::</span> <span class="dt">WriterF</span> e (<span class="dt">Content</span> a) <span class="ot">-&gt;</span> <span class="dt">Content</span> a</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a><span class="ot">censor ::</span> ([e] <span class="ot">-&gt;</span> [e]) <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">WriterF</span> e a</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a><span class="ot">onMerged ::</span> (e <span class="ot">-&gt;</span> e) <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">WriterF</span> e a</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a>onMerged f <span class="ot">=</span> censor (<span class="fu">pure</span> <span class="op">.</span> f <span class="op">.</span> fold)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a><span class="ot">labelData ::</span> <span class="dt">Path</span> <span class="ot">-&gt;</span> <span class="dt">Content</span> a <span class="ot">-&gt;</span> <span class="dt">Content</span> a</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>labelData path <span class="ot">=</span> datas <span class="op">.</span> onMerged (nest path)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a><span class="dt">ContentF</span> a</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a> <span class="ot">=</span> <span class="dt">Drvs</span>  (<span class="dt">WriterF</span> <span class="dt">Drv</span> a)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a> <span class="op">|</span> <span class="dt">Texts</span> (<span class="dt">WriterF</span> <span class="dt">Text</span> a)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a> <span class="op">|</span> <span class="dt">Datas</span> (<span class="dt">WriterF</span> <span class="dt">AttrSet</span> a)</span></code></pre></div>
+<hr/>
+<p>Runs some javascript code and produces code blocks - one for the code and the other with the evaluated code (using nodeJs). The resulting module is nested under the given name.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="ot">jsSnippet ::</span> <span class="dt">Name</span> <span class="ot">-&gt;</span> <span class="dt">JsCode</span> <span class="ot">-&gt;</span> <span class="dt">Module</span></span></code></pre></div>
+<hr/>
+<p>Set the <code>drv</code> attribute in the given module by calling the given function with that module. This is provided purely as a convenience function for single file pages.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode nix"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="ex">conix</span>: { foo = with conix.lib<span class="kw">;</span> <span class="ex">withDrv</span> (markdownFile <span class="st">&quot;foo&quot;</span>) <span class="kw">(</span><span class="ex">texts</span> [ </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="st">&#39;&#39;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="ex">...</span> </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="st">&#39;&#39;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>]<span class="kw">)</span>;}</span></code></pre></div>
+<p>This is equivalent to:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode nix"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="ex">conix</span>:</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="bu">let</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>  <span class="ex">module</span> = conix.lib.texts [...]<span class="kw">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a><span class="kw">in</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a>  <span class="kw">{</span> <span class="ex">foo</span> = conix.lib.mergeModules module { drv = mkDrv module<span class="kw">;</span> <span class="kw">}</span> };</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="ot">withDrv ::</span> (<span class="dt">Module</span> <span class="ot">-&gt;</span> <span class="dt">Derivation</span>) <span class="ot">-&gt;</span> <span class="dt">Module</span> <span class="ot">-&gt;</span> <span class="dt">Module</span></span></code></pre></div>
 </body>
 </html>

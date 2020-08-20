@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>making-a-sandwich</title>
+  <title>320pbkqx729cwdz31dzg9aixlb8y642q-making-a-sandwich</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -75,8 +75,7 @@
     code span.vs { color: #4070a0; } /* VerbatimString */
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="./zettelkasten.css" />
-  <link rel="stylesheet" href="./homepage.css" />
+  <link rel="stylesheet" href="./static/zettelkasten.css" />
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
@@ -121,8 +120,8 @@
 <pre><code>(P -&gt; Q) &amp; P -&gt; Q</code></pre>
 <p>In mathematical logic this statement (called “modus ponens”) is a true statement. To rephrase it in general English: “If <code>(P -&gt; Q)</code> exists and <code>P</code> exists then that implies that <code>Q</code> exists”.</p>
 <p>This gives us the answer to our original question: yes, the existence of recipes and their matching ingredients implies that the sandwich exists if modus ponens holds.</p>
-<h2 id="so-what">So What?</h2>
-<p>Programmers abstract their programs using functions. Large and complex processes can be summarized with a single word. In short, functions are recipes and their arguments are ingredients. Let’s restate the above in terms of a function in a few languages.</p>
+<h2 id="sandwiches-as-arguments-recipes-as-programs">Sandwiches as Arguments; Recipes as Programs</h2>
+<p>Programmers abstract their programs using functions. Large and complex processes can be hidden away behind the walls of a function and whenever a programmer desires to make use of that process they simply call that function. And just like with recipes, functions produce a result.</p>
 <ol type="1">
 <li>Haskell:</li>
 </ol>
@@ -138,7 +137,6 @@
 <div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="kw">template</span>&lt;A,B&gt; B apply(f Func&lt;A,B&gt;, a A) {</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>  <span class="cf">return</span> f(a);</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>}</span></code></pre></div>
-<p>The statement <code>(P -&gt; Q) &amp; P -&gt; Q</code> is a function called apply. The Haskell version’s type looks very similar to the math form. If you happen to know all three languages you’ll notice something: they are all just calling a function with the given arguments.</p>
-<p>In fact, there’s something called the Curry-Howard isomorphism that says that calling a function is the same thing as pair a function with its arguments.</p>
+<p>The statement <code>(P -&gt; Q) &amp; P -&gt; Q</code> is a function called “apply” in programming. It takes a function and an argument and applies the function to that argument. Every programming language must have function application. Apply is so fundamental to programming languages that its often the smallest operator. <code></code> in Haskell (that’s a space, mind you), and <code>( )</code> in Typescript and C++.</p>
 </body>
 </html>

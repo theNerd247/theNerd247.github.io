@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>no-vars-js</title>
+  <title>c05587yzz7fyfm4hxg7y3z2jjkdp8n8y-no-vars-js</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -75,8 +75,7 @@
     code span.vs { color: #4070a0; } /* VerbatimString */
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="./zettelkasten.css" />
-  <link rel="stylesheet" href="./homepage.css" />
+  <link rel="stylesheet" href="./static/zettelkasten.css" />
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
@@ -84,17 +83,19 @@
 <body>
 <h1 id="javascript-with-no-variables">JavaScript with No …Variables?</h1>
 <p>Let’s have some fun. Take the following javascript code and re-write it such that there are no <code>const</code> keywords used.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">const</span> modifyPair <span class="op">=</span> pair <span class="kw">=&gt;</span> {</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>  <span class="kw">const</span> first <span class="op">=</span> pair<span class="op">.</span><span class="at">first</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>  <span class="kw">const</span> second <span class="op">=</span> pair<span class="op">.</span><span class="at">second</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>  <span class="kw">const</span> result <span class="op">=</span> { <span class="dt">first</span><span class="op">:</span> first<span class="op">*</span>second<span class="op">,</span> <span class="dt">second</span><span class="op">:</span> first<span class="op">+</span>second }</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>  <span class="cf">return</span> result<span class="op">;</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>}</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="fu">modifyPair</span> ({ <span class="dt">first</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">second</span><span class="op">:</span> <span class="dv">3</span>}))</span></code></pre></div>
-<p>result:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="kw">const</span> modifyPair <span class="op">=</span> pair <span class="kw">=&gt;</span> {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>  <span class="kw">const</span> first <span class="op">=</span> pair<span class="op">.</span><span class="at">first</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>  <span class="kw">const</span> second <span class="op">=</span> pair<span class="op">.</span><span class="at">second</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>  <span class="kw">const</span> result <span class="op">=</span> { <span class="dt">first</span><span class="op">:</span> first<span class="op">*</span>second<span class="op">,</span> <span class="dt">second</span><span class="op">:</span> first<span class="op">+</span>second }</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>  <span class="cf">return</span> result<span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a>}</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="fu">modifyPair</span> ({ <span class="dt">first</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">second</span><span class="op">:</span> <span class="dv">3</span>}))</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a></span></code></pre></div>
+<p>===&gt;</p>
 <pre><code>&gt; { first: 6, second: 5 }
 </code></pre>
 <div class="sourceCode" id="cb3"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="kw">const</span> first <span class="op">=</span> pair <span class="kw">=&gt;</span> pair<span class="op">.</span><span class="at">first</span></span>
@@ -110,13 +111,13 @@
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a><span class="kw">const</span> modifyPair <span class="op">=</span> <span class="fu">both</span> (mult) (add)</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="fu">modifyPair</span>(<span class="fu">mkPair</span> (<span class="dv">2</span>) (<span class="dv">3</span>)))</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a></span></code></pre></div>
-<p>result:</p>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a></span></code></pre></div>
+<p>===&gt;</p>
 <pre><code>&gt; { first: 6, second: 5 }
 </code></pre>
 <p>Take a look at:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="kw">const</span> first <span class="op">=</span> pair <span class="kw">=&gt;</span> pair<span class="op">.</span><span class="at">first</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="kw">const</span> second <span class="op">=</span> pair <span class="kw">=&gt;</span> pair<span class="op">.</span><span class="at">second</span></span></code></pre></div>
+<p><code>javascript const first = pair =&gt; pair.first const second = pair =&gt; pair.second</code></p>
 <p>Notice how we’re creating a really thin wrapper around accessing a value from an object.</p>
 </body>
 </html>
