@@ -4,6 +4,8 @@ branches:
   only:
     - master
 
+script: nix-build -A site ./default.nix
+
 deploy:
   provider: pages:git
   edge: true

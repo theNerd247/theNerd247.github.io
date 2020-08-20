@@ -2,6 +2,9 @@ conix: { index = with conix.lib; postHtmlFile "index" "--css ./static/homepage.c
 ''# Thoughts of a Functional Programmer
 
 <div class="about" >
+
+![](./static/profile.jpg)
+
 * [GitHub](${conix.resume.gitHubLink})
 * [LinkedIn](${conix.resume.linkedInLink})
 * [Resume](resume/resume.html)

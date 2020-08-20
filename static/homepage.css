@@ -1,7 +1,16 @@
 .about > ul {
   text-align: center;
+  padding-left: 0;
 }
 
 .about > ul > li {
   display: inline;
+}
+
+.about img {
+  margin-left: auto;
+  margin-right: auto;
+  width: 6em;
+  height: 6em;
+  border-radius: 50%;
 }
