@@ -47,7 +47,6 @@ in
 
 <section class="contact">
 ${conix.resume.email} - ${conix.resume.linkedin} - ${conix.resume.github}
-
 </section>
 
 ${section "Experience" (sortExperiences conix.resume.experiences) "experience"
