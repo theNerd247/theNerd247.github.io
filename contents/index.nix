@@ -1,5 +1,5 @@
 conix: { index = with conix.lib; postHtmlFile "index" "--css ./static/homepage.css" (texts [
-''# Thoughts of a Functional Programmer
+"# "(label "title" "Thoughts of a Functional Programmer")''
 
 <div class="about" >
 

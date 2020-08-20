@@ -10,7 +10,7 @@ conix: { lib = rec {
   docs.postHtmlFile.type = "Name -> String -> Module -> Module";
   postHtmlFile = name: args: with conix.lib;
     withDrv (m: 
-      htmlFile name "--css ./static/zettelkasten.css ${args}" 
+      htmlFile name "--css ./static/zettelkasten.css ${args} --metadata pagetitle=\"${m.title or name}\""
         (markdownFile name m)
     );
 };}

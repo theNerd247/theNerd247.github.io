@@ -1,6 +1,6 @@
 [ (conix: { 
     resume.drv = with conix.lib; dir "resume" [ (dir "resume"
-      [ (htmlFile "resume" "--css ./static/latex.css --css ./static/main.css"
+      [ (htmlFile "resume" "--css ./static/latex.css --css ./static/main.css --metadata pagetitle=\"Resume - Noah Harvey\""
           (markdownFile "resume" conix.resume)
         )
         ./static
