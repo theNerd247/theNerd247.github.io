@@ -1,25 +1,32 @@
-(import ../newPost.nix) 
-{ name = "conix-intro";
-  tags = ["draft" "conix"];
-  title = "Comonadic Content in Nix";
-}
-(conix: ["# "(conix.at [ "posts" "conix-intro" "meta" "title"])''
+conix: { posts.conix-intro = with conix.lib; postHtmlFile "conix-intro" "" (texts [
+  { tags = ["conix"]; draft = true; }
+"# "(label "title" "Comonadic Content in Nix")''
+
 
 ## We Need a Better Authoring Tool
 
   * content has implicit relationships that should be explicit.
   * why not just use a regular language with string contatenation?
 
-## Readmes That Break
+```haskell
+WriterF e a =
+ = Censor ([e] -> [e]) a
+ | Tell e a
 
-## Scrap Your Cache - We Have Nix Store
+datas :: WriterF e (Content a) -> Content a
 
-## All The Functional Power
+censor :: ([e] -> [e]) -> a -> WriterF e a
 
-## My Blog Setup
+onMerged :: (e -> e) -> a -> WriterF e a
+onMerged f = censor (pure . f . fold)
 
-## Including Source Code - That Works!
+labelData :: Path -> Content a -> Content a
+labelData path = datas . onMerged (nest path)
 
-
+ContentF a
+ = Drvs  (WriterF Drv a)
+ | Texts (WriterF Text a)
+ | Datas (WriterF AttrSet a)
+```
 ''
-])
+]);}

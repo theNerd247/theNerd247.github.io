@@ -1,17 +1,14 @@
-(import ../newPost.nix)
-  { name = "making-a-sandwich"; 
-    tags = [ "draft" "functional-programming" "philosophy" ];
-    title = "What if I didn't Give you a Sandwich";
-  } (conix: [
-"# "(conix.at ["posts" "making-a-sandwich" "meta" "title"])''
+conix: { posts.making-a-sandwich = with conix.lib; postHtmlFile "making-a-sandwich" "" (texts [
+{ tags = [ "functional-programming" "philosophy" ]; draft = true;} 
+"# "(label "title" "What if I didn't Give you a Sandwich")''
 
 Here's a question:
 
 > ''
-(conix.text ["prem1"] ''If I give you the recipe for making a sandwich'')
+(label "prem1" ''If I give you the recipe for making a sandwich'')
 " and "
-(conix.text ["prem2"] ''all of its ingredients, cookware, etc.'') 
-(conix.text ["conc"] ''Can I assume that at somepoint in time a sandwich exists?'')
+(label "prem2" ''all of its ingredients, cookware, etc.'') 
+(label "conc" ''Can I assume that at somepoint in time a sandwich exists?'')
 ''
 
 
@@ -30,10 +27,10 @@ symbols to represent the logical statements about sandwiches above.
 
 English | Symbols
 --- | ---
-"''(conix.textOf [ "posts" "making-a-sandwich" "prem1" ])''" | `P -> Q`
-"and"                                                        | "&"
-"''(conix.textOf [ "posts" "making-a-sandwich" "prem2" ])''" | `P`
-"''(conix.textOf [ "posts" "making-a-sandwich" "conc"  ])''" | `Q`
+"''(t conix.posts.making-a-sandwich.prem1)''" | `P -> Q`
+"and"                                         | "&"
+"''(t conix.posts.making-a-sandwich.prem2)''" | `P`
+"''(t conix.posts.making-a-sandwich.conc)''"  | `Q`
 
 To write the entire statement using only symbols looks like:
 
@@ -48,12 +45,12 @@ This gives us the answer to our original question: yes, the existence of
 recipes and their matching ingredients implies that the sandwich exists if
 modus ponens holds.
 
-## So What? 
+## Sandwiches as Arguments; Recipes as Programs
 
 Programmers abstract their programs using functions. Large and complex
-processes can be summarized with a single word. In short, functions are
-recipes and their arguments are ingredients. Let's restate the above in
-terms of a function in a few languages. 
+processes can be hidden away behind the walls of a function and whenever a
+programmer desires to make use of that process they simply call that function.
+And just like with recipes, functions produce a result.
 
 1. Haskell:
   ```haskell
@@ -71,12 +68,10 @@ terms of a function in a few languages.
   }
   ```
 
-The statement `(P -> Q) & P -> Q` is a function called apply. The Haskell
-version's type looks very similar to the math form. If you happen to know all
-three languages you'll notice something: they are all just calling a function
-with the given arguments. 
+The statement `(P -> Q) & P -> Q` is a function called "apply" in programming.
+It takes a function and an argument and applies the function to that argument.
+Every programming language must have function application. Apply is so
+fundamental to programming languages that its often the smallest operator. ` `
+in Haskell (that's a space, mind you), and `( )` in Typescript and C++. 
 
-In fact, there's something called the Curry-Howard isomorphism that says that
-calling a function is the same thing as pair a function with its arguments.
-
-''])
+'']);}

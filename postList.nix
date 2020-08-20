@@ -1,14 +1,13 @@
-filterDrafts: conix: 
-  conix.foldMapModules 
-  (n: 
-    if n != "index"
-    then conix.bindModule 
-      (p: 
-        if 
-           filterDrafts == (builtins.head p.meta.tags  == "draft")
-        then conix.emptyModule
-        else conix.pureModule "* [${p.meta.title}](./${p.meta.name}.html)\n"
-      ) (conix.at [ "posts" n])
-    else conix.emptyModule
-  ) 
-  (builtins.attrNames conix.pages.posts)
+conix: { lib.postList = with conix.lib; draftStatus: posts:
+  foldAttrsIxCond (s: s ? title)
+    (post: path: text (
+      if (post ? draft) && post.draft == draftStatus then
+        ''
+        * [${post.title}](./${builtins.elemAt path ((builtins.length path) - 1)}.html)
+        ''
+      else 
+        ""
+    ))
+    (postAttrs: foldModules (builtins.attrValues postAttrs))
+    posts;
+}

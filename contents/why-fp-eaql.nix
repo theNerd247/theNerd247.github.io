@@ -1,10 +1,7 @@
-(import ../newPost.nix)
-  { name = "why-fp-eaql"; 
-    tags = ["draft" "functional-programming" "eaql"];
-    title = "Benefits of Functional Programming With EAQL";
-  } (conix: [
-"# "(conix.at ["posts" "why-fp-eaql" "meta" "title"])
-''
+conix: { posts.why-fp-eaql = with conix.lib; postHtmlFile "why-fp-eaql" "" (texts [
+{ tags = [ "functional-programming" "eaql"]; draft = true; }
+"# "(label "title" "Benefits of Functional Programming With EAQL")''
+
 
 A DSL is a very specific language that aims to make encoding solutions to a
 certain problem domain more intuitive. 
@@ -62,4 +59,4 @@ to combine create solutions and combine them in an easy way.
 # * Lambda Cube
 # * Hindly Milner type system
 # * Writing an evaluator using recursion schemes
-])
+]);}
