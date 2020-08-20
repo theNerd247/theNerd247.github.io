@@ -1,4 +1,4 @@
-conix: { lib = rec {
+conix: { 
   docs.withDrv.docstr = ''
     Set the `drv` attribute in the given module by calling the given function
     with that module. This is provided purely as a convenience function for 
@@ -23,6 +23,6 @@ conix: { lib = rec {
     ```
   '';
   docs.withDrv.type = "(Module -> Derivation) -> Module -> Module";
-  withDrv = mkDrv: module: 
+  lib.withDrv = mkDrv: module: 
     conix.lib.mergeModules module { drv = mkDrv module; };
-}; }
+}

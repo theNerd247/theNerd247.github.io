@@ -9,13 +9,11 @@ conix: { index = with conix.lib; postHtmlFile "index" "--css ./static/homepage.c
 
 # Posts
 
-''#((import ../postList.nix) true conix)''
-''
+''(postList false conix.posts)''
 
 # Drafts 
 
-''#((import ../postList.nix) false conix)''
-''
+''(postList true conix.posts)''
 
 ---
 
