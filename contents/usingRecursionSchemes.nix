@@ -98,13 +98,6 @@ insertIf' mkNewElem (curElem:tail) =
 
 -- ana (insertIf' pred) :: [a] -> [a]
 
--- Hylomorphism version
--- maybe investigate using elgot algebras?
--- 
-
-noteInsert :: (a -> Maybe b) -> ListF a -> 
-
--- 
 ```
 
 Questions
@@ -112,5 +105,9 @@ Questions
 
   * If a functor F a = Fix (G a) then what is 
     `alg :: F a -> a`? `alg :: Fix (G a) -> a` `alg == cata alg' | alg' :: G a b -> a`?
+
+    cata a = c where c = a . fmap c . unfix
+           = d where d = (cata a') . fmap c . unfix
+           = e where e = (f where f = a' . fmap f . unfix) . fmap e . unfix
 ''
 ];}
