@@ -1,7 +1,8 @@
 conix: 
 let
-  sortExperiences = builtins.sort (a: b: a.period.start > b.period.start);
-  showPeriod = period: "${builtins.toString period.start} - ${builtins.toString (period.end or "present")}";
+  sortExperiences = 
+    builtins.sort (a: b: conix.lib.sortTime a.period.start b.period.start);
+  showPeriod = period: "${conix.lib.timeToString period.start} - ${conix.lib.timeToString (period.end or null)}";
   showAuthors = authors:
     let
       prim = builtins.head authors;
@@ -20,20 +21,21 @@ let
     </section>
     '';
 
-  subsection = title: name: period: content:
+  subsection = title: hireType: name: period: content:
     ''
     <div class="subsection">
-    ${if title == "" then "" else "#### ${title}"}
+
+    <div class="aligned"> <span class="left-align"> ${if title == "" then "" else "<h4>${title}</h4>"} </span> <span class="right-align">${hireType}</span> </div>
     <div class="aligned">
-    <span class="left-align">${name}</span>
-    <span class="right-align">
-    ${if builtins.isAttrs period 
-      then
-        showPeriod period
-      else
-        period
-     }
-     </span>
+      <span class="left-align italic">${name}</span>
+      <span class="right-align">
+      ${if builtins.isAttrs period
+        then
+          showPeriod period
+        else
+          period
+       }
+       </span>
      </div>
 
      <div class="content">
@@ -46,12 +48,13 @@ in
 ''# ${conix.resume.firstName} ${conix.resume.lastName}
 
 <section class="contact">
-${conix.resume.email} - ${conix.resume.linkedin} - ${conix.resume.github}
+${conix.resume.email} - ${conix.resume.phone} - ${conix.resume.github}
 </section>
 
 ${section "Experience" (sortExperiences conix.resume.experiences) "experience"
   (e: subsection 
-    e.position 
+    e.position
+    e.hireType
     e.instituteName 
     e.period 
     ("* ${builtins.concatStringsSep "\n* " e.duties}")
@@ -61,6 +64,7 @@ ${section "Experience" (sortExperiences conix.resume.experiences) "experience"
 ${section "Projects" conix.resume.projects "projects"
   (project: subsection 
       "" 
+      ""
       project.instituteName
       (builtins.concatStringsSep " " (builtins.map (l: l.languageName) project.projectLanguages))
       project.synopsis
@@ -70,6 +74,7 @@ ${section "Projects" conix.resume.projects "projects"
 ${section "Education" conix.resume.schools "" 
   (school: subsection
     school.degree
+    school.hireType
     school.instituteName
     school.period
     ""
