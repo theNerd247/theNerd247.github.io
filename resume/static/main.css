@@ -28,8 +28,9 @@ h2, h3, h4 {
   font-family: 'Geneva', sans-serif;
 }
 
-.subsection > h4 {
+.subsection h4 {
   margin-bottom: 0em;
+  margin-top: 0em;
 }
 
 li:not(:last-child) {
@@ -42,7 +43,7 @@ ul {
   margin-left: 0;
 }
 
-.left-align {
+.italic { 
   font-style: italic;
 }
 
@@ -78,10 +79,6 @@ ul {
 
 .projects .subsection > .content {
   text-align: justify;
-}
-
-.subsection > h4 {
-  margin-top: 0.75em;
 }
 
 .contact {
