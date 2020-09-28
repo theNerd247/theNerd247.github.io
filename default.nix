@@ -9,7 +9,11 @@ in
               c.index.drv
               (dir "docs" [ c.docs.drv ])
             ]
-            ++ (c.pkgs.lib.attrsets.mapAttrsToList (_: m: m.drv) c.posts)
+            ++ (builtins.concatLists 
+              ( c.pkgs.lib.attrsets.mapAttrsToList 
+                (_: m: [m.drv] ++ (m.drvs or [])) 
+                c.posts
+              ))
           );
         })
         (c: { docs.drv = c.lib.htmlFile "docs" "" (c.lib.markdownFile "docs" (c.lib.mkDocs c.docs)); })
@@ -18,10 +22,13 @@ in
         (import ./contents/why-fp-eaql.nix)
         (import ./contents/conix-intro.nix)
         (import ./contents/index.nix)
+        (import ./contents/practicalRecursionSchemes.nix)
         (import ./runJs.nix)
         (import ./withDrv.nix)
         (import ./postList.nix)
         (import ./postHtmlFile.nix)
+        (import ./dotgraph.nix)
+        (import ./textsd.nix)
       ]
     );
 

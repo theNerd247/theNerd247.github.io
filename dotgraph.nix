@@ -5,10 +5,10 @@ conix: { lib.dotDigraph = with conix.lib; name: dotCode:
    
     graphvizCode = conix.pkgs.writeText "${name}.dot" dotCode;
 
-    diagraph = conix.pkgs.runCommandLocal
+    digraph = conix.pkgs.runCommandLocal
       "${imgFile}" 
       { buildInputs = [ conix.pkgs.graphviz ]; }
       "dot -T${imgType} -o $out ${graphvizCode}";
   in
-    { drv = imgFile; text = "\n![](./${imgFile})\n"; }
+    { drvs = [digraph]; text = "\n![](./${imgFile})\n"; };
 }
