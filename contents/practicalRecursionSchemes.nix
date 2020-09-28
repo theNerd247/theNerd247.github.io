@@ -17,12 +17,20 @@ Let's say you have a tree that stores words of a sentence.
 ''(dotDigraph "substrTree"
 ''
 digraph {
-  a -> b
-  b -> e
-  a -> p
-  p -> e
-  a -> n
-  n -> t
+  node0 [ label = "a" ]
+  node1 [ label = "n" ]
+  node2 [ label = "t" ]
+  node3 [ label = "p" ]
+  node4 [ label = "e" ]
+  node5 [ label = "t" ]
+  node6 [ label = "d" ]
+
+  node0 -> node1
+  node1 -> node2 
+  node0 -> node3
+  node3 -> node4
+  node0 -> node5
+  node1 -> node6
 }
 '')''
 
