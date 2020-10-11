@@ -188,5 +188,8 @@ What if I even set myself out of the reach of God?
 
 __REST IN GOD'S CONFIDENCE_
 
+When we rest in who we are in Christ because He is our saftey net then we can
+live a vibrant CHristian life.
+
 
 ''];}
