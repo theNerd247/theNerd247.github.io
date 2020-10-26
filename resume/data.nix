@@ -1,32 +1,4 @@
-conix: rec{ 
-
-  lib = {
-    time = m: y: { inherit m y; };
-
-    sortTime = a: b: 
-      a.y > b.y || (a.y == b.y && a.m >= b.m); 
-
-    timeToString = x:
-      let
-        monthToString = 
-          [ 
-            "Jan"
-            "Feb"
-            "Mar"
-            "Apr"
-            "May"
-            "Jun"
-            "Jul"
-            "Aug"
-            "Sep"
-            "Oct"
-            "Nov"
-            "Dec"
-          ];
-        g = { m, y }: "${builtins.elemAt monthToString (m - 1)}. ${builtins.toString y}";
-      in
-        if x == null then "present" else g x;
-  };
+x: with x; tell { 
 
   resume = rec {
     personalTitle = "Software Engineer";
@@ -61,7 +33,7 @@ conix: rec{
 
     schools = 
       [ 
-        { period        = { start = lib.time 8 2012; end = lib.time 5 2017; };
+        { period        = { start = time 8 2012; end = time 5 2017; };
           instituteName = "Kennesaw State University";
           hireType      = "Full Time";
           website       = "https://ksu.edu";
@@ -242,7 +214,7 @@ conix: rec{
       website       = "https://awakesecurity.com/";
       position      = "Software Engineer";
       hireType      = "Full Time";
-      period        = { start = lib.time 3 2020; end = lib.time 9 2020; };
+      period        = { start = time 3 2020; end = time 9 2020; };
       duties        =
         [ "Invented Conix a declarative turing incomplete markup language written in Nix"
           "Created the optparse-repline open source Haskell library to aid in
@@ -257,7 +229,7 @@ conix: rec{
       website = "http://kollacode.com/";
       position = "Software Engineer";
       hireType = "Contractor";
-      period = { start = lib.time 10 2019; end = lib.time 3 2020; };
+      period = { start = time 10 2019; end = time 3 2020; };
       duties =
         [ 
           "Designed email notification API using NodeJS"
@@ -272,7 +244,7 @@ conix: rec{
       website       = "https://generalassemb.ly/locations/atlanta";
       position      = "Software Engineering Lead Instructor";
       hireType      = "Full Time";
-      period        = { start = lib.time 10 2018; end = lib.time 10 2019; };
+      period        = { start = time 10 2018; end = time 10 2019; };
       duties        =
           [ "Lead 60 career-changing students in three 12-week immersive courses using JavaScript Python MongoDB and SQL with a 90% job placement rate."
            "Designed and implemented Git architecture for managing course curriculum which eliminiated work duplication and increased clear team communication."
@@ -285,7 +257,7 @@ conix: rec{
       website       = "https://engineering.kennesaw.edu/mechatronics/index.php";
       position      = "Teaching Assistant";
       hireType      = "Part Time";
-      period        = { start = lib.time 8 2016; end = lib.time 12 2017; };
+      period        = { start = time 8 2016; end = time 12 2017; };
       duties        =
           [ "Developed a web server in Haskell to manage a robot race competition."
            "Used embedded C programming to design tools for students."
@@ -298,7 +270,7 @@ conix: rec{
       website       = "https://www.gtri.gatech.edu/";
       position      = "Robotics Engineer";
       hireType      = "Co-op";
-      period        = { start = lib.time 1 2015; end = lib.time 7 2016; };
+      period        = { start = time 1 2015; end = time 7 2016; };
       duties        =
           [ "Contributed to the completion of an automated poultry de-boning project designed to increase factory processing speed by 80%."
            "Designed graphical tool using C++ to enable research scientists to easily capture and process data relevant to projects."
@@ -315,7 +287,7 @@ conix: rec{
       website       = "";
       position      = "Mechatronics Engineer";
       hireType      = "Internship";
-      period        = { start = lib.time 5 2014; end = lib.time 7 2014; };
+      period        = { start = time 5 2014; end = time 7 2014; };
       duties        =
           [ "Designed embedded software for small engine control systems."
             "Designed and prototyped digital microcontroller circuits."
@@ -328,7 +300,7 @@ conix: rec{
       website       = "http://www.delantegroup.com/";
       position      = "Full Stack Software Engineer";
       hireType      = "Full Time";
-      period        = { start = lib.time 5 2017; end = lib.time 10 2018; };
+      period        = { start = time 5 2017; end = time 10 2018; };
       duties        =
         [ "Designed handwriting to text automation process using AWS MTURK to decrease operation costs from approximately 1k per month to approximately $100 per month."
           "Wrote a C# to TypeScript transpiler to increase cross language type-safety between frontend and backend code."

@@ -2,6 +2,10 @@ import <nixpkgs>
 { overlays = import (builtins.fetchGit
     { url = "https://github.com/theNerd247/conix.git";
       ref = "master";
-      rev = "cc78b71955977e106cee3b55173eb11ac62c5937";
-    });
+      rev = "e351b84204b6ac2bc91b35022740b73ac1cb8a54";
+    })
+    { extensions = 
+        [ (import ./time.nix)
+        ];
+    };
 }

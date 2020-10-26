@@ -1,8 +1,9 @@
-conix: 
+conix: with conix;
+
 let
   sortExperiences = 
-    builtins.sort (a: b: conix.lib.sortTime a.period.start b.period.start);
-  showPeriod = period: "${conix.lib.timeToString period.start} - ${conix.lib.timeToString (period.end or null)}";
+    builtins.sort (a: b: sortTime a.period.start b.period.start);
+  showPeriod = period: "${timeToString period.start} - ${timeToString (period.end or null)}";
   showAuthors = authors:
     let
       prim = builtins.head authors;
@@ -23,7 +24,7 @@ let
 
   subsection = title: hireType: name: period: content:
     ''
-    <div class="subsection">
+    <div class="subsection pageBreak">
 
     <div class="aligned"> <span class="left-align"> ${if title == "" then "" else "<h4>${title}</h4>"} </span> <span class="right-align">${hireType}</span> </div>
     <div class="aligned">
@@ -44,14 +45,24 @@ let
     </div>
     '';
 in
-{ resume = conix.lib.text 
-''# ${conix.resume.firstName} ${conix.resume.lastName}
+
+markdown "resume" (html "resume" [
+  (meta [
+    [''
+      css: 
+        - ''(pathOf ./static/latex.css)"\n"
+        "  - "(pathOf ./static/main.css)
+    ]
+    "pagetitle: Resume - Noah Harvey"
+  ])
+
+(r ''# ${data.resume.firstName} ${data.resume.lastName}
 
 <section class="contact">
-${conix.resume.email} - ${conix.resume.phone} - ${conix.resume.github}
+${data.resume.email} - ${data.resume.phone} - ${data.resume.github}
 </section>
 
-${section "Experience" (sortExperiences conix.resume.experiences) "experience"
+${section "Experience" (sortExperiences data.resume.experiences) "experience"
   (e: subsection 
     e.position
     e.hireType
@@ -61,7 +72,7 @@ ${section "Experience" (sortExperiences conix.resume.experiences) "experience"
   )
 }
 
-${section "Projects" conix.resume.projects "projects"
+${section "Projects" data.resume.projects "projects"
   (project: subsection 
       "" 
       ""
@@ -71,7 +82,7 @@ ${section "Projects" conix.resume.projects "projects"
   )
 }
 
-${section "Education" conix.resume.schools "" 
+${section "Education" data.resume.schools "" 
   (school: subsection
     school.degree
     school.hireType
@@ -81,7 +92,7 @@ ${section "Education" conix.resume.schools ""
   )
 }
 
-${section "Publications" conix.resume.publications ""
+${section "Publications" data.resume.publications ""
   (publication:
     ''
     <span class="publication-item">
@@ -90,4 +101,5 @@ ${section "Publications" conix.resume.publications ""
     ''
   )
 }
-'';}
+'')
+])

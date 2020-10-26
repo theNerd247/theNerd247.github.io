@@ -86,3 +86,11 @@ ul {
   text-align: center;
   padding-bottom: 1em;
 }
+
+@page {
+  margin: 1in;
+}
+
+.pageBreak {
+  break-after: page;
+}
