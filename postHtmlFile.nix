@@ -1,3 +1,6 @@
+let
+  fileBaseNameOf = fp: builtins.elemAt (builtins.splitVersion (builtins.baseNameOf fp)) 0;
+in
 x: with x; module "## Post API"
 {
   postHtmlFile = expr
@@ -21,26 +24,36 @@ x: with x; module "## Post API"
   importPostFile = expr
     "FilePath -> Content"
     "Import the given content from a file as a HTML Blog post"
-    (fp: 
-      let
-        fileBaseName = builtins.elemAt (builtins.splitVersion (builtins.baseNameOf fp)) 0;
-      in
-        data.postHtmlFile fileBaseName (import fp)
-    )
+    (fp: data.postHtmlFile (fileBaseNameOf fp) (import fp))
     ;
 
   importPostsDir = expr
     "DirPath -> Content"
     "Import all the posts under the given dir"
-    (dirPath:
-      foldAttrsIxCond 
+    (dirPath: with builtins;
+      let
+        linksAndFiles = foldAttrsIxCond 
         (_: false)
-        (fileType: fileName: 
-          if fileType == "regular" then importPostFile (./. "/${dirPath}/${fileName}")
+        (fileType: filePath:
+          let
+            fileName = concatStringsSep "." filePath;
+            fbn = fileBaseNameOf fileName;
+          in
+          if fileType == "regular" then 
+            { 
+              fst = x: ["[" (r x.data.posts.${fbn}.title) "](./${fbn}.html)" ];
+              snd = (data.importPostFile (./. + "/${dirPath}/${fileName}"));
+            }
           else []
         )
-        builtins.attrValues
-        (builtins.readDir dirPath)
+        (cs: foldl' (as: a: { fst = [as.fst a.fst]; snd = [as.snd a.snd];}) { fst = ""; snd = ""; } (attrValues cs))
+        (readDir (./. + "/${dirPath}"));
+
+        dname = fileBaseNameOf dirPath;
+      in
+       [ (_tell { ${dname}.links = linksAndFiles.fst; })
+         linksAndFiles.snd
+       ]
     )
     ;
 
