@@ -6,7 +6,7 @@ in
       (dir "resume" (import ./resume))
       (import ./index.nix)
 
-      (importPostFile ./contents/canIBeSureImSaved.nix)
+      (importPostFile ./sermons/canIBeSureImSaved.nix)
 
       # (import ./contents/making-a-sandwich.nix)
       # (import ./contents/no-vars-js.nix)
