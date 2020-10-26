@@ -1,6 +1,9 @@
-conix: { posts.making-a-sandwich = with conix.lib; postHtmlFile "making-a-sandwich" "" (texts [
-{ tags = [ "functional-programming" "philosophy" ]; draft = true;} 
-"# "(label "title" "What if I didn't Give you a Sandwich")''
+x: with x; [
+
+{ tags = [ "functional-programming" "philosophy" ]; 
+  draft = true;
+} 
+"# "{title = "What if I didn't Give you a Sandwich"}''
 
 Here's a question:
 
@@ -74,4 +77,4 @@ Every programming language must have function application. Apply is so
 fundamental to programming languages that its often the smallest operator. ` `
 in Haskell (that's a space, mind you), and `( )` in Typescript and C++. 
 
-'']);}
+'']

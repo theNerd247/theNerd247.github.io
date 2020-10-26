@@ -1,11 +1,10 @@
-conix: { sermons.canIBeSureImSaved = with conix.lib; 
 let
   ref = "Romans 8";
 in
 
-texts [ 
+x: with x; [
 
-''# ''(label "title" "Can I Be Sure I'm Saved?")''
+''# ''{title = "Can I Be Sure I'm Saved?"; }''
 
 # Intro
 
@@ -70,12 +69,12 @@ movement is to occur and so he sets up practices to direct the team to do this.
 ${ref}:29 - Jesus was the first born of several brothers. We are conformed to
 the image of Christ because we are brothers; we have the same DNA.
 
-(dotDigraph "inChrist" ''
+''(digraph "inChrist" ''
 
-Christ -> "Man In Christ +R" [label "Imputed righteosness"]
-Christ <- "Man In Adam -R"   [label "Forgiveness"]
+  Christ -> "Man In Christ +R" [label="Imputed righteosness"]
+  "Man In Adam -R" -> Christ   [label="Forgiveness"]
 
-'')
+'')''
 
 ${ref}:30
 
@@ -114,4 +113,4 @@ considered done (modus ponens?).
 going to give up on you now. There's nothing you can do to make Him displeased.
 
 ''
-];}
+]

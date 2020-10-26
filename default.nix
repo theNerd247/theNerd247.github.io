@@ -1,10 +1,12 @@
 let
   conix = (import ./pkgs.nix).conix;
 in
-  { site = conix.run
+  { site = conix.run (x: with x;
     [ 
-      (conix.dir "resume" (import ./resume))
+      (dir "resume" (import ./resume))
       (import ./contents/index.nix)
+
+      (importPostFile ./contents/canIBeSureImSaved.nix)
 
       # (import ./contents/making-a-sandwich.nix)
       # (import ./contents/no-vars-js.nix)
@@ -14,7 +16,7 @@ in
       # (import ./runJs.nix)
       # (import ./withDrv.nix)
       # (import ./dotgraph.nix)
-    ];
+    ]);
 
     resume = conix.run (import ./resume);
   }
