@@ -22,9 +22,9 @@ c: with c; html "index" [
 * [Resume](resume/resume.html)
 </div>
 
-# Posts
+# Sermon Notes
 
-''#(postList false conix.posts)''
+''(r (list data.sermons.links))
 ''
 
 ---

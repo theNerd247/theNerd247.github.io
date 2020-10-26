@@ -12,7 +12,7 @@ x: with x; module "## Post API"
     (fileBaseName: content: x: with x; html fileBaseName [
       (meta [
         (css ./static/zettelkasten.css)
-        ["pagetitle: \""(r (data.posts.${fileBaseName}.title or fileBaseName))"\""]
+        ["pagetitle: \""(r (data.${fileBaseName}.title or fileBaseName))"\""]
       ])''
 
 
@@ -41,12 +41,12 @@ x: with x; module "## Post API"
           in
           if fileType == "regular" then 
             { 
-              fst = x: ["[" (r x.data.posts.${fbn}.title) "](./${fbn}.html)" ];
-              snd = (data.importPostFile (./. + "/${dirPath}/${fileName}"));
+              fst = x: ["[" (_ref x.data.${fbn}.title) "](./${fbn}.html)" ];
+              snd = data.importPostFile (./. + "/${dirPath}/${fileName}");
             }
           else []
         )
-        (cs: foldl' (as: a: { fst = [as.fst a.fst]; snd = [as.snd a.snd];}) { fst = ""; snd = ""; } (attrValues cs))
+        (cs: foldl' (as: a: { fst = as.fst ++ [a.fst]; snd = as.snd ++ [a.snd];}) { fst = []; snd = []; } (attrValues cs))
         (readDir (./. + "/${dirPath}"));
 
         dname = fileBaseNameOf dirPath;
