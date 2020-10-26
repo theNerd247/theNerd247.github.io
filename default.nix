@@ -6,16 +6,7 @@ in
       (dir "resume" (import ./resume))
       (import ./index.nix)
 
-      (importPostsDir ./sermons)
-
-      # (import ./contents/making-a-sandwich.nix)
-      # (import ./contents/no-vars-js.nix)
-      # (import ./contents/why-fp-eaql.nix)
-      # (import ./contents/conix-intro.nix)
-      # (import ./contents/practicalRecursionSchemes.nix)
-      # (import ./runJs.nix)
-      # (import ./withDrv.nix)
-      # (import ./dotgraph.nix)
+      (importPostsDir "./sermons")
     ]);
 
     resume = conix.run (import ./resume);
