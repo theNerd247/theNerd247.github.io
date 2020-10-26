@@ -1,16 +1,47 @@
-conix: { lib = rec { 
-  docs.postHtmlFile.docstr = ''
-    Creates an html file as the `drv` for a module.
+x: with x; module "## Post API"
+{
+  postHtmlFile = expr
+    "FileBaseName -> Content -> Content"
+    ''
+    Create an HTML blog post and nest its content under the given file's
+    basename
+    ''
+    (fileBaseName: content: x: with x; html fileBaseName [
+      (meta [
+        (css ./static/zettelkasten.css)
+        ["pagetitle: \""(r (data.posts.${fileBaseName}.title or fileBaseName))"\""]
+      ])''
 
-    This is specific to the zettelkasten as it has a hardcoded css path.
-  '';
-  docs.postHtmlFile.todo = [
-    "When upstreaming this into conix it'd be best to remove the hardcoded css path"
-  ];
-  docs.postHtmlFile.type = "Name -> String -> Module -> Module";
-  postHtmlFile = name: args: with conix.lib;
-    withDrv (m: 
-      htmlFile name "--css ./static/zettelkasten.css ${args} --metadata pagetitle=\"${m.title or name}\""
-        (markdownFile name m)
-    );
-};}
+
+
+      ''(nest fileBaseName content)
+    ])
+    ;
+
+  importPostFile = expr
+    "FilePath -> Content"
+    "Import the given content from a file as a HTML Blog post"
+    (fp: 
+      let
+        fileBaseName = builtins.elemAt (builtins.splitVersion (builtins.baseNameOf fp)) 0;
+      in
+        data.postHtmlFile fileBaseName (import fp)
+    )
+    ;
+
+  importPostsDir = expr
+    "DirPath -> Content"
+    "Import all the posts under the given dir"
+    (dirPath:
+      foldAttrsIxCond 
+        (_: false)
+        (fileType: fileName: 
+          if fileType == "regular" then importPostFile (./. "/${dirPath}/${fileName}")
+          else []
+        )
+        builtins.attrValues
+        (builtins.readDir dirPath)
+    )
+    ;
+
+}

@@ -1,11 +1,13 @@
 import <nixpkgs>
-{ overlays = import (builtins.fetchGit
-    { url = "https://github.com/theNerd247/conix.git";
-      ref = "master";
-      rev = "e351b84204b6ac2bc91b35022740b73ac1cb8a54";
-    })
+{ overlays = import /home/noah/src/com/conix
+    # (builtins.fetchGit
+    #{ url = "https://github.com/theNerd247/conix.git";
+    #  ref = "master";
+    #  rev = "b95c0325cb2b15fe64d485636a298c514f9013f3";
+    #})
     { extensions = 
         [ (import ./time.nix)
+          (import ./postHtmlFile.nix)
         ];
     };
 }

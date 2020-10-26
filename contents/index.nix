@@ -1,21 +1,34 @@
-conix: { index = with conix.lib; postHtmlFile "index" "--css ./static/homepage.css" (texts [
-"# "(label "title" "Thoughts of a Programmer")''
+c: with c; html "index" [
+
+  (meta [ 
+    [''
+      css: 
+        - ''(pathOf ../static/homepage.css)
+     "\n  - " (pathOf ../static/zettelkasten.css)
+   ]
+        
+    "pagetitle: Noah Harvey"
+  ])''
+
+
+# Noah Harvey
 
 <div class="about" >
 
-![](./static/profile.jpg)
+![](''(pathOf ../static/profile.jpg)'')
 
-* [GitHub](${conix.resume.gitHubLink})
-* [LinkedIn](${conix.resume.linkedInLink})
+* [GitHub](''(r data.resume.gitHubLink)'')
+* [LinkedIn](''(r data.resume.linkedInLink)'')
 * [Resume](resume/resume.html)
 </div>
 
 # Posts
 
-''(postList false conix.posts)''
+''#(postList false conix.posts)''
+''
 
 ---
 
-Built using ${conix.lib.homePageLink} v${conix.lib.version.text}
+Built using [conix](''(r conix.homepageUrl)'') v''(r conix.version.text)
 
-'']);}
+]
