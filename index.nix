@@ -3,8 +3,8 @@ c: with c; html "index" [
   (meta [ 
     [''
       css: 
-        - ''(pathOf ../static/homepage.css)
-     "\n  - " (pathOf ../static/zettelkasten.css)
+        - ''(pathOf ./static/homepage.css)
+     "\n  - " (pathOf ./static/zettelkasten.css)
    ]
         
     "pagetitle: Noah Harvey"
@@ -15,7 +15,7 @@ c: with c; html "index" [
 
 <div class="about" >
 
-![](''(pathOf ../static/profile.jpg)'')
+![](''(pathOf ./static/profile.jpg)'')
 
 * [GitHub](''(r data.resume.gitHubLink)'')
 * [LinkedIn](''(r data.resume.linkedInLink)'')

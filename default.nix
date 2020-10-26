@@ -4,7 +4,7 @@ in
   { site = conix.run (x: with x;
     [ 
       (dir "resume" (import ./resume))
-      (import ./contents/index.nix)
+      (import ./index.nix)
 
       (importPostFile ./contents/canIBeSureImSaved.nix)
 
