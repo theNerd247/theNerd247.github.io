@@ -27,6 +27,8 @@ x: with x; module "## Post API"
     (fp: data.postHtmlFile (fileBaseNameOf fp) (import fp))
     ;
 
+  # TODO: make the dir import generic enough to be part of the core library
+  # TODO: add linking mechanism to the core library to simplify this code
   importPostsDir = expr
     "DirPath -> Content"
     "Import all the posts under the given dir"
@@ -38,15 +40,16 @@ x: with x; module "## Post API"
           let
             fileName = concatStringsSep "." filePath;
             fbn = fileBaseNameOf fileName;
+            ext = builtins.match ".*.nix$" fileName;
           in
-          if fileType == "regular" then 
+          if fileType == "regular" && ext == [] then 
             { 
-              fst = x: ["[" (_ref x.data.${fbn}.title) "](./${fbn}.html)" ];
-              snd = data.importPostFile (./. + "/${dirPath}/${fileName}");
+              fst = [(x: ["[" (_ref x.data.${fbn}.title) "](./${fbn}.html)" ])];
+              snd = [(data.importPostFile (./. + "/${dirPath}/${fileName}"))];
             }
-          else []
+          else { fst = []; snd = []; }
         )
-        (cs: foldl' (as: a: { fst = as.fst ++ [a.fst]; snd = as.snd ++ [a.snd];}) { fst = []; snd = []; } (attrValues cs))
+        (cs: foldl' (as: a: { fst = as.fst ++ a.fst; snd = as.snd ++ a.snd;}) { fst = []; snd = []; } (attrValues cs))
         (readDir (./. + "/${dirPath}"));
 
         dname = fileBaseNameOf dirPath;

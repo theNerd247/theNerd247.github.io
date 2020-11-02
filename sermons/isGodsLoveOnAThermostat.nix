@@ -1,12 +1,10 @@
-conix: { isGodsLoveOnAThermostat = with conix.lib; 
-
 let
   ref = "Romans 8";
 in
 
-texts [
+x: with x; [
 
-''# ''(label "title" "Is GO'ds Love On A Thermostat?")''
+''# ''{title = "Is GO'ds Love On A Thermostat?";}''
 
 # Intro
 
@@ -83,7 +81,7 @@ Jer 31:3
 Paul re-assures us of God's love ${ref}:36 by referencing Psalm 44:22. He 
 is saying that God's people should't be surprised that we will suffer.
 
-# ''(capcase "Adversity can be a Sign of God's salvation not rejection")''
+# Adversity can be a Sign of God's salvation not rejection
 
 2 Tim 3:12
 
@@ -94,7 +92,7 @@ is saying that God's people should't be surprised that we will suffer.
 revelation 
 : Christ's return during the millenium
 
-# ''(capscase "God has made you a super conquerer")''
+# God has made you a super conquerer
 
 ${ref}:37
 
@@ -148,7 +146,7 @@ changed to "Teach me to know it is well with my soul".
 Knowledge is the instrument panel on that spiritual airplane that gets us
 through the opaque clouds.
 
-# ''(capscase "God wants you to live with confidence, not fear and anxiety.")''
+# God wants you to live with confidence, not fear and anxiety.
 
 ${ref}:39
 
@@ -192,4 +190,4 @@ When we rest in who we are in Christ because He is our saftey net then we can
 live a vibrant CHristian life.
 
 
-''];}
+'']

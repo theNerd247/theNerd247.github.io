@@ -1,6 +1,6 @@
-conix: { sermons.theFingerPrintsOfGodsSpirit = with conix; texts [
+x: with x; [
 
-''# ''(label "title" "The Fingerprints of God's Spirit")''
+''# ''{ title = "The Fingerprints of God's Spirit"; }''
 
 # Intro
 
@@ -16,7 +16,7 @@ run to me! I have given you my Spirit! You simply need to activate me".
 : to interpret a text through a thorough analysis of the original author's
 meaning of the text.
 
-# ''(capsCase "What should I know about the holy Spirit's involvement in my life?")''
+# What should I know about the holy Spirit's involvement in my life?
 
 Titus 3
 
@@ -25,11 +25,9 @@ Paul is writing to him.
 
 ''(digraph "GoodWorksFromGrace" ''
 
-digraph {
   "God's grace" -> "Spiritual Riches" [label="produces"]
   "Spirit Riches" -> "Heart of Righteousness" [label="produces"]
   "Heart of Righteousness" -> "Good works" [label="produces"]
-}
 
 '')''
 
@@ -71,7 +69,7 @@ regeneration
 : lit. re-created (John 3:7)
 
 
-# ''(capsCase "Recognize your reformation in Christ")''
+# Recognize your reformation in Christ
 
 Eph 2:2-3
 
@@ -88,25 +86,21 @@ Eph 2:5
 
 ''(digraph "3PartsOfPerson" ''
 
-digraph {
   Body -> Soul
   Soul -> Spirit
   Spirit -> Body
 
-}
 '')''
 
 
 ''(digraph "Regeneration" ''
 
-digraph {
   Body -> Soul
   Soul -> Spirit
 
   Spirit -> Spirit [label="divine combustion"]
 
   HS -> Spirit [label="God combines with your spirit"]
-}
 
 '')''
 
@@ -121,7 +115,7 @@ Holy Spirit enters us we can then see and thus follow Christ.
 
 God does an extreme make over in us - like HGTV.
 
-# ''(capsCase "Embrace the renewing process")''
+# Embrace the renewing process
 
 
 Titus 3:5
@@ -158,7 +152,7 @@ made
 You will never be living at your fullest potential. There is always more and
 more you can grow into in your walk with Christ.
 
-# ''(capsCase "Recieve the full benefit of your justification")''
+# Recieve the full benefit of your justification
 
 Titus 3:6-7
 
@@ -173,5 +167,5 @@ Does that matter to you?
 the believer to experience while livng here on this earth. Have you activiated
 the divine riches God has for your life?
 
-'' ];}
+'' ]
 

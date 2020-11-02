@@ -1,5 +1,6 @@
-conix: { sermons.romans8 = with conix.lib; texts [
-''
+x: with x; [
+''# ''{ title = "Quick Back To The Future"; }''
+
 # Intro
 
 Romans 8:21
@@ -73,14 +74,15 @@ Redemption
 : exagarazo - to buy a slave out
 : apolatruo - to go to the slave market, buy a slave and subsequently free him.
 
-''(table "tensesOfSalvation" ["We are saved", "being saved", "shall be saved"]
+''(table
+  ["We are saved" "being saved" "shall be saved"]
 
-[["salvation", "sanctification", "glorified"]
- ["justified", "acting out righteousness", "redeemed body"]
-]
+  [["salvation" "sanctification" "glorified"]
+   ["justified" "acting out righteousness" "redeemed body"]
+  ]
 )''
 
-''(dotDigraph "newbody" "Millenium --> eternity")''
+''(digraph "newbody" "Millenium -> eternity")''
 
 eagerly
 : actively! Not a passive waiting
@@ -116,4 +118,4 @@ _Like a deep sea diver who has to wear a suit because he wasn't made to live in
 water; we wear a sinful body and we are not made to live in this world but with
 Christ in the next._
 ''
-];}
+]

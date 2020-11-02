@@ -1,11 +1,10 @@
-conix: { sermons.findingGoodInBad = with conix.lib; 
 let
   ref = "Romans 8";
 in
 
-texts [
+x: with x; [
 
-''# ''(label "title" "FInding Good In The Bad")''
+''# ''{title = "FInding Good In The Bad"; }''
 
 ## Intro
 
@@ -118,4 +117,4 @@ Comprehend:
 * Trust in God's management of All things
 
 ''
-];}
+]

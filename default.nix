@@ -6,7 +6,7 @@ in
       (dir "resume" (import ./resume))
       (import ./index.nix)
 
-      (importPostsDir "./sermons")
+      (dir "sermons" (importPostsDir "./sermons"))
     ]);
 
     resume = conix.run (import ./resume);

@@ -68,14 +68,14 @@ why can't I be like that? When the HS fills a particular believer He manifests
 His works in a way that is tied closely with that person's natural gifts
 and personality/temperament.
 
-''(digraph "In Christ" ''
+''(digraph "InChrist" ''
 
-Hell -> cross [label="salvation"]
+Hell -> Cross [label="salvation"]
 Cross -> "In Christ" [label="Position"]
 Cross -> "Filling of HS" [label="Fellowship"]
 
 "Filling of HS" -> "OOF" [label="sin"]
-"OOF" -> "Filling of HS" -> [label="confession"]
+"OOF" -> "Filling of HS" [label="confession"]
 
 '')''
 

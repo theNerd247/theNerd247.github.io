@@ -6,6 +6,8 @@ x: with x; [
 
 ''# ''{title = "Can I Be Sure I'm Saved?"; }''
 
+_''{ speaker = "Dr. Byron Morgan"; }''_
+
 # Intro
 
 ${ref}:28-30

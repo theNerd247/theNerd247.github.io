@@ -1,11 +1,10 @@
-conix: { judgementAndCriticism = with conix.lib; 
 let
-  ref = "Romans 8"
+  ref = "Romans 8";
 in
 
-texts [
+x: with x; [
 
-''# ''(label "When You Experience Judgement and Criticism")''
+''# ''{title = "When You Experience Judgement and Criticism";}''
 
 # Intro
 
@@ -172,4 +171,4 @@ that trophy!" - but the one who hit the perfect score says "My scorecard is his 
 * 
 
 ''
-];}
+]

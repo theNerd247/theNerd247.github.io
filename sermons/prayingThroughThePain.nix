@@ -1,10 +1,9 @@
-conix: { sermons.prayingThroughThePain = with conix.lib;
 let 
-  ref = conix.sermons.prayingThroughThePain.ref 
+  ref = "Romans 8";
 in 
-  texts [
+x: with x; [
 ''
-# ''(label "title" "Praying Through The Pain")''
+# ''{title = "Praying Through The Pain"; }''
 
 # Intro
 
@@ -16,7 +15,7 @@ God uses pain to get our attention to address what He wants to change us.
 How can my pain connect me better with God? How can I go to God in prayer to
 connect with His peace in my life?
 
-''(label "ref" "Romans 8")'':14-17
+${ref}:14-17
 
 1. Leading
 2. Assuring us of our relationship
@@ -81,9 +80,9 @@ weakness
 
 Johari Window
 
-''(table ["", ""]
- [[ "open self"  , "blind self"]
-  [ "hidden self", "uknown self"]
+''(table ["" ""]
+ [[ "open self"    "blind self"]
+  [ "hidden self" "uknown self"]
 ])''
 
 # Recognize Your Weakness 
@@ -157,4 +156,4 @@ ${ref}:27
 * Believe that your divine advocate will guide you, if you surrender to Him.
   Lord I am not going to get up until you speak to me.
 
-''];}
+'']
