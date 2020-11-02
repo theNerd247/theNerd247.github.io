@@ -22,11 +22,6 @@ c: with c; html "index" [
 * [Resume](resume/resume.html)
 </div>
 
-# Sermon Notes
-
-''(r (list data.sermons.links))
-''
-
 ---
 
 Built using [conix](''(r conix.homepageUrl)'') v''(r conix.version.text)
