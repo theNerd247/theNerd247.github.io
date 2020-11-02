@@ -92,5 +92,5 @@ ul {
 }
 
 .pageBreak {
-  break-after: page;
+  break-inside: avoid;
 }
