@@ -1,9 +1,12 @@
+
+
 ---
 css: 
   - ./latex.css
   - ./main.css
 pagetitle: Resume - Noah Harvey
 ---
+
 # Noah Harvey
 
 <section class="contact">
