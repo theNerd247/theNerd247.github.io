@@ -66,6 +66,11 @@ markdown "resume" (html "resume" [
 
 </section>
 
+<section class="contact">
+''(r data.languagesText)''
+
+</section>
+
 ''
 (section "Experience" "experience"
   (r (with builtins; map
@@ -119,11 +124,12 @@ markdown "resume" (html "resume" [
   ))
 )
 
-(section "Languages" ""
-  (r (with builtins; map
-    (language: language.languageName)
-    data.resume.languages 
-  ))
-)
+#(section "Languages" ""
+(tell { languagesText = 
+  (r (intersperse " - " (builtins.map 
+    (l: l.languageName) 
+    data.resume.languages
+  )))
+;} )
 
 ])
