@@ -1,8 +1,7 @@
 let
-  conix = (import ./pkgs.nix).conix;
+  run = (import ./pkgs.nix).conix.runExtended [ (import ./time.nix) (import ./postHtmlFile.nix) ];
 in
-  { site = conix.runExtended 
-    [ (import ./time.nix) (import ./postHtmlFile.nix) ]
+  { site = run
     (x: with x; [ 
       (dir "resume" (import ./resume))
 
@@ -12,9 +11,9 @@ in
 
       (dir "posts" (nest "posts" (importPostsDir "./posts")))
 
-      #(dir "notes" (nest "notes" (importPostsDir "./notes")))
+      (dir "notes" (nest "notes" (importPostsDir "./notes")))
 
     ]);
 
-    resume = conix.run (import ./resume);
+    resume = run (import ./resume);
   }

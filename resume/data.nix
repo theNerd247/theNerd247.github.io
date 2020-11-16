@@ -21,14 +21,18 @@ x: with x; tell {
         uniq
       ];
     languages = 
-        [ linux
+        [ 
           haskell
           nix
           elm
-          clang
+          c
+          cpp
           csharp
           javascript
+          java
           git
+          bash
+          python
         ]; 
 
     schools = 
@@ -126,7 +130,7 @@ x: with x; tell {
            yearsExperience    = 4;
      };
 
-    clang = {
+    c = {
            languageName       =  "C";
            yearsExperience    = 7;
            languageCategories = ["backend"];
@@ -210,6 +214,12 @@ x: with x; tell {
         languageCategories = [];
     };
 
+    java = {
+      languageName = "Java";
+      yearsExperience = 4;
+      languageCategories = [ "backend" ];
+    };
+
     awakeSecurity = {
       instituteName = "Awake Security";
       website       = "https://awakesecurity.com/";
@@ -217,11 +227,12 @@ x: with x; tell {
       hireType      = "Full Time";
       period        = { start = time 3 2020; end = time 9 2020; };
       duties        =
-        [ "Invented Conix a declarative turing incomplete markup language written in Nix"
+        [ "Invented Conix a domain specific language for writing smart markdown."
           "Created the optparse-repline open source Haskell library to aid in
           refactoring a large codebase and eliminate production bugs as well as
           stablize a user interface."
           "Designed tutorials for EAQL - a new programming language invented by Awake Security."
+          "Learned Category-Theory and Type-theory while studying under Gabriel Gonzalez."
         ];
     };
 
@@ -247,9 +258,11 @@ x: with x; tell {
       hireType      = "Full Time";
       period        = { start = time 10 2018; end = time 10 2019; };
       duties        =
-          [ "Lead 60 career-changing students in three 12-week immersive courses using JavaScript Python MongoDB and SQL with a 90% job placement rate."
-           "Designed and implemented Git architecture for managing course curriculum which eliminiated work duplication and increased clear team communication."
-           "Designed prototyped and built course scheduling system using functional programming to decrease course planning time from 1 week to half a day."
+          [ 
+            "Lead 60 career-changing students in three 12-week immersive courses using JavaScript, Python, MongoDB, and SQL with a 90% job placement rate."
+            "Designed and implemented Git architecture for managing course curriculum which eliminiated work duplication and increased clear team communication."
+            "Designed, prototyped and built a course scheduling system to decrease course planning time from 1 week to half a day."
+            "Authored web development curriculum and exercises for junior developers using Express, MongoDB, NodeJS, and React JS."
           ];
     };
 
@@ -273,13 +286,11 @@ x: with x; tell {
       hireType      = "Co-op";
       period        = { start = time 1 2015; end = time 7 2016; };
       duties        =
-          [ "Contributed to the completion of an automated poultry de-boning project designed to increase factory processing speed by 80%."
-           "Designed graphical tool using C++ to enable research scientists to easily capture and process data relevant to projects."
-          ];
-      otherSkills =
-          [ "Contributed to on going research projects within a week of on-boarding using image processing algorithms in C++."
-           "Contributed to the completion of a 5 year prototyping project for top industry client in poultry processing."
-           "Introduced the Robotic Operating System framework to new projects to increase modularity and increase."
+          [ 
+           "Designed and implemented robotics control software for an automated poultry de-boning project designed to increase factory processing speed by 80%."
+           "Wrote computer vision software to collect statistics for modelling the skeleton of poultry."
+           "Introduced the Robotic Operating System framework and GitLab to new projects which created a stable."
+           "Co-Authored a research paper on modelling the kinematics of non-rigid bodies"
           ];
     };
 
@@ -290,9 +301,10 @@ x: with x; tell {
       hireType      = "Internship";
       period        = { start = time 5 2014; end = time 7 2014; };
       duties        =
-          [ "Designed embedded software for small engine control systems."
-            "Designed and prototyped digital microcontroller circuits."
-            "Aided in brainstorming new company products."
+          [ 
+            "Designed embedded software for a small engine control system."
+            "Designed, built, and programmed motor controller circuit boards from reciept printers."
+            "Aided in quality control of auto parts"
           ];
     };
 

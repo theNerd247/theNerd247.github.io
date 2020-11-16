@@ -3,50 +3,52 @@ conix: with conix;
 let
   sortExperiences = 
     builtins.sort (a: b: sortTime a.period.start b.period.start);
+
   showPeriod = period: "${timeToString period.start} - ${timeToString (period.end or null)}";
+
   showAuthors = authors:
     let
       prim = builtins.head authors;
     in
       "${prim.lastName}, ${prim.firstName}${if builtins.length authors > 1 then " et al." else ""}";
 
-  section = title: data: class: itemContent:
+  section = title: class: contents: [
     ''
-    <section class="section ${class}">
-    ### ${title}
+    <section class="section ''class ''">
+    ### '' title ''
     <div class="section-contents">
 
-    ${builtins.concatStringsSep "" (builtins.map itemContent data)}
+    '' contents ''
 
     </div>
     </section>
-    '';
+    ''];
 
-  subsection = title: hireType: name: period: content:
+  subsection = topLeft: topRight: bottomLeft: bottomRight: content: [
     ''
     <div class="subsection pageBreak">
 
-    <div class="aligned"> <span class="left-align"> ${if title == "" then "" else "<h4>${title}</h4>"} </span> <span class="right-align">${hireType}</span> </div>
-    <div class="aligned">
-      <span class="left-align italic">${name}</span>
+    <div class="aligned">''
+      "<span class=\"left-align\">"
+        (if topLeft == "" then [] else ["<h4>" topLeft "</h4>"])
+      "</span>"
+      "<span class=\"right-align\">" topRight "</span>"
+    "</div>"
+    ''<div class="aligned">
+      <span class="left-align italic">'' bottomLeft ''</span>
       <span class="right-align">
-      ${if builtins.isAttrs period
-        then
-          showPeriod period
-        else
-          period
-       }
-       </span>
+      '' bottomRight ''
+      </span>
      </div>
 
      <div class="content">
-     ${content}
+     '' content ''
      </div>
     </div>
-    '';
+    ''];
 in
 
-markdown "resume" (html "resume" [
+html "resume" [
   (meta [
     [''
       css: 
@@ -56,50 +58,71 @@ markdown "resume" (html "resume" [
     "pagetitle: Resume - Noah Harvey"
   ])
 
-(r ''# ${data.resume.firstName} ${data.resume.lastName}
+''# '' (r data.resume.firstName)" "(r data.resume.lastName)''
 
 <section class="contact">
-${data.resume.email} - ${data.resume.phone} - ${data.resume.github}
+''(r data.resume.email)'' - ''(r data.resume.phone)'' - ''(r data.resume.github)''
+
 </section>
 
-${section "Experience" (sortExperiences data.resume.experiences) "experience"
-  (e: subsection 
-    e.position
-    e.hireType
-    e.instituteName 
-    e.period 
-    ("* ${builtins.concatStringsSep "\n* " e.duties}")
-  )
-}
+''
+(section "Experience" "experience"
+  (r (with builtins; map
+    ({position, hireType, instituteName, period, duties, ...}: subsection 
+      position
+      hireType
+      instituteName 
+      (showPeriod period) 
+      (list duties)
+    )
+    (sortExperiences data.resume.experiences)
+  ))
+)
 
-${section "Projects" data.resume.projects "projects"
-  (project: subsection 
-      "" 
+(section "Projects" "projects"
+  (r (with builtins; map
+    (project: subsection 
+        "" 
+        ""
+        project.instituteName
+        (concatStringsSep " " (map (l: l.languageName) project.projectLanguages))
+        project.synopsis
+    )
+    data.resume.projects
+  ))
+)
+
+(section "Education" ""
+  (r (with builtins; map
+    (school: subsection
+      school.degree
+      school.hireType
+      school.instituteName
+      (showPeriod school.period)
       ""
-      project.instituteName
-      (builtins.concatStringsSep " " (builtins.map (l: l.languageName) project.projectLanguages))
-      project.synopsis
-  )
-}
+    )
+    data.resume.schools 
+  ))
+)
 
-${section "Education" data.resume.schools "" 
-  (school: subsection
-    school.degree
-    school.hireType
-    school.instituteName
-    school.period
-    ""
-  )
-}
+(section "Publications" ""
+  (r (with builtins; map
+    (publication:
+      ''
+      <span class="publication-item">
+      ${showAuthors publication.publicationAuthors} _${publication.publicationTitle}_ ${builtins.toString publication.publicationYear}, ${publication.publisher}
+      </span>
+      ''
+    )
+    data.resume.publications 
+  ))
+)
 
-${section "Publications" data.resume.publications ""
-  (publication:
-    ''
-    <span class="publication-item">
-    ${showAuthors publication.publicationAuthors} _${publication.publicationTitle}_ ${builtins.toString publication.publicationYear}, ${publication.publisher}
-    </span>
-    ''
-  )
-}
-'')
-])
+(section "Languages" ""
+  (r (with builtins; map
+    (language: language.languageName)
+    data.resume.languages 
+  ))
+)
+
+]
