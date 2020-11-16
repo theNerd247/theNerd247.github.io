@@ -16,39 +16,40 @@ let
     ''
     <section class="section ''class ''">
     ### '' title ''
+
     <div class="section-contents">
 
     '' contents ''
 
     </div>
     </section>
-    ''];
+
+  ''];
 
   subsection = topLeft: topRight: bottomLeft: bottomRight: content: [
-    ''
-    <div class="subsection pageBreak">
+    "<div class=\"subsection pageBreak\">"
 
-    <div class="aligned">''
+    "<div class=\"aligned\">"
       "<span class=\"left-align\">"
         (if topLeft == "" then [] else ["<h4>" topLeft "</h4>"])
       "</span>"
       "<span class=\"right-align\">" topRight "</span>"
     "</div>"
-    ''<div class="aligned">
-      <span class="left-align italic">'' bottomLeft ''</span>
-      <span class="right-align">
-      '' bottomRight ''
-      </span>
-     </div>
+    "<div class=\"aligned\">"
+      "<span class=\"left-align italic\">" bottomLeft "</span>"
+      "<span class=\"right-align\">"
+        bottomRight
+      "</span>"
+     "</div>"
 
-     <div class="content">
-     '' content ''
-     </div>
-    </div>
-    ''];
+     "<div class=\"content\">\n\n"
+       content
+     "\n\n</div>"
+    "</div>"
+    ];
 in
 
-html "resume" [
+markdown "resume" (html "resume" [
   (meta [
     [''
       css: 
@@ -125,4 +126,4 @@ html "resume" [
   ))
 )
 
-]
+])
