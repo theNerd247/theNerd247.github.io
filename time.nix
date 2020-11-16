@@ -1,4 +1,4 @@
-x: with x; module "## Time API \n"
+x: with x; module (_: [])
 {
   time = expr
     "Month -> Year -> Time"

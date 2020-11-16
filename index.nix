@@ -22,6 +22,10 @@ c: with c; html "index" [
 * [Resume](resume/resume.html)
 </div>
 
+# Projects
+
+  * [Conix](''(r conix.homepageUrl)'') - A programming 
+
 ---
 
 Built using [conix](''(r conix.homepageUrl)'') v''(r conix.version.text)

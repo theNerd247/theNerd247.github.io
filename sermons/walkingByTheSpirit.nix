@@ -1,4 +1,4 @@
-conix: with conix;
+conix: with conix; [
 
 "# "{ title = "Walking By The Spirit"; }''
 
@@ -109,4 +109,4 @@ Things that grieve the Holy Spirit (applied to the church at Ephesus):
 1. Malice, wrath, slander. All forms of anger manifested in a sinful way.
 
 Remember we could hurt the feelings of Christ and the Holy Spirit.
-''
+'']

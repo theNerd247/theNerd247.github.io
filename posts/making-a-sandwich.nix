@@ -3,15 +3,15 @@ x: with x; [
 { tags = [ "functional-programming" "philosophy" ]; 
   draft = true;
 } 
-"# "{title = "What if I didn't Give you a Sandwich"}''
+"# "{title = "What if I didn't Give you a Sandwich"; }''
 
 Here's a question:
 
 > ''
-(label "prem1" ''If I give you the recipe for making a sandwich'')
+{prem1 = ''If I give you the recipe for making a sandwich''; }
 " and "
-(label "prem2" ''all of its ingredients, cookware, etc.'') 
-(label "conc" ''Can I assume that at somepoint in time a sandwich exists?'')
+{ prem2 = ''all of its ingredients, cookware, etc.''; } 
+{ conc = ''Can I assume that at somepoint in time a sandwich exists?''; }
 ''
 
 
@@ -30,10 +30,10 @@ symbols to represent the logical statements about sandwiches above.
 
 English | Symbols
 --- | ---
-"''(t conix.posts.making-a-sandwich.prem1)''" | `P -> Q`
+"''(r data.prem1)''" | `P -> Q`
 "and"                                         | "&"
-"''(t conix.posts.making-a-sandwich.prem2)''" | `P`
-"''(t conix.posts.making-a-sandwich.conc)''"  | `Q`
+"''(r data.prem2)''" | `P`
+"''(r data.conc)''"  | `Q`
 
 To write the entire statement using only symbols looks like:
 

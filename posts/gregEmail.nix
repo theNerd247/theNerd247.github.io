@@ -1,14 +1,6 @@
-(import <nixpkgs> { overlays = import (builtins.fetchGit
-{ ref = "conixSnippets"; rev = "02f41ba7257c7d44b9e25170b21f330492c22389"; url = "https://github.com/theNerd247/conix.git"; });
-}).conix.run(conix: with conix; html "gregEmail" [
+conix: with conix; [
 
-''Hey Gregg,
-
-So here's a small introduction to lambda calculus. Obviously you can
-Google just about anything today but, I hope to give you a 3,000 ft. fly-over
-so that you don't have to spend too much time Googling.
-
-# What is a Programming Language?
+''# ''{ title = "What is a Programming Language?"; }''
 
 When I learned computer hardware architecture and programming I did so in a
 bottom up manner.  I started with logic circuits to construct simple adding
@@ -232,4 +224,4 @@ could very well remove the arithmetic expressions to arrive at only
 functions, variables, and application of functions to expressions.
 
 
-''])
+'']

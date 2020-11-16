@@ -38,6 +38,7 @@ x: with x; tell {
           hireType      = "Full Time";
           website       = "https://ksu.edu";
           degree        = "B.S. Mechatronics Engineering";
+          gpa           = 3.44;
         }
       ];
 
