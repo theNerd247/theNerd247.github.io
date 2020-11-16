@@ -1,9 +1,9 @@
-conix: { posts.practicalRecursionSchemes = with conix.lib; postHtmlFile "practicalRecursionSchemes" "" (textsd [
+conix: with conix; [
 
 { tags = ["recursion-schemes" "functional-programming"];  draft = true;}
 
 ''
-# ''(label "title" "Practical Recursion Schemes")''
+# ''{ title = "Practical Recursion Schemes"; }''
 
 I'm obsesed with recursion schemes. And I'd like to give a practical example of
 what they are and why they are practical. For now I'll stick only to 1
@@ -15,9 +15,8 @@ recursion scheme - catamorphisms (aka folds or, for the JS folk, a more generic
 A search tree stores words of a senence in alphabetical order. Below we have a
 tree storing: "ant", "and", "ape", "at":
 
-''(dotDigraph "substrTree"
+''(digraph "substrTree"
 ''
-digraph {
   node0 [ label = "a" ]
   node1 [ label = "n" ]
   node2 [ label = "t" ]
@@ -34,7 +33,6 @@ digraph {
   node0 -> node5
   node1 -> node6
   node6 -> node7
-}
 '')''
 
 To search for a word we'll use the following algorithm where:
@@ -51,9 +49,8 @@ To search for a word we'll use the following algorithm where:
 : initially set to be Nothing.
 : When appending a letter to an rWord Nothing is treated as the empty string.
 
-''(dotDigraph "searchAlg1"
+''(digraph "searchAlg1"
 ''
-digraph {
 
   node0  [label = "sWord empty"]
   node1  [label = "return rWord"]
@@ -79,7 +76,6 @@ digraph {
   node6 -> node4 [label = "yes"]
 
   node6 -> node8 [label = "no"]
-}
 
 '')''
 
@@ -99,13 +95,13 @@ type RWord = Maybe String
 findWord :: SWord -> STree -> RWord
 findWord sWord = fmap reverse . findWord' Nothing sWord
 
-''(label "findWordCode" ''
+''{ findWordCode = ''
 findWord' :: SWord -> STree -> [RWord]
 findWord' [] tree = collectWords tree
 findWord' sWord@(s:ss) (STree c branches)
   | s == c           = foldMap ((c:) . findWord' ss) branches
   | otherwise        = []
-'')''
+'';}''
 
 collectWords :: STree -> [RWord]
 collectWords (STree c branches) = foldMap ((c:) . collectWords) branches
@@ -175,7 +171,7 @@ The answers to the last 2 questions we can find by analyzing the recursive code
 above:
 
 ```haskell
-''(t conix.posts.practicalRecursionSchemes.findWordCode)''
+''(r data.findWordCode)''
 
 ```
 
@@ -221,5 +217,5 @@ findWordAlg (SCons s (StreeF c rwords)) =
 
 ```
 
-'']);}
+'']
 

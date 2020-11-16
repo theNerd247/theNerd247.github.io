@@ -1,6 +1,6 @@
-conix: { posts.why-fp-eaql = with conix.lib; postHtmlFile "why-fp-eaql" "" (texts [
+conix: with conix.lib; [
 { tags = [ "functional-programming" "eaql"]; draft = true; }
-"# "(label "title" "Benefits of Functional Programming With EAQL")''
+"# "{ title = "Benefits of Functional Programming With EAQL"; }''
 
 
 A DSL is a very specific language that aims to make encoding solutions to a
@@ -59,4 +59,4 @@ to combine create solutions and combine them in an easy way.
 # * Lambda Cube
 # * Hindly Milner type system
 # * Writing an evaluator using recursion schemes
-]);}
+]

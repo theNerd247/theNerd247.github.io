@@ -1,7 +1,7 @@
-conix: { posts.understandingLenses = with conix.lib; texts [
+conix: with conix.lib; [
 { draft = true; }
 
-''# ''(label "title" "Understanding Lenses")''
+''# ''{ title = "Understanding Lenses"; }''
 
 # Indexing 
 
@@ -25,7 +25,7 @@ describes the path into the tree to grab a specific value.
 
 Lenses are the function form of indexes. Instead of representing the path to a
 particular value into a datastructure with a value, we represent it with a
-function. ''#TODO prove this statement
+function. '' #TODO prove this statement
 ''
 
 ```haskell
@@ -52,4 +52,4 @@ modifyTree :: (a -> a) -> Tree a -> Tree a
 or some other more restrictive type would be the appropriate industry-strength
 type.
 
-];}
+'']

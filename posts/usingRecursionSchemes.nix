@@ -1,6 +1,6 @@
-conix: { notes.recursionSchemes.using = with conix.lib; texts [
+conix: with conix; [
 ''
-# ''(label "title" "Using Recursion Schemes")''
+# ''{ title = "Using Recursion Schemes"; }''
 
 General Principles
 ==================
@@ -110,4 +110,4 @@ Questions
            = d where d = (cata a') . fmap c . unfix
            = e where e = (f where f = a' . fmap f . unfix) . fmap e . unfix
 ''
-];}
+]
