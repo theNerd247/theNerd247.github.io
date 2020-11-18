@@ -130,10 +130,12 @@ find the common properties of module-like features across multiple languages
 what do we find? 
 
 First, a module is something that exports a collection of expressions in that
-language where each expression is paired with a unique identifier. Typically
-these collections are manifested as features particular to that language:
-classes in OOP languages, objects in untyped languages like JavaScript and Nix,
-and modules in Haskell.
+language where each expression is paired with a unique identifier. I'll call
+these expressions + identifier pair a definition. Typically these collections
+are manifested as features particular to that language: classes in OOP
+languages, objects in untyped languages like JavaScript and Nix, and modules in
+Haskell. Each of these collections should be able to be combined to create
+larger collections. That is we can form larger modules from smaller ones.
 
 Second, a module requires some way of depending on other modules. Again most
 languages use explicit import statements. Here's a sample of some:
@@ -152,8 +154,48 @@ languages use explicit import statements. Here's a sample of some:
   Nix: `let F = import ./foo.nix in ...`
   ''
 
-])''
+  ''
+  Elm-lang: `import List as L`
+  ''
 
+  ''
+  Java: `import java.util.*;`
+  ''
+
+])''
+In each of these examples we are solving 2 problems. Where is the target
+dependency located? And, how do we bring it into scope? 
+
+Modules should have the following properties:
+
+* Combining modules avoids name clashes.  Let's say we have 2 modules `A` and
+`B` - each containing a definition with identifier called `x`. If we combine
+these modules `C = A <> B` then we would get a name clash - which module should
+define `C`'s `x` definition? The answer is `C` should be defined in such a way
+that we avoid the issue altogether.
+
+* A module shouldn't not be allowed to depend on a non-existant module. Just
+like calling a variable that doesn't exist is illegal - so is calling a module.
+
+## Module Features
+
+* Modules should be easy to extract from a project and turned into their own
+projects.
+
+* A module should be an independtly shippable unit. That is a module should
+easily transported across different projects with ease.
+
+* A module should be version controlled. Modules change over time and thus
+it's not enough to state the name of a module to use but also what point in
+time that module lives.
+
+* A module should have meta-data and documentation attached to it. Things like
+copy{right,left}, website, author, etc.
+
+## Modelling a Module
+
+To model this let's start by thinking about the most basic module: an empty
+module. This module would contain no definitions 
 
 # A Debugging Language Feature
 
