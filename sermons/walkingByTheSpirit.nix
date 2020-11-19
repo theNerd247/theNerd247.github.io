@@ -100,7 +100,6 @@ lay aside
 Romans 6:6. Stop being slaves today. When we sin, God doesn't change; we have
 moved.
 
-
 Things that grieve the Holy Spirit (applied to the church at Ephesus):
 
 1. Dishonesty. Our old father was Satan (John 8:44)

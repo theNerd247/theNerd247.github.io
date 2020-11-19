@@ -10,11 +10,15 @@ into the module systems problem.
 Packages, modules, and the like all solves ''(r (builtins.length data.problems))'' 
 meta-software problems:
 
-''(list { problems = [
+''(tell { problems = [
   "Grouping common functioning code and storing different groups in respective files."
   "Using code that is written outside the file where it's being used."
   "Organizing code into logical units that compose."
-];})''
+];})
+
+(r (list data.problems))
+
+''
 
 For example, Javascript + NodeJS allows one to write common code in files
 called modules which are defined as: 
@@ -29,6 +33,7 @@ exports = {
 }
 
 '')''
+
 This file is exporting an API defining Peano arthimetic. 
 
 To consume some code in this API NodeJS syntax requires one to use the
@@ -136,6 +141,8 @@ are manifested as features particular to that language: classes in OOP
 languages, objects in untyped languages like JavaScript and Nix, and modules in
 Haskell. Each of these collections should be able to be combined to create
 larger collections. That is we can form larger modules from smaller ones.
+In other words, what ever model we pick for a module it should behave like a
+monoid.
 
 Second, a module requires some way of depending on other modules. Again most
 languages use explicit import statements. Here's a sample of some:
@@ -175,36 +182,92 @@ define `C`'s `x` definition? The answer is `C` should be defined in such a way
 that we avoid the issue altogether.
 
 * A module shouldn't not be allowed to depend on a non-existant module. Just
-like calling a variable that doesn't exist is illegal - so is calling a module.
+like calling a variable that doesn't exist is illegal - so should be calling a
+non-existent module.
 
-## Module Features
+## A First Model of A Module
 
-* Modules should be easy to extract from a project and turned into their own
-projects.
+Let's start with the first property of modules: they should be collections of
+definitions. A definition is a pair of a unique identifier with an expression
+in that language. I
 
-* A module should be an independtly shippable unit. That is a module should
-easily transported across different projects with ease.
+I'll use Haskell's type language to describe the types we are going to discuss:
 
-* A module should be version controlled. Modules change over time and thus
-it's not enough to state the name of a module to use but also what point in
-time that module lives.
+''(code "haskell" ''
 
-* A module should have meta-data and documentation attached to it. Things like
-copy{right,left}, website, author, etc.
+import Data.Map (Map)
 
-## Modelling a Module
+type DefId = String
 
-To model this let's start by thinking about the most basic module: an empty
-module. This module would contain no definitions 
+-- I've created a type here without constructors to act as a place holder
+-- for expressions in the target language.
+data Expression
 
+newtype DefCollection = DefCollection { defMap :: Map DefId Expression }
+
+'')''
+
+Second, let's model modules depending on each other. To do this I'll use
+a function. I've chosen this for 2 reasons:
+
+''(list [
+
+  ''
+  Modules need to depend on existent modules.
+  ''
+
+  ''
+  Modules shouldn't depend on a module that doesn't exist.
+  ''
+
+])''
+
+And functions fullfill both of these requirements.
+
+(code "haskell" ''
+
+newtype Module = Module { runModule :: DefCollection -> DefCollection }
+
+'')''
+
+And we know that modules should operate as monoids so in Haskell these
+functions should exist:
+
+''(code "haskell" ''
+
+mempty :: Module
+
+(<>) :: Module -> Module -> Module
+
+'')''
+
+
+
+''
+]
+# ## Module Features
+# 
+# * Modules should be easy to extract from a project and turned into their own
+# projects.
+# 
+# * A module should be an independtly shippable unit. That is a module should
+# easily transported across different projects with ease.
+# 
+# * A module should be version controlled. Modules change over time and thus
+# it's not enough to state the name of a module to use but also what point in
+# time that module lives.
+# 
+# * A module should have meta-data and documentation attached to it. Things like
+# copy{right,left}, website, author, etc.
+# 
 # A Debugging Language Feature
+#
+# So how do we solve the problem of figuring out where certain code comes from?
+# 
+# I propose we push this problem onto the compiler / language. Why not have a 
+# special syntax that asks the compiler to dump out where a particular variable's
+# definition originates from as a warning - or something similar? This way we can
+# avoid having to explicitely state where a function originates but still trace
+# issues up the module tree if we need to.
 
-So how do we solve the problem of figuring out where certain code comes from?
-
-I propose we push this problem onto the compiler / language. Why not have a 
-special syntax that asks the compiler to dump out where a particular variable's
-definition originates from as a warning - or something similar? This way we can
-avoid having to explicitely state where a function originates but still trace
-issues up the module tree if we need to.
-
-'']
+]

@@ -1,19 +1,33 @@
-let
-  run = (import ./pkgs.nix).conix.runExtended [ (import ./time.nix) (import ./postHtmlFile.nix) ];
-in
-  { site = run
-    (x: with x; [ 
-      (dir "resume" (import ./resume))
+rec
+{
+  conix = (import ./pkgs.nix).conix; 
 
-      (import ./index.nix)
+  run = conix.runExtended extensions;
 
-      (dir "sermons" (nest "sermons" (importPostsDir "./sermons")))
+  eval = conix.evalExtended extensions;
 
-      (dir "posts" (nest "posts" (importPostsDir "./posts")))
+  extensions =
+    [ 
+      (import ./time.nix) 
+      (import ./postHtmlFile.nix)
+      (import ./runJs.nix)
+    ];
 
-      (dir "notes" (nest "notes" (importPostsDir "./notes")))
+  site = run s;
 
-    ]);
+  s = 
+  (x: with x; [ 
+    (dir "resume" (import ./resume))
 
-    resume = run (import ./resume);
-  }
+    (import ./index.nix)
+
+    (dir "sermons" (nest "sermons" (importPostsDir "./sermons")))
+
+    (dir "posts" (nest "posts" (importPostsDir "./posts")))
+
+    (dir "notes" (nest "notes" (importPostsDir "./notes")))
+
+  ]);
+
+  resume = run (import ./resume);
+}

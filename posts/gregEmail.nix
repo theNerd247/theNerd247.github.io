@@ -37,7 +37,7 @@ Re-write the following JavaScript code using ONLY:
   * arithmetic statements
 
 
-''{ jsExampleInit = code "js" ''
+''(jsSnippet "jsExampleInit" { jsExampleInit = ''
 
 const getSum = (xs) => {
   let sum = 0;
@@ -49,7 +49,7 @@ const getSum = (xs) => {
 
 getSum([1, 2, 3]);
 
-'';}''
+'';})''
 
 And here's the solution in steps:
 
@@ -138,7 +138,7 @@ numbers:
 
 _initial problem_
 
-''(r data.jsExampleInit)''
+''(code "js" (r data.jsExampleInit))''
 
 _solution_
 
