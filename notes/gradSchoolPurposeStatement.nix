@@ -40,7 +40,7 @@ of discovering better techniques for designing program APIs and applications.
 I have come to realize that most APIs are small languages and
 applications are compositions of statements written in those languages. Since
 APIs are languages and good languages have some underlying mathematical model
-it only makes sense to study languages and their modelling to then develop
+it only makes sense to study languages and their modeling to then develop
 industrial strength APIs. 
 
 In my study of programming language design I have began reading Benjamin
