@@ -23,7 +23,7 @@ conix: with conix; [ (pdf "sop" [''
 
 As a PhD student at Carnegie Mellon I intend to study how to use mathematical
 models to design and implement domain specific languages.  Particularly I am
-interested in using category theory, Type Theory, and the lambda calculi to
+interested in using category theory, type theory, and the lambda calculi to
 construct denotational semantics of functional programming languages.
 
 ''#TODO: shorten this?  
