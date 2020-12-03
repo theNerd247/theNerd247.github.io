@@ -21,14 +21,35 @@
 
 conix: with conix; [ (pdf "sop" [''
 
-As a PhD student at Carnegie Mellon I intend to study how to use mathematical
-models to design and implement domain specific languages.  Particularly I am
-interested in using category theory, type theory, and the lambda calculi to
-construct denotational semantics of functional programming languages.
+As a PhD student at Carnegie Mellon I intend to study the various mathematical
+models to design and implement domain specific languages (DSLs). Particularly I
+intend on studying category theory, type theory, and the lambda calculi to
+design and implement type-safe DSLs and embedded DSLS (eDSLS). I am interested
+in creating languages that enable industry grade rapid prototyping and creating
+sound APIs that are well defined, well tested, and easily refactorable.
+
+I've learned from my past experience as a software engineer that software tends
+to break for reasons that are mainly due to human error. Here they are:
+
+  * The codebase is not organized idiomatically and thus is difficult to
+  understand.
+  * The code was not well tested when it was assumed to be.
+  * The problem needs a quick solution and the entire design process is
+  shortened or skipped.
+
+I believe the fundamental relationship between the programmer and the machine
+contributes to the cause of these problems. Many problem domains are not solved
+using specific languages - but instead general purpose languages. For example
+as a mechatronics engineering intern working at the Georgia Tech Research
+institute I wrote in C++. We needed a language that was fast as we were
+operating a robot with a knife as an end-effector (scary stuff). Many bugs
+caused unsafe conditions for researchers near the robot due to the
+aforementioned issued. I believe if we were using a language more natural to
+the field of robotic kinematics we would not have run into so many problems.
 
 ''#TODO: shorten this?  
 
-'' My interest in the use of math driven programming language design arose out
+'' My interest in the use of math driven design arose out
 of my practical experience as a software engineer. While working at a company
 that handled financial data for large corporations I had to solve problems
 directly related to the customer's experience. These problems had their roots
