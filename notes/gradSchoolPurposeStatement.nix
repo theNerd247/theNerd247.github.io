@@ -24,7 +24,7 @@ conix: with conix; [ (pdf "sop" [''
 As a PhD student at Carnegie Mellon I intend to study the various mathematical
 models to design and implement domain specific languages (DSLs). Particularly I
 intend on studying category theory, type theory, and the lambda calculi to
-design and implement type-safe DSLs and embedded DSLS (eDSLS). I am interested
+design and implement type-safe DSLs and embedded DSLS (eDSLs). I am interested
 in creating languages that enable industry grade rapid prototyping and creating
 sound APIs that are well defined, well tested, and easily refactorable.
 
@@ -38,14 +38,41 @@ to break for reasons that are mainly due to human error. Here they are:
   shortened or skipped.
 
 I believe the fundamental relationship between the programmer and the machine
-contributes to the cause of these problems. Many problem domains are not solved
-using specific languages - but instead general purpose languages. For example
-as a mechatronics engineering intern working at the Georgia Tech Research
-institute I wrote in C++. We needed a language that was fast as we were
-operating a robot with a knife as an end-effector (scary stuff). Many bugs
-caused unsafe conditions for researchers near the robot due to the
-aforementioned issued. I believe if we were using a language more natural to
-the field of robotic kinematics we would not have run into so many problems.
+contributes to the cause of these problems. General purpose languages are the
+popular tool for solving most problems. This is much like using a swiss-army
+knife to fix a car. For example as a mechatronics engineering intern working at
+the Georgia Tech Research institute I wrote in C++. We needed a language that
+was fast since we were controlling a robot with a knife end-effector Safety was
+an important factor. Bugs were riddled through the code due to the above
+mentioned problems. We were using a single language to express robotic
+kinematics, control a conveyor belt, perform image processing, and manage a
+asynchronous jobs. Because of this it was all to easy to muddle the codebase. 
+
+Obviously a simple solution to such problems would be to encourage developers
+to write cleaner code bases. However this a subjective approach and leads to
+flame wars on the internet and personal issues between developers. As my mentor
+Gabriel Gonzalez once said: "Code issues often reflect people issues". That is
+pushing solutions onto developers only opens the door to more problems in the
+code. In short, best practices are not what industry needs.
+
+Modern development has seen the rise of languages were constructing eDSLs is
+relatively easy. Such languages are often functional programming languages such
+as Haskell, LISP, and ML. With the rise in popularity of category theory in
+industry circles developers are starting to write libraries that have a
+language feel to them. For example, Haskell has libraries such as `diagram`
+(for creating vector images), `pipes` (for working with streams), and `blaze`
+(for creating webpages). Because these languages are each in the same host
+language it is intuitive for developers to reach for the right tool for the
+right job and compose statements written in those languages together to create
+beautiful programs. In this vain libraries based on free monads have risen
+to make composing interpreters of eDSLs together. This makes writing programs
+that are
+
+* Organized idiomatically
+* Makes for codebase bases that are easier to test
+* Solutions can be more readily encoded using eDSLs
+
+
 
 ''#TODO: shorten this?  
 
