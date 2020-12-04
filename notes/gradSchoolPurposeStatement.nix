@@ -66,13 +66,17 @@ language it is intuitive for developers to reach for the right tool for the
 right job and compose statements written in those languages together to create
 beautiful programs. In this vain libraries based on free monads have risen
 to make composing interpreters of eDSLs together. This makes writing programs
-that are
+that are:
 
 * Organized idiomatically
 * Makes for codebase bases that are easier to test
 * Solutions can be more readily encoded using eDSLs
 
-
+I intend to apply my studies at Carnegie Mellon to develop techniques for
+developing eDSLs and DSLs how that domain is expressed to a machine.  Other
+ideas include automating code documentation systems, designing better module
+systems so that distributing codebases is easier, and developing techniques for
+analyzing code correctness.
 
 ''#TODO: shorten this?  
 
