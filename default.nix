@@ -32,4 +32,6 @@ rec
   resume = run (import ./resume);
 
   sop = run (import ./notes/gradSchoolPurposeStatement.nix);
+
+  cover = run (import ./notes/noredink.nix);
 }
