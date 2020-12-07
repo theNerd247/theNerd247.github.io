@@ -227,12 +227,18 @@ x: with x; tell {
       hireType      = "Full Time";
       period        = { start = time 3 2020; end = time 9 2020; };
       duties        =
-        [ "Invented Conix a domain specific language for writing smart markdown."
-          "Created the optparse-repline open source Haskell library to aid in
-          refactoring a large codebase and eliminate production bugs as well as
-          stablize a user interface."
-          "Designed tutorials for EAQL - a new programming language invented by Awake Security."
-          "Learned Category-Theory and Type-theory while studying under Gabriel Gonzalez."
+        [ 
+          ''
+          Invented a domain specific language called `conix` to program
+          technical documents. This language made it possible to author
+          tutorials that were always up to date.
+          ''
+
+          ''
+          Layed the foundation for a large codebase refactor by writing an
+          open-source Haskell library. This refactor provided the means to
+          fix major bugs in our product and implement new features.
+          ''
         ];
     };
 
@@ -244,9 +250,20 @@ x: with x; tell {
       period = { start = time 10 2019; end = time 3 2020; };
       duties =
         [ 
-          "Designed email notification API using NodeJS"
-          "Architected IBM cloud integrated project using TypeScript and Docker"
-          "Wrote declarative secrets management script"
+          ''
+          Co-lead a new project's program architecture and introduced
+          Typescript to the team which increased overall team proficency.
+          ''
+
+          ''
+          Introduced best practices for using Git and Github to the company.
+          ''
+
+          ''
+          Invented declarative authorization-key management system. This
+          drastically increased developer productivity by making application
+          builds predictable.
+          ''
         ];
     };
 
