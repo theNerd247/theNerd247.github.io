@@ -321,10 +321,21 @@ x: with x; tell {
       period        = { start = time 1 2015; end = time 7 2016; };
       duties        =
           [ 
-           "Designed and implemented robotics control software for an automated poultry de-boning project designed to increase factory processing speed by 80%."
-           "Wrote computer vision software to collect statistics for modelling the skeleton of poultry."
-           "Introduced the Robotic Operating System framework and GitLab to new projects which created a stable."
-           "Co-Authored a research paper on modelling the kinematics of non-rigid bodies"
+            ''
+            Designed and implemented robotics control software for an automated
+            poultry de-boning project designed to increase factory processing
+            speed by 80%.
+            ''
+
+            ''
+            Wrote computer vision software to collect statistics for modelling
+            the skeleton of poultry.
+            ''
+
+            ''
+            Introduced the Robotic Operating System framework and GitLab to new
+            projects which created a stable.
+            ''
           ];
     };
 
