@@ -21,100 +21,33 @@
 
 conix: with conix; [ (pdf "sop" [''
 
-As a PhD student at Carnegie Mellon I intend to study the various mathematical
-models to design and implement domain specific languages (DSLs). Particularly I
-intend on studying category theory, type theory, and the lambda calculi to
-design and implement type-safe DSLs and embedded DSLS (eDSLs). I am interested
-in creating languages that enable industry grade rapid prototyping and creating
-sound APIs that are well defined, well tested, and easily refactorable.
+Most software today is written by consuming libraries (directly, through some
+module system, or indirectly, through an API). Each library is written to
+solve a specialized domain and thus can be considered an embedded domain
+specific language (eDSLS). Unlike most host languages, embedded languages do
+not have the same degree of mathematical modelling and verification. I am
+interested in researching techniques for designing and implementing formally
+modelled functional programming languages to make constructing, testing, and
+distributing libraries less error prone, easier document, test, and
+distribute.
 
-I've learned from my past experience as a software engineer that software tends
-to break for reasons that are mainly due to human error. Here they are:
+When I was still in my undergraduate course I worked at the Georgia Tech
+Research Institute (GTRI) as a software engineering co-op in the robotics
+department. There I wrote software for research scientists' projects using the
+Robotic Operating System which forced developers to write applications by
+composing multiple libraries together via a message passing protocol - much how
+today's web applications are developed using web APIs. I quickly noticed that
+programs written without this pattern had more bugs and eventually became
+unmaintainable.
 
-  * The codebase is not organized idiomatically and thus is difficult to
-  understand.
-  * The code was not well tested when it was assumed to be.
-  * The problem needs a quick solution and the entire design process is
-  shortened or skipped.
-
-I believe the fundamental relationship between the programmer and the machine
-contributes to the cause of these problems. General purpose languages are the
-popular tool for solving most problems. This is much like using a swiss-army
-knife to fix a car. For example as a mechatronics engineering intern working at
-the Georgia Tech Research institute I wrote in C++. We needed a language that
-was fast since we were controlling a robot with a knife end-effector Safety was
-an important factor. Bugs were riddled through the code due to the above
-mentioned problems. We were using a single language to express robotic
-kinematics, control a conveyor belt, perform image processing, and manage a
-asynchronous jobs. Because of this it was all to easy to muddle the codebase. 
-
-Obviously a simple solution to such problems would be to encourage developers
-to write cleaner code bases. However this a subjective approach and leads to
-flame wars on the internet and personal issues between developers. As my mentor
-Gabriel Gonzalez once said: "Code issues often reflect people issues". That is
-pushing solutions onto developers only opens the door to more problems in the
-code. In short, best practices are not what industry needs.
-
-Modern development has seen the rise of languages were constructing eDSLs is
-relatively easy. Such languages are often functional programming languages such
-as Haskell, LISP, and ML. With the rise in popularity of category theory in
-industry circles developers are starting to write libraries that have a
-language feel to them. For example, Haskell has libraries such as `diagram`
-(for creating vector images), `pipes` (for working with streams), and `blaze`
-(for creating webpages). Because these languages are each in the same host
-language it is intuitive for developers to reach for the right tool for the
-right job and compose statements written in those languages together to create
-beautiful programs. In this vain libraries based on free monads have risen
-to make composing interpreters of eDSLs together. This makes writing programs
-that are:
-
-* Organized idiomatically
-* Makes for codebase bases that are easier to test
-* Solutions can be more readily encoded using eDSLs
-
-I intend to apply my studies at Carnegie Mellon to develop techniques for
-developing eDSLs and DSLs how that domain is expressed to a machine.  Other
-ideas include automating code documentation systems, designing better module
-systems so that distributing codebases is easier, and developing techniques for
-analyzing code correctness.
-
-''#TODO: shorten this?  
-
-'' My interest in the use of math driven design arose out
-of my practical experience as a software engineer. While working at a company
-that handled financial data for large corporations I had to solve problems
-directly related to the customer's experience. These problems had their roots
-directly tied to the existence of non-idiomatic libraries that did not have
-well defined behavior. Since then I've learned the enormous benefit of model
-driven development. I began to study category theory and lambda calculus in
-order to better understand how programming languages were constructed in hopes
-of discovering better techniques for designing program APIs and applications.
-I have come to realize that most APIs are small languages and
-applications are compositions of statements written in those languages. Since
-APIs are languages and good languages have some underlying mathematical model
-it only makes sense to study languages and their modeling to then develop
-industrial strength APIs. 
-
-In my study of programming language design I have began reading Benjamin
-Pierce's _Types and Programming Languages_ to understand how type systems are
-constructed and basic type theory. Further I have watched the _Programming with
-Categories Course_ by David Spivak, Bartosz Milewski, and Brandon Fong and am
-making my way through _Categories for Programmers_. While I do not have a
-formal background in mathematics I have have spent many hours since my
-bachelor's degree studying basic abstract algebra and set theory - at least
-enough to help in my day job.
-
-Aside from my hunger for understanding the concepts behind programming language
-design I have experience both in research and as a classroom instructor. I
-worked as a software engineering instructor for a bootcamp. There I learned how
-to instruct adults and used non-conventional teaching methods to bring students
-from no knowledge of programming to being junior software engineers. Prior to
-this I worked as a TA for a professor in the robotics department. There I
-taught an introductory embedded C seminar and ran the lab that corresponded to
-that course. Finally, as an undergraduate I worked at the Georgia Tech Research
-Institute as a robotics software engineer co-op. There I aided in writing a
-research paper on the kinematics of non-rigid bodies and wrote the software
-that drove a robot that could debone poultry.
+During my time at GTRI I started learning category theory and the Haskell
+programming language and lambda calculus. My curiosity in these subjects lead
+me to learning how programming languages were constructed and designed. In
+short I landed a job as a software engineering instructor at a boot-camp. 
+While teaching web application development with JavaScript this pattern where
+students best understood new concepts and libraries when those libraries
+were written idiomatically. For example, in the course curriculum the
+Express JS library (for writing HTTP servers) and th
 
 '' 
 
