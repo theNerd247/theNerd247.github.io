@@ -276,10 +276,27 @@ x: with x; tell {
       period        = { start = time 10 2018; end = time 10 2019; };
       duties        =
           [ 
-            "Lead 60 career-changing students in three 12-week immersive courses using JavaScript, Python, MongoDB, and SQL with a 90% job placement rate."
-            "Designed and implemented Git architecture for managing course curriculum which eliminiated work duplication and increased clear team communication."
-            "Designed, prototyped and built a course scheduling system to decrease course planning time from 1 week to half a day."
-            "Authored web development curriculum and exercises for junior developers using Express, MongoDB, NodeJS, and React JS."
+            ''
+            Lead 60 career-changing students in three 12-week immersive courses
+            using JavaScript, Python, MongoDB, and SQL with a 90% job
+            placement rate.
+            ''
+
+            ''
+            Unified how course material was managed and communicated. This
+            allowed our team to better optimize our materials for students
+            as well as facilitate better communication across team members.
+            ''
+
+            ''
+            Designed, prototyped and built a course scheduling system to
+            decrease course planning time from 1 week to half a day.
+            ''
+
+            ''
+            Authored web development curriculum and exercises for junior
+            developers using Express, MongoDB, NodeJS, and React JS.
+            ''
           ];
     };
 
