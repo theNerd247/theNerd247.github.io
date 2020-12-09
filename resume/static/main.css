@@ -92,6 +92,10 @@ ul {
   justify-content: space-between;
 }
 
+.aligned > .align-right {
+  vertical-align: baseline;
+}
+
 .projects > .section-contents {
   display: flex;
   flex-flow: row wrap;
