@@ -69,12 +69,6 @@ markdown "resume" (html "resume" [
 (article "main" [
 
   (article "sidebar" [
-    (section "Languages" 
-      (r (intersperse ", " (builtins.map 
-        (l: l.languageName) 
-        data.resume.languages
-      )))
-    )
     
     (section "Contact" (list [
 
@@ -84,6 +78,13 @@ markdown "resume" (html "resume" [
       (r data.resume.github)
 
     ]))
+
+    (section "Languages" 
+      (r (intersperse ", " (builtins.map 
+        (l: l.languageName) 
+        data.resume.languages
+      )))
+    )
   ])
 
   (article "main-content" [
