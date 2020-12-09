@@ -16,6 +16,20 @@ body{
   max-width: 8in;
 }
 
+.main {
+  flex-flow: row-reverse nowrap;
+  display: flex;
+  justify-content: space-between;
+}
+
+.main-content {
+  width: 70%;
+}
+
+.sidebar {
+  width: 28%;
+}
+
 h1 {
   margin-bottom: 0.1em;
 }

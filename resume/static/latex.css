@@ -138,9 +138,11 @@ textarea {
 }
 
 /* Natural flow and rhythm in articles by default */
+/*
 article > * + * {
   margin-top: 1em;
 }
+*/
 
 /* Styles for inline code or code snippets */
 code,
