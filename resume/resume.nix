@@ -12,9 +12,9 @@ let
     in
       "${prim.lastName}, ${prim.firstName}${if builtins.length authors > 1 then " et al." else ""}";
 
-  section = title: class: contents: [
+  section = title: contents: [
     ''
-    <section class="section ''class ''">
+    <section class="section ''(pkgs.lib.toLower title) ''">
     ### '' title ''
 
     <div class="section-contents">
@@ -47,6 +47,16 @@ let
      "\n\n</div>"
     "</div>"
     ];
+
+  article = class: content: [
+    ''
+    <article class='' class ''>
+
+    '' content ''
+
+    </article>
+    ''
+  ];
 in
 
 markdown "resume" (html "resume" [
@@ -59,20 +69,31 @@ markdown "resume" (html "resume" [
     "pagetitle: Resume - Noah Harvey"
   ])
 
-''# '' (r data.resume.firstName)" "(r data.resume.lastName)''
 
+''
 <section class="contact">
-''(r data.resume.email)'' - ''(r data.resume.phone)'' - ''(r data.resume.github)''
 
-</section>
+<h1>'' (r data.resume.firstName)" "(r data.resume.lastName)''</h1>
 
-<section class="contact">
-''(r data.languagesText)''
+''(r data.resume.email)" - "(r data.resume.phone)" - "(r data.resume.github)''
 
 </section>
 
 ''
-(section "Experience" "experience"
+(article "sidebar" [
+  (section "Languages" 
+    (r (intersperse " - " (builtins.map 
+      (l: l.languageName) 
+      data.resume.languages
+    )))
+  )
+  
+  (section "Objective" (r data.resume.objective))
+])
+
+(article "main" [
+
+(section "Experience" 
   (r (with builtins; map
     ({position, hireType, instituteName, period, duties, ...}: subsection 
       position
@@ -85,7 +106,7 @@ markdown "resume" (html "resume" [
   ))
 )
 
-(section "Projects" "projects"
+(section "Projects" 
   (r (with builtins; map
     (project: subsection 
         "" 
@@ -98,7 +119,7 @@ markdown "resume" (html "resume" [
   ))
 )
 
-(section "Education" ""
+(section "Education" 
   (r (with builtins; map
     (school: subsection
       school.degree
@@ -111,7 +132,7 @@ markdown "resume" (html "resume" [
   ))
 )
 
-(section "Publications" ""
+(section "Publications"
   (r (with builtins; map
     (publication:
       ''
@@ -124,12 +145,6 @@ markdown "resume" (html "resume" [
   ))
 )
 
-#(section "Languages" ""
-(tell { languagesText = 
-  (r (intersperse " - " (builtins.map 
-    (l: l.languageName) 
-    data.resume.languages
-  )))
-;} )
+])
 
 ])

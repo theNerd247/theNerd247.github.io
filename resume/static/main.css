@@ -1,3 +1,11 @@
+/* TODO: 
+ *
+ * shorten bullet line spacing ~ 1em?
+ * move upper right text to be aligned to baseline and not ceiling
+ * shorten spacing between project title and description
+ *
+ *
+ */
 body{
   display: flex;
   flex-flow: column nowrap;
