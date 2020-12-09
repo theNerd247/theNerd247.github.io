@@ -65,14 +65,14 @@ x: with x; tell {
         ];
 
     itcli = {
-      instituteName = "itcli";
+      projectName = "itcli";
       website       = "https://github.com/theNerd247/itcli";
       synopsis      = "A CLI issue tracker for small projects";
       projectLanguages = [haskell nix];
     };
 
     breezeCheck = {
-      instituteName = "breeze-check";
+      projectName = "breeze-check";
       website       = "https://github.com/theNerd247/breeze-check";
       synopsis      = "Mobile first check in system using snap and Elm-Lang";
       projectLanguages = [haskell elm nix];
@@ -80,42 +80,42 @@ x: with x; tell {
 
 
     lambda = {
-      instituteName = "lambda";
+      projectName = "lambda";
       website       = "https://github.com/theNerd247/breeze-check";
       synopsis      = "A tiny lambda calculus interpreter";
       projectLanguages = [ haskell ];
     };
 
     conix = {
-      instituteName = "conix";
+      projectName = "conix";
       website = "https://github.com/theNerd247/conix";
       synopsis = "A declarative documentation library written in nix.";
       projectLanguages = [ nix ];
     };
 
     ariaRacer = {
-      instituteName = "aria-racer";
+      projectName = "aria-racer";
       website       = "https://github.com/theNerd247/aria-racer";
       synopsis      = "A robot racing server with a web-based interface using snap.";
       projectLanguages = [ haskell bash docker ];
     };
 
     resumePortfolio = {
-      instituteName = "resume";
+      projectName = "resume";
       website = "https://github.com/theNerd247/theNerd247.github.io";
       synopsis = "Personal resume and portfolio website builder";
       projectLanguages = [ haskell nix];
     };
 
     optparseRepline = {
-      instituteName = "optparse-repline";
+      projectName = "optparse-repline";
       website = "https://github.com/theNerd247/optparse-repline";
       synopsis = "An Haskell library for creating REPLs using optparse-applicative";
       projectLanguages = [ haskell ];
     };
 
     scheduler = {
-      instituteName = "scheduler";
+      projectName = "scheduler";
       website = "https://github.com/theNerd247/theNerd247.github.io";
       synopsis = "An automated scheduling system for teachers.";
       projectLanguages = [ javascript ];
@@ -123,7 +123,7 @@ x: with x; tell {
 
 
     lessonsNixStore = {
-      instituteName = "lessons-nix";
+      projectName = "lessons-nix";
       website = "https://github.com/theNerd247/theNerd247.github.io";
       synopsis = "A nix build system for managing teaching content";
       projectLanguages = [ nix ];

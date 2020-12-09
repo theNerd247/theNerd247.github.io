@@ -117,7 +117,7 @@ markdown "resume" (html "resume" [
         (project: subsection 
             "" 
             ""
-            project.instituteName
+            project.projectName
             []
             #(concatStringsSep " " (map (l: l.languageName) project.projectLanguages))
             project.synopsis
