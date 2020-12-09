@@ -63,20 +63,17 @@ markdown "resume" (html "resume" [
   (meta [
     [''
       css: 
-        - ''(pathOf ./static/latex.css)"\n"
+        ''#- ''(pathOf ./static/latex.css)"\n"
         "  - "(pathOf ./static/main.css)
     ]
     "pagetitle: Resume - Noah Harvey"
   ])
 
 
-''
-<section class="contact">
+''<h1 class="title">'' (r data.resume.firstName)" "(r data.resume.lastName)''</h1>
 
-<h1>'' (r data.resume.firstName)" "(r data.resume.lastName)''</h1>
-
+<section class="subtitle">
 ''(r data.resume.objective)''
-
 </section>
 
 ''

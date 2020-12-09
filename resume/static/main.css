@@ -14,6 +14,27 @@ body{
   padding-left: 0.5em;
   padding-right: 0.5em;
   max-width: 8in;
+
+  font-family: 'Latin Modern', Georgia, Cambria, 'Times New Roman', Times, serif;
+  line-height: 1.8;
+
+  /*min-height: 100vh;*/
+  /*overflow-x: hidden;*/
+  margin: 0 auto;
+
+  color: hsl(0, 5%, 10%);
+  text-rendering: optimizeLegibility;
+}
+
+.title, .subtitle {
+  text-align: center;
+}
+
+.title {
+  margin-bottom: 0em;
+  margin-top: 0em;
+  font-size: 2rem;
+  line-height: 3.25rem;
 }
 
 .main {
@@ -30,24 +51,20 @@ body{
   width: 28%;
 }
 
-h1 {
-  margin-bottom: 0.1em;
+h2 {
+  font-size: 1rem;
+  line-height: 1rem;
+  margin-top: 3rem;
 }
 
-.section {
-  margin-bottom: 1em;
+h3 {
+  font-size: 0.9rem;
+  margin: 0 0 0 0;
 }
 
-.section > h3 {
-  border-top: solid black 0.1em;
-  margin-top: 0.1em;
-  margin-bottom: 0.1em;
-
-/*  font-size: 14pt;*/
-}
-
-h2, h3, h4 {
-  font-family: 'Geneva', sans-serif;
+h4 {
+  font-size: 1rem;
+  margin-top: 2rem;
 }
 
 .subsection h4 {
@@ -102,12 +119,6 @@ ul {
 
 .projects .subsection > .content {
   text-align: justify;
-}
-
-.contact {
-  font-family: 'Geneva', sans-serif;
-  text-align: center;
-  padding-bottom: 1em;
 }
 
 @page {
