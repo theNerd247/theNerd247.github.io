@@ -75,7 +75,7 @@ markdown "resume" (html "resume" [
 
 <h1>'' (r data.resume.firstName)" "(r data.resume.lastName)''</h1>
 
-''(r data.resume.email)" - "(r data.resume.phone)" - "(r data.resume.github)''
+''(r data.resume.objective)''
 
 </section>
 
@@ -90,7 +90,14 @@ markdown "resume" (html "resume" [
       )))
     )
     
-    (section "Objective" (r data.resume.objective))
+    (section "Contact" (list [
+
+      (r data.resume.email)
+      (r data.resume.phone)
+      (r data.resume.linkedin)
+      (r data.resume.github)
+
+    ]))
   ])
 
   (article "main-content" [
