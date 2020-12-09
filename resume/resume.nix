@@ -81,7 +81,7 @@ markdown "resume" (html "resume" [
 
   (article "sidebar" [
     (section "Languages" 
-      (r (intersperse " - " (builtins.map 
+      (r (intersperse ", " (builtins.map 
         (l: l.languageName) 
         data.resume.languages
       )))
