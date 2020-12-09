@@ -1,6 +1,6 @@
 /* TODO: 
  *
- * shorten bullet line spacing ~ 1em?
+ * shorten bullet line spacing ~ 1rem?
  * move upper right text to be aligned to baseline and not ceiling
  * shorten spacing between project title and description
  *
@@ -10,9 +10,9 @@ body{
   display: flex;
   flex-flow: column nowrap;
   font-size: 10pt;
-  line-height: 1.1em;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
+  line-height: 1.1rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
   max-width: 8in;
 
   font-family: 'Latin Modern', Georgia, Cambria, 'Times New Roman', Times, serif;
@@ -31,8 +31,8 @@ body{
 }
 
 .title {
-  margin-bottom: 0em;
-  margin-top: 0em;
+  margin-bottom: 0rem;
+  margin-top: 0rem;
   font-size: 2rem;
   line-height: 3.25rem;
 }
@@ -72,18 +72,22 @@ p {
 }
 
 .subsection h4 {
-  margin-bottom: 0em;
-  margin-top: 0em;
-}
-
-li:not(:last-child) {
-  padding-bottom: 0.8em;
-  text-align: justify;
+  margin-bottom: 0rem;
+  margin-top: 0rem;
 }
 
 ul {
-  padding-left: 1em;
+  padding-left: 1rem;
   margin-left: 0;
+  line-height: 1rem;
+}
+
+li {
+  text-align: justify;
+}
+
+li:not(:last-child) {
+  padding-bottom: 0.25rem;
 }
 
 .experience > .aligned > div {
