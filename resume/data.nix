@@ -56,8 +56,7 @@ x: with x; tell {
       [ 
         optparseRepline
         breezeCheck
-        ariaRacer
-        scheduler 
+        conix
       ];
 
     publications = 

@@ -28,24 +28,13 @@ let
 
   subsection = topLeft: topRight: bottomLeft: bottomRight: content: [
     "<div class=\"subsection pageBreak\">"
+      "<h4>" topLeft "</h4>"
+      "<div>"(intersperse ", " [bottomLeft topRight bottomRight])''</div>
 
-    "<div class=\"aligned\">"
-      "<span class=\"left-align\">"
-        (if topLeft == "" then [] else ["<h4>" topLeft "</h4>"])
-      "</span>"
-      "<span class=\"right-align\">" topRight "</span>"
-    "</div>"
-    "<div class=\"aligned\">"
-      "<span class=\"left-align italic\">" bottomLeft "</span>"
-      "<span class=\"right-align\">"
-        bottomRight
-      "</span>"
-     "</div>"
-
-     "<div class=\"content\">\n\n"
+      
+       ''
        content
-     "\n\n</div>"
-    "</div>"
+    "\n\n</div>"
     ];
 
   article = class: content: [
