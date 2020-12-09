@@ -80,70 +80,74 @@ markdown "resume" (html "resume" [
 </section>
 
 ''
-(article "sidebar" [
-  (section "Languages" 
-    (r (intersperse " - " (builtins.map 
-      (l: l.languageName) 
-      data.resume.languages
-    )))
-  )
-  
-  (section "Objective" (r data.resume.objective))
-])
-
 (article "main" [
 
-(section "Experience" 
-  (r (with builtins; map
-    ({position, hireType, instituteName, period, duties, ...}: subsection 
-      position
-      hireType
-      instituteName 
-      (showPeriod period) 
-      (list duties)
+  (article "sidebar" [
+    (section "Languages" 
+      (r (intersperse " - " (builtins.map 
+        (l: l.languageName) 
+        data.resume.languages
+      )))
     )
-    (sortExperiences data.resume.experiences)
-  ))
-)
+    
+    (section "Objective" (r data.resume.objective))
+  ])
 
-(section "Projects" 
-  (r (with builtins; map
-    (project: subsection 
-        "" 
-        ""
-        project.instituteName
-        (concatStringsSep " " (map (l: l.languageName) project.projectLanguages))
-        project.synopsis
-    )
-    data.resume.projects
-  ))
-)
+  (article "main-content" [
 
-(section "Education" 
-  (r (with builtins; map
-    (school: subsection
-      school.degree
-      school.hireType
-      school.instituteName
-      (showPeriod school.period)
-      ""
+    (section "Experience" 
+      (r (with builtins; map
+        ({position, hireType, instituteName, period, duties, ...}: subsection 
+          position
+          hireType
+          instituteName 
+          (showPeriod period) 
+          (list duties)
+        )
+        (sortExperiences data.resume.experiences)
+      ))
     )
-    data.resume.schools 
-  ))
-)
 
-(section "Publications"
-  (r (with builtins; map
-    (publication:
-      ''
-      <span class="publication-item">
-      ${showAuthors publication.publicationAuthors} _${publication.publicationTitle}_ ${builtins.toString publication.publicationYear}, ${publication.publisher}
-      </span>
-      ''
+    (section "Projects" 
+      (r (with builtins; map
+        (project: subsection 
+            "" 
+            ""
+            project.instituteName
+            (concatStringsSep " " (map (l: l.languageName) project.projectLanguages))
+            project.synopsis
+        )
+        data.resume.projects
+      ))
     )
-    data.resume.publications 
-  ))
-)
+
+    (section "Education" 
+      (r (with builtins; map
+        (school: subsection
+          school.degree
+          school.hireType
+          school.instituteName
+          (showPeriod school.period)
+          ""
+        )
+        data.resume.schools 
+      ))
+    )
+
+    (section "Publications"
+      (r (with builtins; map
+        (publication:
+          ''
+          <span class="publication-item">
+          ${showAuthors publication.publicationAuthors} _${publication.publicationTitle}_ ${builtins.toString publication.publicationYear}, ${publication.publisher}
+          </span>
+          ''
+        )
+        data.resume.publications 
+      ))
+    )
+
+    ])
 
 ])
 
