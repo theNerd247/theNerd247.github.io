@@ -118,7 +118,8 @@ markdown "resume" (html "resume" [
             "" 
             ""
             project.instituteName
-            (concatStringsSep " " (map (l: l.languageName) project.projectLanguages))
+            []
+            #(concatStringsSep " " (map (l: l.languageName) project.projectLanguages))
             project.synopsis
         )
         data.resume.projects
