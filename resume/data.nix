@@ -12,8 +12,8 @@ x: with x; tell {
     linkedin      = "linkedin.com/in/noahharvey";
     objective     = 
       ''
-      I wish to improve the lives of others - both the user and the programmer
-      - by writing idiomatic and well documentated software.
+      I wish to improve the lives of others by writing idiomatic and well
+      documentated software.
       '';
 
     experiences = 
