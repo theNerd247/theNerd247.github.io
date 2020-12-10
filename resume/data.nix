@@ -261,7 +261,7 @@ x: with x; tell {
           ''
 
           ''
-          Introduced best practices for using Git and Github to the company.
+          Wrote web applications using NodeJS, TypeScript, and, VueJs
           ''
 
           ''
@@ -312,9 +312,10 @@ x: with x; tell {
       hireType      = "Part Time";
       period        = { start = time 8 2016; end = time 12 2017; };
       duties        =
-          [ "Developed a web server in Haskell to manage a robot race competition."
-           "Used embedded C programming to design tools for students."
-           "Lead and instructed embedded software and robotics lab."
+          [ 
+            "Developed a web server in Haskell to manage a robot race competition."
+            "Used embedded C programming to design tools for students."
+            "Lead and instructed embedded software and robotics lab."
           ];
     };
 
