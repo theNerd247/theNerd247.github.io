@@ -26,10 +26,10 @@ let
 
   ''];
 
-  subsection = topLeft: topRight: bottomLeft: bottomRight: content: [
+  subsection = title: subTitle: content: [
     "<div class=\"subsection pageBreak\">"
-      "<h4>" topLeft "</h4>"
-      "<div>"(intersperse ", " [bottomLeft topRight bottomRight])''</div>
+      "<h4>" title "</h4>"
+      "<div>" subTitle ''</div>
 
       
        ''
@@ -85,6 +85,13 @@ markdown "resume" (html "resume" [
         data.resume.languages
       )))
     )
+
+    (section "Projects" 
+      (r (with builtins; map
+        (project: subsection project.projectName "" project.synopsis)
+        data.resume.projects
+      ))
+    )
   ])
 
   (article "main-content" [
@@ -93,36 +100,20 @@ markdown "resume" (html "resume" [
       (r (with builtins; map
         ({position, hireType, instituteName, period, duties, ...}: subsection 
           position
-          hireType
-          instituteName 
-          (showPeriod period) 
+          (intersperse ", " [(showPeriod period) instituteName hireType ])
           (list duties)
         )
         (sortExperiences data.resume.experiences)
       ))
     )
 
-    (section "Projects" 
-      (r (with builtins; map
-        (project: subsection 
-            "" 
-            ""
-            project.projectName
-            []
-            #(concatStringsSep " " (map (l: l.languageName) project.projectLanguages))
-            project.synopsis
-        )
-        data.resume.projects
-      ))
-    )
+    
 
     (section "Education" 
       (r (with builtins; map
         (school: subsection
           school.degree
-          school.hireType
-          school.instituteName
-          (showPeriod school.period)
+          (intersperse ", " [(showPeriod school.period) school.instituteName])
           ""
         )
         data.resume.schools 
