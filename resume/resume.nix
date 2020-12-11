@@ -12,6 +12,8 @@ let
     in
       "${prim.lastName}, ${prim.firstName}${if builtins.length authors > 1 then " et al." else ""}";
 
+  wrapped = before: content: after: if isEmpty content then [] else [ before content after ];
+
   section = title: contents: [
     ''
     <section class="section ''(pkgs.lib.toLower title) ''">
@@ -26,16 +28,19 @@ let
 
   ''];
 
-  subsection = title: subTitle: content: [
-    "<div class=\"subsection pageBreak\">"
-      "<h4>" title "</h4>"
-      "<div>" subTitle ''</div>
+  subsection = title: subTitle: content: 
+    wrapped 
+      "<div class=\"subsection pageBreak\">"
+      [ (wrapped "<h4>" title "</h4>")
+        (wrapped ''<div class="subsection-subtitle">'' subTitle 
+          ''</div>
 
-      
-       ''
-       content
-    "\n\n</div>"
-    ];
+        
+          ''
+        )
+        (wrapped ''<div class="subsection-content">'' content ''</div>'')
+      ]
+      "\n\n</div>";
 
   article = class: content: [
     ''
@@ -106,8 +111,6 @@ markdown "resume" (html "resume" [
         (sortExperiences data.resume.experiences)
       ))
     )
-
-    
 
     (section "Education" 
       (r (with builtins; map
