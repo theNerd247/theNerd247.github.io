@@ -283,8 +283,8 @@ x: with x; tell {
           [ 
             ''
             Lead 60 career-changing students in three 12-week immersive courses
-            using JavaScript, Python, MongoDB, and SQL with a 90% job
-            placement rate.
+            using NodeJs, React, Express, Python Django, MongoDB, and SQL
+            with a 90% job placement rate.
             ''
 
             ''
