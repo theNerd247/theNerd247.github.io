@@ -97,6 +97,17 @@ markdown "resume" (html "resume" [
         data.resume.projects
       ))
     )
+
+    (section "Education" 
+      (r (with builtins; map
+        (school: subsection
+          school.degree
+          (showPeriod school.period)
+          school.instituteName
+        )
+        data.resume.schools 
+      ))
+    )
   ])
 
   (article "main-content" [
@@ -112,16 +123,7 @@ markdown "resume" (html "resume" [
       ))
     )
 
-    (section "Education" 
-      (r (with builtins; map
-        (school: subsection
-          school.degree
-          (intersperse ", " [(showPeriod school.period) school.instituteName])
-          ""
-        )
-        data.resume.schools 
-      ))
-    )
+    
 
     (section "Publications"
       (r (with builtins; map
