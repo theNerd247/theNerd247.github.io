@@ -134,41 +134,63 @@ But first, monoids...
 
 # Monoids
 
-Take the following sequence of numbers: `1,3,5,7,9`. We can perform the
-addition of these numbers in any order:
-
-''(list 
-[ "`(1+3) + (5+7) + 9`"
-  "`1 + (3+5) + (7+9)`"
-  "`1 + (3 + (5+7) + 9)`"
-  "`(((1+3) + 5) + 7) + 9`"
-])''
-
-to name a few. Addition also comes with a special number called the identity
-number that doesn't change the result of addition. It's `0`. `0 + n = n` and `n
-+ 0 = n`. And finally, notice that we can re-use the result of an addition to
-perform another addition.
-
-It turns out that these 3 properties are everywhere in our world:
+Consider the following tasks to perform with a program:
 
 ''(list [
 
-  "multiplication"
-  "concatenating strings"
-  "mixing paint"
+"Finding the smallest number in a list"
+"Finding the largest number in a list"
+"Computing the sum of a list of numbers"
+"Computing the product of a list of numbers"
+"Converting a list of numbers into a string that is to be printed to stdout"
+"Reversing a list of values"
+"Checking if all values satisfy a predicate"
 
 ])''
 
-And there's the common pattern between all of them. Each addition like thing
-is:
+Here's the pattern each solution to these problems will follow:
 
-  * A set of elements (e.g. numbers, paints, etc.)
-  * An binary operator (e.g. addition, multiplication, mixing 2 paints, etc.)
-  * An identity element (e.g, `0`, `1`, laquer - a transparent paint)
+''(table ["Problem #" "Value If Empty List" "How to compute the result during each step of a loop"] 
+  [ ["1" "`null`"  "`minVal = min(value, minVal)`"]
+    ["2" "`null`"  "`maxVal = max(value, maxVal)`"]
+    ["3" "`0`"     "`sum    = plus(value, sum)`"]
+    ["4" "`1`"     "`prod   = multiply(value, prod)`"]
+    ["5" "`""`"    "`str    = concat(toString(value), str)`"]
+    ["6" "`[]`"    "`list   = concat(list, singletonList(value))`"]
+    ["7" "`true`"  "`isAll  = and(predicate(value), isAll)`"]
+  ]
+)''
 
-These things are 
-In math these 3 things together is called a monoid. And each monoid must behave
-in the following manner:
+Do you notice a pattern? Each problem:
+
+''(list [
+
+''
+Has a 'default' solution. This default value should be chosen so
+as to not affect the outcome of the non-empty list case.
+''
+
+''
+Possibly transforms each value to the same kind of value as the output. For
+example in the last three the value is getting transformed into: a string, a
+list, a boolean value.
+''
+
+''
+Combines the possibly converted value with the current result using a function
+that takes 2 arguments. If `a` were the type of the result of each problem then
+the function of 2 arguments would have this type: `a <funcion-name-here>(x a, y
+a)`.
+''
+
+])''
+
+It turns out that mathematicians have gotten to this idea first. Things that
+have a default value and a way to combine 2 values to produce a value of the
+same type is called a monoid. 
+
+Monoids are everywhere and I personally use them almost everyday of my
+programming career.
 
   1. The binary operator can only output elements in the given set.
   Mathematically this is called a closed operator. In computer science we write
