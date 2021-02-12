@@ -155,7 +155,7 @@ Here's the pattern each solution to these problems will follow:
     ["2" "`null`"  "`maxVal = max(value, maxVal)`"]
     ["3" "`0`"     "`sum    = plus(value, sum)`"]
     ["4" "`1`"     "`prod   = multiply(value, prod)`"]
-    ["5" "`""`"    "`str    = concat(toString(value), str)`"]
+    ["5" "`""`"    "`str    = concat(str, toString(value))`"]
     ["6" "`[]`"    "`list   = concat(list, singletonList(value))`"]
     ["7" "`true`"  "`isAll  = and(predicate(value), isAll)`"]
   ]
@@ -189,78 +189,175 @@ It turns out that mathematicians have gotten to this idea first. Things that
 have a default value and a way to combine 2 values to produce a value of the
 same type is called a monoid. 
 
-Monoids are everywhere and I personally use them almost everyday of my
-programming career.
+A monoid is made of 3 things:
 
-  1. The binary operator can only output elements in the given set.
-  Mathematically this is called a closed operator. In computer science we write
-  the type of such functions as `(*) : a -> a -> a`. This means that the `*`
-  operator takes in 2 elements of type `a` and produces a value of type `a`.
-  Here `a` represents the set of all values of type `a`. Taking addition as a
-  more concrete example consider the binary operator `+`. It's type is `(+) :
-  Natural -> Natural -> Natural`.  That is it takes 2 `Natural` numbers and
-  produces a value that is a `Natural` number. At first glance this property
-  is pointless - however it'll come into play later on.
+1. A type. I'll write this as `a`
+1. A binary function (aka operator) of type `a -> a -> a`. That is it takes two
+values of type `a` and returns a value of type `a`. I'll write this binary operator
+as `◊`.
+1. A default value of type `a` called the identity. I'll write this as `e`.
 
-  1. The order in which combination is executed doesn't matter. Mathematically
-  this is called the associativity law. Typically this statement is written
-  down in equation form. That is if the combination order doesn't matter then
-  for all `a`, `b`, and `c` elements of a set the following equation always
-  holds:
+There are certain properties a monoid must obey. Let's discover these
+properties together:
 
-    ```
-    a * (b * c) = (a * b) * c
-    ```
-  where `*` is the binary operator of the monoid.
+### Identity
 
-  1. The identity element is a right and left identity of the binary operator.
-  Again in equation form:
+First remember back to the problems above. Each one had a default value that
+didn't affect the result if the list was non empty. For example the empty
+string is the default value for creating a printable string because the empty
+string has no effect when combined with other strings. Here's this property for all
+the problems above:
 
-    ```
-    e * a = a
-    a * e = a
-    ```
-  where `e` is the identity element of the monoid and `a` any element in the
-  monoid.
 
-There are a few things that aren't quite so obvious from the definition alone
-but are extremely useful when inventing a monoid. First, the binary operator
-preserves the order of the elements being combined.
+''(table ["Problem #" "Value If Empty List" "How to compute the result during each step of a loop"] 
+  [ ["1" "`null`"  "`min(value, null) = value`"]
+    ["2" "`null`"  "`max(value, null) = value`"]
+    ["3" "`0`"     "`plus(value, 0) = value`"]
+    ["4" "`1`"     "`multiply(value, 1) = value`"]
+    ["5" "`""`"    "`concat("", value) = value`"]
+    ["6" "`[]`"    "`concat([], [value]) = [value]`" ]
+    ["7" "`true`"  "`and(predicate(value), true) = predicate(value)`"]
+  ]
+)''
 
-Remember the list of numbers above? The monoid being used there was the natural
-numbers (numbers 0,1,2,...) with `+` and `0` as the binary operator and
-identity element. When we add 3 numbers together (say `1 + 3 + 5`) the monoid
-laws says we are free to perform the addition in any order we like but there is
-no law that says it's ok to re-arrange the numbers. For addition this doesn't
-make much sense because naturally addition does allow us to re-arrange the
-numbers, however with string concatenation this is more obvious. For example:
+Do you notice the pattern? Each default value has no affect on the result of
+the binary operator. Generally this is called the identity law and is written
+as:
 
-```
-"fire" * "fly" = "firefly" != "fly" * "fire" = "flyfire"
-```
-Here it makes no sense to say that we can re-arrange the order in which strings
-are concatenated. Practically this law allows us to "not care" about the data
-structure storing the elements of our monoid. That is if I give you a list of
-numbers to add verses a JSON object or maybe some C# iterator object. As long
-as the order in which the elements are presented to the `+` operator are the
-same we will always get the same result. This plays an important role in
-developing clear thinking about the problem at hand.
+''(code "" ''
+∀ x ∈ a
+e ◊ x = x
+x ◊ e = x
+'')''
+This means that every monoid's identity element `e` must obey the above
+equations[^The `∀ x ∈ a` means "For all values in type `a`. And the variable
+`x` represents these values).
 
-The second non obvious thing is that results from applying a binary operator 
-must always be re-useable. This is what the first law states. While this may
-seem trivial it is important to keep in mind when creating a new monoid.
+### Associativity
 
-Finally the third law gives us the ability to construct "default" results.
-Consdier our addition example. What number should we give if we had an empty
-list of numbers to add? Naturally we would say `0`. But why? Well, consider
-multiplication. If we were multiplying a list of numbers instead of adding them
-then when given the empty list we would return 1. And for strings, we would
-return the empty string. The reason we are picking these particular values is
-because they are the identity element. And the identity element behaves in such
-a way so as to dissapear when 1 or more elements in the set need to be
-combined. When the identity element is partially applied to the binary operator
-we get the identity function - a function that does nothing with its argument
-except returns it.
+Take the following list summation code. There's a hidden relationship between
+the for-loop and the addition function. In order to see this we need to get
+rid of the loop and the intermittant variables:
+
+''(code "" ''
+
+x = 0
+
+for n in [3, 4, 5]:
+
+  x = add(x, n)
+
+'')''
+First, unravel the intermittent values of x:
+
+''(code "" ''
+
+x0 = 0
+x1 = add(x0, 3)
+x2 = add(x1, 4)
+x3 = add(x2, 5)
+
+'')''
+
+And then get rid of the intermittent variables by nesting the function calls:
+
+''(code "" ''
+
+add(add(add(0, 3), 4), 5)
+
+'')''
+The above code produces the same result as the for-loop, however with the
+intermittant variables removed it's clear how the result of each `add` is being
+re-used. Further more we could re-arrange the add calls so long as we keep the
+order of the numbers. Since we're talking about monoids I'll use `◊` to denote
+the binary operator of our monoid. In this case it's just the `add` function.
+
+''(code "" ''
+
+(0 ◊ 3) ◊ (4 ◊ 5) = add(add(0,3), add(4,5))
+(0 ◊ (3 ◊ 4)) ◊ 5 = add(add(0, add(3,4)), 5)
+
+'')''
+Let's take the first example and write it using a for-loop:
+
+''(code "" ''
+
+x = 0
+for n in [3]:
+  x = add(x, n)
+
+y = 0
+for x in [4,5]:
+  x = add(x, n)
+
+x = add(x, y)
+
+'')''
+`(0 ◊ 3) ◊ (4 ◊ 5)` would translate to taking a list, splitting it in half -
+summing each half and then adding the results. What this means is that we 
+can distribute the summation across multiple threads. And no matter how we
+distribute the problem we will always get the same result.
+
+There is an equation that states this in more precise terms:
+
+''(code "" ''
+∀ {x,y,z} ⊆ a
+
+x ◊ y ◊ z = x ◊ (y ◊ z) = (x ◊ y) ◊ z
+
+'')''
+This means that for any values of type `a` we can run the binary operators in
+any order and still get the same result. 
+
+# Redesigning With Monoids
+
+Let's look at how we can solve the above problems using monoids. First we'll
+tackle the printable string problem. Here's the python code for reference:
+
+''(code "python" ''
+
+def toPrintableString(numList):
+  
+  str = ""
+
+  for n in numList: 
+    if str == "":
+      sep = ""
+    else:
+      sep = ", "
+
+    str = str + sep + toString(n)
+
+  return str
+
+'')''
+
+''(code "python" ''
+
+# String -> String -> String
+def combineSepStr(a, b):
+
+  if a == "" and b == "":
+    return ""
+  else if a == "":
+    return b
+  else if b == "":
+    return a
+  else:
+    return a + ", " + b
+
+def toPrintStr(numList):
+
+  # identity of strings
+  res = ""
+
+  for n in numList:
+    combineSepStr(res , toString(n))
+
+  return res
+
+'')''
+
 
 # A Monoid for Perfect Numbers
 
