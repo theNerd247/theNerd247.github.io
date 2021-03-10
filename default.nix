@@ -35,4 +35,6 @@ rec
   sop = run (import ./notes/gradSchoolPurposeStatement.nix);
 
   cover = run (import ./notes/noredink.nix);
+
+  quietTime = run (import ./notes/quietTime.nix);
 }
