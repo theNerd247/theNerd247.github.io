@@ -56,33 +56,6 @@ let
         chordVerse = x: if isChords  then builtins.replaceStrings ["\n"] [""] x + "\n" else x;
         newSlide = if isChords then "" else "\n\n  * * * * *\n\n";
 
-        # lineLength, n lines on slide, currentRendered text
-        # 
-        # c   -> (length, nLines, isSpace, rendered) 
-
-        # (n, [])           -> (0, nill)
-        # (n, (x, words))   
-        #   | n > 38 && x == ' ' = LineSplit (0, words)
-        #   | n > 38             = LineSplit (0, x : words)
-        #   | x == ' '           = WordSep 
-        #   | otherwise          = WordLetter x (n+1, words)
-
-        # nill                                        -> (Nothing, "")
-        # WordSep n (slide, slidesStr)                -> (prependChar n <$> slide, slideStr)
-        # LineSplit (FilledSlide lstr rstr, slideStr) -> (Nothing, lstr <> linesplit <> slideSep <> slideStr)
-        # LineSplit (OneLineSlide str, slideStr)      -> (Just $ FilledSlide str "", slideStr)0
-
-        # WordSep
-        # Word LineLength String
-        # Line LineLength [Word] 
-        # Slide Line (Maybe Line)
-        # Slides [Slide]
-
-        # syntax: 
-        #
-        # Chords ....
-        # Verse ....
-
         # slidesFor verse:
         #
         # Multiple spaces are collapsed to one
@@ -93,9 +66,32 @@ let
         # Only 2 lines per slide
         # Each verse starts on a set of slides
 
-        # ' ' <> ' ' -> ' '
-        # x   <> x   -> f x x
-        # 
+        # Line SpacedWords | LineLength SpacedWords <= 38
+        # Slide Line (Maybe Line)
+
+        # collapseSpaces :: Spaced String -> Spaced String -> Spaced String
+        collapseSpaces = a: b:
+          liftA2 spaced (x: y: x + y) a (if spaceOnLeft a && spaceOnRight b then noSpaceRight b else b)
+
+        noSpaceRight = x:
+          { inherit (x) _str _isSpaceLeft; _isSpaceRight = false; }
+
+        toSpaced = char:
+          if char == " " then 
+            { _str = ""; _isSpaceLeft = true; _isSpaceRight = true; }
+          else 
+            { _str = char; _isSpaceLeft = false; _isSpaceRight = false; }
+
+        spaced = 
+          { fmap = f: x: { inherit (x) _isSpaceLeft _isSpaceRight; _str = f x.str; };
+            ap = ff: x: 
+              { _isSpaceLeft = ff._isSpaceLeft || x._isSpaceLeft; 
+                _isSpaceRight = ff._isSpaceRight || x._isSpaceRight; 
+                _str = ff._str x._str 
+              };
+          }
+
+          liftA2 = F: f: a: b: F.ap (F.fmap f a) b;
       };
 in
 #  { inherit slide; }
